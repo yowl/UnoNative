@@ -1,0 +1,9 @@
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+    <Assembly Name="Uno" >
+        <Type Name="Windows.UI.Core.CoreDispatcher"  >
+            <Method Name="DispatcherCallback" />
+        </Type>
+  </Assembly>    
+  </Application>
+</Directives>
