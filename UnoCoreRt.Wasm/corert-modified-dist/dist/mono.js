@@ -471,13 +471,10 @@ var wasmBinary;
 if (Module["wasmBinary"]) wasmBinary = Module["wasmBinary"];
 
 
-// The address globals begin at. Very low in memory, for code size and optimization opportunities.
-// Above 0 is static memory, starting with globals.
-// Then the stack.
-// Then 'dynamic' memory for sbrk.
-var GLOBAL_BASE = 1024;
 
-
+/** @param {number} ptr
+    @param {string} type
+    @param {number|boolean=} noSafe */
 function getValue(ptr, type, noSafe) {
   type = type || 'i8';
   if (type.charAt(type.length-1) === '*') type = 'i32'; // pointers are 32-bit
@@ -493,6 +490,8 @@ function getValue(ptr, type, noSafe) {
     }
   return null;
 }
+
+
 var wasmMemory;
 var wasmTable;
 var ABORT = false;
@@ -824,7 +823,7 @@ function stackTrace() {
         js += "\n" + Module["extraStackTrace"]();
     return demangleAll(js)
 }
-var PAGE_SIZE = 16384;
+var PAGE_SIZE = 4096;
 var WASM_PAGE_SIZE = 65536;
 function alignUp(x, multiple) {
     if (x % multiple > 0) {
@@ -844,9 +843,10 @@ function updateGlobalBufferAndViews(buf) {
   Module['HEAPF32'] = HEAPF32 = new Float32Array(buf);
   Module['HEAPF64'] = HEAPF64 = new Float64Array(buf);
 }
-var STACK_BASE = 49275248,
+var STACK_BASE = 19439792,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 44032368;
+    STACK_MAX = 14196912;
+
 
 assert(STACK_BASE % 16 === 0, "stack must start aligned");
 
@@ -1434,36 +1434,9 @@ var ___set_stack_limit = Module["___set_stack_limit"] = createExportWrapper("__s
 
 
 
-var ASM_CONSTS = [function($0, $1) {
-    var str = UTF8ToString($0);
-    try {
-        var res = eval(str);
-        if (res === null || res == undefined)
-            return 0;
-        res = res.toString();
-        setValue($1, 0, "i32")
-    } catch (e) {
-        res = e.toString();
-        setValue($1, 1, "i32");
-        if (res === null || res === undefined)
-            res = "unknown exception"
-    }
-    var buff = Module._malloc((res.length + 1) * 2);
-    stringToUTF16(res, buff, (res.length + 1) * 2);
-    return buff
-}
-, function() {
-    var err = new Error;
-    console.log("Stacktrace: \n");
-    console.log(err.stack)
-}
-, function() {
-    return STACK_BASE
-}
-, function() {
-    return TOTAL_STACK
-}
-];
+var ASM_CONSTS = {
+  
+};
 function _emscripten_asm_const_i(code) {
     return ASM_CONSTS[code]()
 }
@@ -13668,6 +13641,8 @@ var asmLibraryArg = {
  "invoke_jij": invoke_jij,
  "invoke_jiji": invoke_jiji,
  "invoke_jijj": invoke_jijj,
+    "invoke_i": invoke_i,
+    "invoke_v": invoke_v,
  "invoke_vi": invoke_vi,
  "invoke_vid": invoke_vid,
  "invoke_vidd": invoke_vidd,
@@ -13904,6 +13879,38 @@ var _emscripten_builtin_free = Module["_emscripten_builtin_free"] = createExport
 
 var _emscripten_builtin_memalign = Module["_emscripten_builtin_memalign"] = createExportWrapper("emscripten_builtin_memalign");
 var _emscripten_builtin_memset = Module["_emscripten_builtin_memset"] = createExportWrapper("emscripten_builtin_memset");
+
+var _asan_c_load_1 = Module["_asan_c_load_1"] = createExportWrapper("asan_c_load_1");
+
+var _asan_c_load_1u = Module["_asan_c_load_1u"] = createExportWrapper("asan_c_load_1u");
+
+var _asan_c_load_2 = Module["_asan_c_load_2"] = createExportWrapper("asan_c_load_2");
+
+var _asan_c_load_2u = Module["_asan_c_load_2u"] = createExportWrapper("asan_c_load_2u");
+
+var _asan_c_load_4 = Module["_asan_c_load_4"] = createExportWrapper("asan_c_load_4");
+
+var _asan_c_load_4u = Module["_asan_c_load_4u"] = createExportWrapper("asan_c_load_4u");
+
+var _asan_c_load_f = Module["_asan_c_load_f"] = createExportWrapper("asan_c_load_f");
+
+var _asan_c_load_d = Module["_asan_c_load_d"] = createExportWrapper("asan_c_load_d");
+
+var _asan_c_store_1 = Module["_asan_c_store_1"] = createExportWrapper("asan_c_store_1");
+
+var _asan_c_store_1u = Module["_asan_c_store_1u"] = createExportWrapper("asan_c_store_1u");
+
+var _asan_c_store_2 = Module["_asan_c_store_2"] = createExportWrapper("asan_c_store_2");
+
+var _asan_c_store_2u = Module["_asan_c_store_2u"] = createExportWrapper("asan_c_store_2u");
+
+var _asan_c_store_4 = Module["_asan_c_store_4"] = createExportWrapper("asan_c_store_4");
+
+var _asan_c_store_4u = Module["_asan_c_store_4u"] = createExportWrapper("asan_c_store_4u");
+
+var _asan_c_store_f = Module["_asan_c_store_f"] = createExportWrapper("asan_c_store_f");
+
+var _asan_c_store_d = Module["_asan_c_store_d"] = createExportWrapper("asan_c_store_d");
 
 /** @type {function(...*):?} */
 var _emscripten_main_thread_process_queued_calls = Module["_emscripten_main_thread_process_queued_calls"] = createExportWrapper("emscripten_main_thread_process_queued_calls");
