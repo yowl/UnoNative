@@ -1692,7 +1692,7 @@ function updateGlobalBufferAndViews(buf) {
  Module["HEAPF64"] = HEAPF64 = new Float64Array(buf);
 }
 
-var STACK_BASE = 102129072, STACKTOP = STACK_BASE, STACK_MAX = 96886192;
+var STACK_BASE = 98764400, STACKTOP = STACK_BASE, STACK_MAX = 93521520;
 
 assert(STACK_BASE % 16 === 0, "stack must start aligned");
 
@@ -1787,7 +1787,6 @@ function initRuntime() {
  runtimeInitialized = true;
  if (!Module["noFSInit"] && !FS.init.initialized) FS.init();
  TTY.init();
- PIPEFS.root = FS.mount(PIPEFS, {}, null);
  SOCKFS.root = FS.mount(SOCKFS, {}, null);
  callRuntimeCallbacks(__ATINIT__);
 }
@@ -2200,28 +2199,28 @@ var tempDouble;
 var tempI64;
 
 var ASM_CONSTS = {
- 68477586: function() {
+ 66475426: function() {
   return withBuiltinMalloc(function() {
    return allocateUTF8(Module["ASAN_OPTIONS"] || 0);
   });
  },
- 68477684: function() {
+ 66475524: function() {
   return withBuiltinMalloc(function() {
    return allocateUTF8(Module["LSAN_OPTIONS"] || 0);
   });
  },
- 68477781: function() {
+ 66475621: function() {
   return withBuiltinMalloc(function() {
    return allocateUTF8(Module["UBSAN_OPTIONS"] || 0);
   });
  },
- 68496784: function() {
+ 66494624: function() {
   return STACK_BASE;
  },
- 68496807: function() {
+ 66494647: function() {
   return STACK_MAX;
  },
- 68511341: function() {
+ 66509181: function() {
   var setting = Module["printWithColors"];
   if (setting != null) {
    return setting;
@@ -2309,6 +2308,176 @@ function stackTrace() {
  return demangleAll(js);
 }
 
+function _AcceptSecurityContext() {
+ err("missing function: AcceptSecurityContext");
+ abort(-1);
+}
+
+function _AcquireCredentialsHandleW() {
+ err("missing function: AcquireCredentialsHandleW");
+ abort(-1);
+}
+
+function _ApplyControlToken() {
+ err("missing function: ApplyControlToken");
+ abort(-1);
+}
+
+function _BCryptCloseAlgorithmProvider() {
+ err("missing function: BCryptCloseAlgorithmProvider");
+ abort(-1);
+}
+
+function _BCryptCreateHash() {
+ err("missing function: BCryptCreateHash");
+ abort(-1);
+}
+
+function _BCryptDestroyHash() {
+ err("missing function: BCryptDestroyHash");
+ abort(-1);
+}
+
+function _BCryptDestroyKey() {
+ err("missing function: BCryptDestroyKey");
+ abort(-1);
+}
+
+function _BCryptExportKey() {
+ err("missing function: BCryptExportKey");
+ abort(-1);
+}
+
+function _BCryptFinishHash() {
+ err("missing function: BCryptFinishHash");
+ abort(-1);
+}
+
+function _BCryptGenRandom() {
+ err("missing function: BCryptGenRandom");
+ abort(-1);
+}
+
+function _BCryptGetProperty() {
+ err("missing function: BCryptGetProperty");
+ abort(-1);
+}
+
+function _BCryptHashData() {
+ err("missing function: BCryptHashData");
+ abort(-1);
+}
+
+function _BCryptOpenAlgorithmProvider() {
+ err("missing function: BCryptOpenAlgorithmProvider");
+ abort(-1);
+}
+
+function _CancelIoEx() {
+ err("missing function: CancelIoEx");
+ abort(-1);
+}
+
+function _CertAddCertificateLinkToStore() {
+ err("missing function: CertAddCertificateLinkToStore");
+ abort(-1);
+}
+
+function _CertCloseStore() {
+ err("missing function: CertCloseStore");
+ abort(-1);
+}
+
+function _CertControlStore() {
+ err("missing function: CertControlStore");
+ abort(-1);
+}
+
+function _CertCreateCertificateChainEngine() {
+ err("missing function: CertCreateCertificateChainEngine");
+ abort(-1);
+}
+
+function _CertDuplicateCertificateContext() {
+ err("missing function: CertDuplicateCertificateContext");
+ abort(-1);
+}
+
+function _CertEnumCertificatesInStore() {
+ err("missing function: CertEnumCertificatesInStore");
+ abort(-1);
+}
+
+function _CertFindCertificateInStore() {
+ err("missing function: CertFindCertificateInStore");
+ abort(-1);
+}
+
+function _CertFindExtension() {
+ err("missing function: CertFindExtension");
+ abort(-1);
+}
+
+function _CertFreeCertificateChain() {
+ err("missing function: CertFreeCertificateChain");
+ abort(-1);
+}
+
+function _CertFreeCertificateChainEngine() {
+ err("missing function: CertFreeCertificateChainEngine");
+ abort(-1);
+}
+
+function _CertFreeCertificateContext() {
+ err("missing function: CertFreeCertificateContext");
+ abort(-1);
+}
+
+function _CertGetCertificateChain() {
+ err("missing function: CertGetCertificateChain");
+ abort(-1);
+}
+
+function _CertGetCertificateContextProperty() {
+ err("missing function: CertGetCertificateContextProperty");
+ abort(-1);
+}
+
+function _CertGetIntendedKeyUsage() {
+ err("missing function: CertGetIntendedKeyUsage");
+ abort(-1);
+}
+
+function _CertGetNameStringW() {
+ err("missing function: CertGetNameStringW");
+ abort(-1);
+}
+
+function _CertGetValidUsages() {
+ err("missing function: CertGetValidUsages");
+ abort(-1);
+}
+
+function _CertNameToStrW() {
+ err("missing function: CertNameToStrW");
+ abort(-1);
+}
+
+function _CertOpenStore() {
+ err("missing function: CertOpenStore");
+ abort(-1);
+}
+
+function _CertVerifyCertificateChainPolicy() {
+ err("missing function: CertVerifyCertificateChainPolicy");
+ abort(-1);
+}
+
+function _CertVerifyTimeValidity() {
+ err("missing function: CertVerifyTimeValidity");
+ abort(-1);
+}
+
 function _CompareStringEx() {
  err("missing function: CompareStringEx");
  abort(-1);
@@ -2316,6 +2485,116 @@ function _CompareStringEx() {
 
 function _CompareStringOrdinal() {
  err("missing function: CompareStringOrdinal");
+ abort(-1);
+}
+
+function _CompleteAuthToken() {
+ err("missing function: CompleteAuthToken");
+ abort(-1);
+}
+
+function _CopyFileExW() {
+ err("missing function: CopyFileExW");
+ abort(-1);
+}
+
+function _CreateFileW() {
+ err("missing function: CreateFileW");
+ abort(-1);
+}
+
+function _CryptAcquireContextW() {
+ err("missing function: CryptAcquireContextW");
+ abort(-1);
+}
+
+function _CryptDecodeObject() {
+ err("missing function: CryptDecodeObject");
+ abort(-1);
+}
+
+function _CryptDestroyKey() {
+ err("missing function: CryptDestroyKey");
+ abort(-1);
+}
+
+function _CryptFindOIDInfo() {
+ err("missing function: CryptFindOIDInfo");
+ abort(-1);
+}
+
+function _CryptFormatObject() {
+ err("missing function: CryptFormatObject");
+ abort(-1);
+}
+
+function _CryptGenKey() {
+ err("missing function: CryptGenKey");
+ abort(-1);
+}
+
+function _CryptGetDefaultProviderW() {
+ err("missing function: CryptGetDefaultProviderW");
+ abort(-1);
+}
+
+function _CryptGetKeyParam() {
+ err("missing function: CryptGetKeyParam");
+ abort(-1);
+}
+
+function _CryptGetProvParam() {
+ err("missing function: CryptGetProvParam");
+ abort(-1);
+}
+
+function _CryptGetUserKey() {
+ err("missing function: CryptGetUserKey");
+ abort(-1);
+}
+
+function _CryptImportKey() {
+ err("missing function: CryptImportKey");
+ abort(-1);
+}
+
+function _CryptImportPublicKeyInfoEx2() {
+ err("missing function: CryptImportPublicKeyInfoEx2");
+ abort(-1);
+}
+
+function _CryptReleaseContext() {
+ err("missing function: CryptReleaseContext");
+ abort(-1);
+}
+
+function _CryptSetProvParam() {
+ err("missing function: CryptSetProvParam");
+ abort(-1);
+}
+
+function _DecryptMessage() {
+ err("missing function: DecryptMessage");
+ abort(-1);
+}
+
+function _DeleteFileW() {
+ err("missing function: DeleteFileW");
+ abort(-1);
+}
+
+function _DeleteSecurityContext() {
+ err("missing function: DeleteSecurityContext");
+ abort(-1);
+}
+
+function _DeleteVolumeMountPointW() {
+ err("missing function: DeleteVolumeMountPointW");
+ abort(-1);
+}
+
+function _EncryptMessage() {
+ err("missing function: EncryptMessage");
  abort(-1);
 }
 
@@ -2334,8 +2613,28 @@ function _EnumTimeFormatsEx() {
  abort(-1);
 }
 
+function _EnumerateSecurityPackagesW() {
+ err("missing function: EnumerateSecurityPackagesW");
+ abort(-1);
+}
+
+function _FindClose() {
+ err("missing function: FindClose");
+ abort(-1);
+}
+
+function _FindFirstFileExW() {
+ err("missing function: FindFirstFileExW");
+ abort(-1);
+}
+
 function _FindNLSStringEx() {
  err("missing function: FindNLSStringEx");
+ abort(-1);
+}
+
+function _FindNextFileW() {
+ err("missing function: FindNextFileW");
  abort(-1);
 }
 
@@ -2344,13 +2643,108 @@ function _FindStringOrdinal() {
  abort(-1);
 }
 
+function _FormatMessageW() {
+ err("missing function: FormatMessageW");
+ abort(-1);
+}
+
+function _FreeAddrInfoExW() {
+ err("missing function: FreeAddrInfoExW");
+ abort(-1);
+}
+
+function _FreeAddrInfoW() {
+ err("missing function: FreeAddrInfoW");
+ abort(-1);
+}
+
+function _FreeContextBuffer() {
+ err("missing function: FreeContextBuffer");
+ abort(-1);
+}
+
+function _FreeCredentialsHandle() {
+ err("missing function: FreeCredentialsHandle");
+ abort(-1);
+}
+
+function _GetAdaptersAddresses() {
+ err("missing function: GetAdaptersAddresses");
+ abort(-1);
+}
+
+function _GetAddrInfoExW() {
+ err("missing function: GetAddrInfoExW");
+ abort(-1);
+}
+
+function _GetAddrInfoW() {
+ err("missing function: GetAddrInfoW");
+ abort(-1);
+}
+
+function _GetCPInfoExW() {
+ err("missing function: GetCPInfoExW");
+ abort(-1);
+}
+
 function _GetCalendarInfoEx() {
  err("missing function: GetCalendarInfoEx");
  abort(-1);
 }
 
+function _GetConsoleMode() {
+ err("missing function: GetConsoleMode");
+ abort(-1);
+}
+
+function _GetConsoleOutputCP() {
+ err("missing function: GetConsoleOutputCP");
+ abort(-1);
+}
+
+function _GetConsoleScreenBufferInfo() {
+ err("missing function: GetConsoleScreenBufferInfo");
+ abort(-1);
+}
+
+function _GetFileAttributesExW() {
+ err("missing function: GetFileAttributesExW");
+ abort(-1);
+}
+
+function _GetFileType() {
+ err("missing function: GetFileType");
+ abort(-1);
+}
+
 function _GetLocaleInfoEx() {
  err("missing function: GetLocaleInfoEx");
+ abort(-1);
+}
+
+function _GetNameInfoW() {
+ err("missing function: GetNameInfoW");
+ abort(-1);
+}
+
+function _GetNetworkParams() {
+ err("missing function: GetNetworkParams");
+ abort(-1);
+}
+
+function _GetPerAdapterInfo() {
+ err("missing function: GetPerAdapterInfo");
+ abort(-1);
+}
+
+function _GetStdHandle() {
+ err("missing function: GetStdHandle");
+ abort(-1);
+}
+
+function _GetTokenInformation() {
+ err("missing function: GetTokenInformation");
  abort(-1);
 }
 
@@ -2369,6 +2763,16 @@ function _IdnToUnicode() {
  abort(-1);
 }
 
+function _ImpersonateLoggedOnUser() {
+ err("missing function: ImpersonateLoggedOnUser");
+ abort(-1);
+}
+
+function _InitializeSecurityContextW() {
+ err("missing function: InitializeSecurityContextW");
+ abort(-1);
+}
+
 function _LCIDToLocaleName() {
  err("missing function: LCIDToLocaleName");
  abort(-1);
@@ -2384,13 +2788,238 @@ function _LocaleNameToLCID() {
  abort(-1);
 }
 
+function _LsaClose() {
+ err("missing function: LsaClose");
+ abort(-1);
+}
+
+function _LsaFreeMemory() {
+ err("missing function: LsaFreeMemory");
+ abort(-1);
+}
+
+function _LsaFreeReturnBuffer() {
+ err("missing function: LsaFreeReturnBuffer");
+ abort(-1);
+}
+
+function _LsaGetLogonSessionData() {
+ err("missing function: LsaGetLogonSessionData");
+ abort(-1);
+}
+
+function _LsaLookupNames2() {
+ err("missing function: LsaLookupNames2");
+ abort(-1);
+}
+
+function _LsaLookupSids() {
+ err("missing function: LsaLookupSids");
+ abort(-1);
+}
+
+function _LsaNtStatusToWinError() {
+ err("missing function: LsaNtStatusToWinError");
+ abort(-1);
+}
+
+function _LsaOpenPolicy() {
+ err("missing function: LsaOpenPolicy");
+ abort(-1);
+}
+
+function _MoveFileExW() {
+ err("missing function: MoveFileExW");
+ abort(-1);
+}
+
+function _MultiByteToWideChar() {
+ err("missing function: MultiByteToWideChar");
+ abort(-1);
+}
+
+function _NCryptDeleteKey() {
+ err("missing function: NCryptDeleteKey");
+ abort(-1);
+}
+
+function _NCryptFreeObject() {
+ err("missing function: NCryptFreeObject");
+ abort(-1);
+}
+
+function _NCryptGetProperty() {
+ err("missing function: NCryptGetProperty");
+ abort(-1);
+}
+
+function _NCryptImportKey() {
+ err("missing function: NCryptImportKey");
+ abort(-1);
+}
+
+function _NCryptOpenKey() {
+ err("missing function: NCryptOpenKey");
+ abort(-1);
+}
+
+function _NCryptOpenStorageProvider() {
+ err("missing function: NCryptOpenStorageProvider");
+ abort(-1);
+}
+
+function _NCryptSetProperty() {
+ err("missing function: NCryptSetProperty");
+ abort(-1);
+}
+
 function _NormalizeString() {
  err("missing function: NormalizeString");
  abort(-1);
 }
 
+function _OpenProcessToken() {
+ err("missing function: OpenProcessToken");
+ abort(-1);
+}
+
+function _OpenThreadToken() {
+ err("missing function: OpenThreadToken");
+ abort(-1);
+}
+
+function _QueryContextAttributesW() {
+ err("missing function: QueryContextAttributesW");
+ abort(-1);
+}
+
+function _ReadConsoleW() {
+ err("missing function: ReadConsoleW");
+ abort(-1);
+}
+
+function _ReadFile() {
+ err("missing function: ReadFile");
+ abort(-1);
+}
+
+function _RemoveDirectoryW() {
+ err("missing function: RemoveDirectoryW");
+ abort(-1);
+}
+
+function _ReplaceFileW() {
+ err("missing function: ReplaceFileW");
+ abort(-1);
+}
+
 function _ResolveLocaleName() {
  err("missing function: ResolveLocaleName");
+ abort(-1);
+}
+
+function _RevertToSelf() {
+ err("missing function: RevertToSelf");
+ abort(-1);
+}
+
+function _SetConsoleTextAttribute() {
+ err("missing function: SetConsoleTextAttribute");
+ abort(-1);
+}
+
+function _SetFileCompletionNotificationModes() {
+ err("missing function: SetFileCompletionNotificationModes");
+ abort(-1);
+}
+
+function _SetThreadErrorMode() {
+ err("missing function: SetThreadErrorMode");
+ abort(-1);
+}
+
+function _SspiEncodeStringsAsAuthIdentity() {
+ err("missing function: SspiEncodeStringsAsAuthIdentity");
+ abort(-1);
+}
+
+function _SspiFreeAuthIdentity() {
+ err("missing function: SspiFreeAuthIdentity");
+ abort(-1);
+}
+
+function _WSAConnect() {
+ err("missing function: WSAConnect");
+ abort(-1);
+}
+
+function _WSAEventSelect() {
+ err("missing function: WSAEventSelect");
+ abort(-1);
+}
+
+function _WSAGetOverlappedResult() {
+ err("missing function: WSAGetOverlappedResult");
+ abort(-1);
+}
+
+function _WSAIoctl() {
+ err("missing function: WSAIoctl");
+ abort(-1);
+}
+
+function _WSARecv() {
+ err("missing function: WSARecv");
+ abort(-1);
+}
+
+function _WSASend() {
+ err("missing function: WSASend");
+ abort(-1);
+}
+
+function _WSASocketW() {
+ err("missing function: WSASocketW");
+ abort(-1);
+}
+
+function _WSAStartup() {
+ err("missing function: WSAStartup");
+ abort(-1);
+}
+
+function _WideCharToMultiByte() {
+ err("missing function: WideCharToMultiByte");
+ abort(-1);
+}
+
+function _WinHttpCloseHandle() {
+ err("missing function: WinHttpCloseHandle");
+ abort(-1);
+}
+
+function _WinHttpGetIEProxyConfigForCurrentUser() {
+ err("missing function: WinHttpGetIEProxyConfigForCurrentUser");
+ abort(-1);
+}
+
+function _WinHttpGetProxyForUrl() {
+ err("missing function: WinHttpGetProxyForUrl");
+ abort(-1);
+}
+
+function _WinHttpOpen() {
+ err("missing function: WinHttpOpen");
+ abort(-1);
+}
+
+function _WriteConsoleW() {
+ err("missing function: WriteConsoleW");
+ abort(-1);
+}
+
+function _WriteFile() {
+ err("missing function: WriteFile");
  abort(-1);
 }
 
@@ -5324,11 +5953,59 @@ var SYSCALLS = {
  }
 };
 
-function ___sys_chmod(path, mode) {
+function ___sys__newselect(nfds, readfds, writefds, exceptfds, timeout) {
  try {
-  path = SYSCALLS.getStr(path);
-  FS.chmod(path, mode);
-  return 0;
+  assert(nfds <= 64, "nfds must be less than or equal to 64");
+  assert(!exceptfds, "exceptfds not supported");
+  var total = 0;
+  var srcReadLow = readfds ? _asan_js_load_4(readfds >> 2) : 0, srcReadHigh = readfds ? _asan_js_load_4(readfds + 4 >> 2) : 0;
+  var srcWriteLow = writefds ? _asan_js_load_4(writefds >> 2) : 0, srcWriteHigh = writefds ? _asan_js_load_4(writefds + 4 >> 2) : 0;
+  var srcExceptLow = exceptfds ? _asan_js_load_4(exceptfds >> 2) : 0, srcExceptHigh = exceptfds ? _asan_js_load_4(exceptfds + 4 >> 2) : 0;
+  var dstReadLow = 0, dstReadHigh = 0;
+  var dstWriteLow = 0, dstWriteHigh = 0;
+  var dstExceptLow = 0, dstExceptHigh = 0;
+  var allLow = (readfds ? _asan_js_load_4(readfds >> 2) : 0) | (writefds ? _asan_js_load_4(writefds >> 2) : 0) | (exceptfds ? _asan_js_load_4(exceptfds >> 2) : 0);
+  var allHigh = (readfds ? _asan_js_load_4(readfds + 4 >> 2) : 0) | (writefds ? _asan_js_load_4(writefds + 4 >> 2) : 0) | (exceptfds ? _asan_js_load_4(exceptfds + 4 >> 2) : 0);
+  var check = function(fd, low, high, val) {
+   return fd < 32 ? low & val : high & val;
+  };
+  for (var fd = 0; fd < nfds; fd++) {
+   var mask = 1 << fd % 32;
+   if (!check(fd, allLow, allHigh, mask)) {
+    continue;
+   }
+   var stream = FS.getStream(fd);
+   if (!stream) throw new FS.ErrnoError(8);
+   var flags = SYSCALLS.DEFAULT_POLLMASK;
+   if (stream.stream_ops.poll) {
+    flags = stream.stream_ops.poll(stream);
+   }
+   if (flags & 1 && check(fd, srcReadLow, srcReadHigh, mask)) {
+    fd < 32 ? dstReadLow = dstReadLow | mask : dstReadHigh = dstReadHigh | mask;
+    total++;
+   }
+   if (flags & 4 && check(fd, srcWriteLow, srcWriteHigh, mask)) {
+    fd < 32 ? dstWriteLow = dstWriteLow | mask : dstWriteHigh = dstWriteHigh | mask;
+    total++;
+   }
+   if (flags & 2 && check(fd, srcExceptLow, srcExceptHigh, mask)) {
+    fd < 32 ? dstExceptLow = dstExceptLow | mask : dstExceptHigh = dstExceptHigh | mask;
+    total++;
+   }
+  }
+  if (readfds) {
+   _asan_js_store_4(readfds >> 2, dstReadLow);
+   _asan_js_store_4(readfds + 4 >> 2, dstReadHigh);
+  }
+  if (writefds) {
+   _asan_js_store_4(writefds >> 2, dstWriteLow);
+   _asan_js_store_4(writefds + 4 >> 2, dstWriteHigh);
+  }
+  if (exceptfds) {
+   _asan_js_store_4(exceptfds >> 2, dstExceptLow);
+   _asan_js_store_4(exceptfds + 4 >> 2, dstExceptHigh);
+  }
+  return total;
  } catch (e) {
   if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
   return -e.errno;
@@ -5357,16 +6034,6 @@ function ___sys_exit_group(status) {
 
 function ___sys_fadvise64_64(fd, offset, len, advice) {
  return 0;
-}
-
-function ___sys_fchmod(fd, mode) {
- try {
-  FS.fchmod(fd, mode);
-  return 0;
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
 }
 
 function ___sys_fcntl64(fd, cmd, varargs) {
@@ -5506,18 +6173,6 @@ function ___sys_getdents64(fd, dirp, count) {
  }
 }
 
-function ___sys_getegid32() {
- return 0;
-}
-
-function ___sys_geteuid32() {
- return ___sys_getegid32();
-}
-
-function ___sys_getgid32() {
- return ___sys_getegid32();
-}
-
 function ___sys_getpid() {
  return 42;
 }
@@ -5534,10 +6189,6 @@ function ___sys_getrusage(who, usage) {
   if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
   return -e.errno;
  }
-}
-
-function ___sys_getuid32() {
- return ___sys_getegid32();
 }
 
 function ___sys_ioctl(fd, op, varargs) {
@@ -5604,10 +6255,6 @@ function ___sys_ioctl(fd, op, varargs) {
  }
 }
 
-function ___sys_link(oldpath, newpath) {
- return -34;
-}
-
 function ___sys_lstat64(path, buf) {
  try {
   path = SYSCALLS.getStr(path);
@@ -5620,16 +6267,6 @@ function ___sys_lstat64(path, buf) {
 
 function ___sys_madvise1(addr, length, advice) {
  return 0;
-}
-
-function ___sys_mkdir(path, mode) {
- try {
-  path = SYSCALLS.getStr(path);
-  return SYSCALLS.doMkdir(path, mode);
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
 }
 
 function ___sys_mlock(addr, len) {
@@ -5726,228 +6363,6 @@ function ___sys_open(path, flags, varargs) {
  }
 }
 
-var PIPEFS = {
- BUCKET_BUFFER_SIZE: 8192,
- mount: function(mount) {
-  return FS.createNode(null, "/", 16384 | 511, 0);
- },
- createPipe: function() {
-  var pipe = {
-   buckets: []
-  };
-  pipe.buckets.push({
-   buffer: new Uint8Array(PIPEFS.BUCKET_BUFFER_SIZE),
-   offset: 0,
-   roffset: 0
-  });
-  var rName = PIPEFS.nextname();
-  var wName = PIPEFS.nextname();
-  var rNode = FS.createNode(PIPEFS.root, rName, 4096, 0);
-  var wNode = FS.createNode(PIPEFS.root, wName, 4096, 0);
-  rNode.pipe = pipe;
-  wNode.pipe = pipe;
-  var readableStream = FS.createStream({
-   path: rName,
-   node: rNode,
-   flags: FS.modeStringToFlags("r"),
-   seekable: false,
-   stream_ops: PIPEFS.stream_ops
-  });
-  rNode.stream = readableStream;
-  var writableStream = FS.createStream({
-   path: wName,
-   node: wNode,
-   flags: FS.modeStringToFlags("w"),
-   seekable: false,
-   stream_ops: PIPEFS.stream_ops
-  });
-  wNode.stream = writableStream;
-  return {
-   readable_fd: readableStream.fd,
-   writable_fd: writableStream.fd
-  };
- },
- stream_ops: {
-  poll: function(stream) {
-   var pipe = stream.node.pipe;
-   if ((stream.flags & 2097155) === 1) {
-    return 256 | 4;
-   } else {
-    if (pipe.buckets.length > 0) {
-     for (var i = 0; i < pipe.buckets.length; i++) {
-      var bucket = pipe.buckets[i];
-      if (bucket.offset - bucket.roffset > 0) {
-       return 64 | 1;
-      }
-     }
-    }
-   }
-   return 0;
-  },
-  ioctl: function(stream, request, varargs) {
-   return ERRNO_CODES.EINVAL;
-  },
-  fsync: function(stream) {
-   return ERRNO_CODES.EINVAL;
-  },
-  read: function(stream, buffer, offset, length, position) {
-   var pipe = stream.node.pipe;
-   var currentLength = 0;
-   for (var i = 0; i < pipe.buckets.length; i++) {
-    var bucket = pipe.buckets[i];
-    currentLength += bucket.offset - bucket.roffset;
-   }
-   assert(buffer instanceof ArrayBuffer || ArrayBuffer.isView(buffer));
-   var data = buffer.subarray(offset, offset + length);
-   if (length <= 0) {
-    return 0;
-   }
-   if (currentLength == 0) {
-    throw new FS.ErrnoError(ERRNO_CODES.EAGAIN);
-   }
-   var toRead = Math.min(currentLength, length);
-   var totalRead = toRead;
-   var toRemove = 0;
-   for (var i = 0; i < pipe.buckets.length; i++) {
-    var currBucket = pipe.buckets[i];
-    var bucketSize = currBucket.offset - currBucket.roffset;
-    if (toRead <= bucketSize) {
-     var tmpSlice = currBucket.buffer.subarray(currBucket.roffset, currBucket.offset);
-     if (toRead < bucketSize) {
-      tmpSlice = tmpSlice.subarray(0, toRead);
-      currBucket.roffset += toRead;
-     } else {
-      toRemove++;
-     }
-     data.set(tmpSlice);
-     break;
-    } else {
-     var tmpSlice = currBucket.buffer.subarray(currBucket.roffset, currBucket.offset);
-     data.set(tmpSlice);
-     data = data.subarray(tmpSlice.byteLength);
-     toRead -= tmpSlice.byteLength;
-     toRemove++;
-    }
-   }
-   if (toRemove && toRemove == pipe.buckets.length) {
-    toRemove--;
-    pipe.buckets[toRemove].offset = 0;
-    pipe.buckets[toRemove].roffset = 0;
-   }
-   pipe.buckets.splice(0, toRemove);
-   return totalRead;
-  },
-  write: function(stream, buffer, offset, length, position) {
-   var pipe = stream.node.pipe;
-   assert(buffer instanceof ArrayBuffer || ArrayBuffer.isView(buffer));
-   var data = buffer.subarray(offset, offset + length);
-   var dataLen = data.byteLength;
-   if (dataLen <= 0) {
-    return 0;
-   }
-   var currBucket = null;
-   if (pipe.buckets.length == 0) {
-    currBucket = {
-     buffer: new Uint8Array(PIPEFS.BUCKET_BUFFER_SIZE),
-     offset: 0,
-     roffset: 0
-    };
-    pipe.buckets.push(currBucket);
-   } else {
-    currBucket = pipe.buckets[pipe.buckets.length - 1];
-   }
-   assert(currBucket.offset <= PIPEFS.BUCKET_BUFFER_SIZE);
-   var freeBytesInCurrBuffer = PIPEFS.BUCKET_BUFFER_SIZE - currBucket.offset;
-   if (freeBytesInCurrBuffer >= dataLen) {
-    currBucket.buffer.set(data, currBucket.offset);
-    currBucket.offset += dataLen;
-    return dataLen;
-   } else if (freeBytesInCurrBuffer > 0) {
-    currBucket.buffer.set(data.subarray(0, freeBytesInCurrBuffer), currBucket.offset);
-    currBucket.offset += freeBytesInCurrBuffer;
-    data = data.subarray(freeBytesInCurrBuffer, data.byteLength);
-   }
-   var numBuckets = data.byteLength / PIPEFS.BUCKET_BUFFER_SIZE | 0;
-   var remElements = data.byteLength % PIPEFS.BUCKET_BUFFER_SIZE;
-   for (var i = 0; i < numBuckets; i++) {
-    var newBucket = {
-     buffer: new Uint8Array(PIPEFS.BUCKET_BUFFER_SIZE),
-     offset: PIPEFS.BUCKET_BUFFER_SIZE,
-     roffset: 0
-    };
-    pipe.buckets.push(newBucket);
-    newBucket.buffer.set(data.subarray(0, PIPEFS.BUCKET_BUFFER_SIZE));
-    data = data.subarray(PIPEFS.BUCKET_BUFFER_SIZE, data.byteLength);
-   }
-   if (remElements > 0) {
-    var newBucket = {
-     buffer: new Uint8Array(PIPEFS.BUCKET_BUFFER_SIZE),
-     offset: data.byteLength,
-     roffset: 0
-    };
-    pipe.buckets.push(newBucket);
-    newBucket.buffer.set(data);
-   }
-   return dataLen;
-  },
-  close: function(stream) {
-   var pipe = stream.node.pipe;
-   pipe.buckets = null;
-  }
- },
- nextname: function() {
-  if (!PIPEFS.nextname.current) {
-   PIPEFS.nextname.current = 0;
-  }
-  return "pipe[" + PIPEFS.nextname.current++ + "]";
- }
-};
-
-function ___sys_pipe(fdPtr) {
- try {
-  if (fdPtr == 0) {
-   throw new FS.ErrnoError(21);
-  }
-  var res = PIPEFS.createPipe();
-  _asan_js_store_4(fdPtr >> 2, res.readable_fd);
-  _asan_js_store_4(fdPtr + 4 >> 2, res.writable_fd);
-  return 0;
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
-}
-
-function ___sys_pipe2(fds, flags) {
- return -52;
-}
-
-function ___sys_poll(fds, nfds, timeout) {
- try {
-  var nonzero = 0;
-  for (var i = 0; i < nfds; i++) {
-   var pollfd = fds + 8 * i;
-   var fd = _asan_js_load_4(pollfd >> 2);
-   var events = _asan_js_load_2(pollfd + 4 >> 1);
-   var mask = 32;
-   var stream = FS.getStream(fd);
-   if (stream) {
-    mask = SYSCALLS.DEFAULT_POLLMASK;
-    if (stream.stream_ops.poll) {
-     mask = stream.stream_ops.poll(stream);
-    }
-   }
-   mask &= events | 8 | 16;
-   if (mask) nonzero++;
-   _asan_js_store_2(pollfd + 6 >> 1, mask);
-  }
-  return nonzero;
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
-}
-
 function ___sys_prlimit64(pid, resource, new_limit, old_limit) {
  try {
   if (old_limit) {
@@ -5977,29 +6392,6 @@ function ___sys_readlink(path, buf, bufsize) {
  try {
   path = SYSCALLS.getStr(path);
   return SYSCALLS.doReadlink(path, buf, bufsize);
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
-}
-
-function ___sys_rename(old_path, new_path) {
- try {
-  old_path = SYSCALLS.getStr(old_path);
-  new_path = SYSCALLS.getStr(new_path);
-  FS.rename(old_path, new_path);
-  return 0;
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
-}
-
-function ___sys_rmdir(path) {
- try {
-  path = SYSCALLS.getStr(path);
-  FS.rmdir(path);
-  return 0;
  } catch (e) {
   if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
   return -e.errno;
@@ -6972,26 +7364,6 @@ function ___sys_unlink(path) {
  }
 }
 
-function ___sys_utimensat(dirfd, path, times, flags) {
- try {
-  path = SYSCALLS.getStr(path);
-  assert(flags === 0);
-  path = SYSCALLS.calculateAt(dirfd, path);
-  var seconds = _asan_js_load_4(times >> 2);
-  var nanoseconds = _asan_js_load_4(times + 4 >> 2);
-  var atime = seconds * 1e3 + nanoseconds / (1e3 * 1e3);
-  times += 8;
-  seconds = _asan_js_load_4(times >> 2);
-  nanoseconds = _asan_js_load_4(times + 4 >> 2);
-  var mtime = seconds * 1e3 + nanoseconds / (1e3 * 1e3);
-  FS.utime(path, atime, mtime);
-  return 0;
- } catch (e) {
-  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
-  return -e.errno;
- }
-}
-
 function ___sys_write(fd, buf, count) {
  try {
   var stream = SYSCALLS.getStreamFromFD(fd);
@@ -7034,6 +7406,11 @@ function _clock_gettime(clk_id, tp) {
  _asan_js_store_4(tp >> 2, now / 1e3 | 0);
  _asan_js_store_4(tp + 4 >> 2, now % 1e3 * 1e3 * 1e3 | 0);
  return 0;
+}
+
+function _closesocket() {
+ err("missing function: closesocket");
+ abort(-1);
 }
 
 var DOTNET = {
@@ -7104,18 +7481,6 @@ function _deflateEnd() {
 function _deflateInit2_() {
  err("missing function: deflateInit2_");
  abort(-1);
-}
-
-function _dladdr(address, info) {
- abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
-}
-
-function _dlclose(handle) {
- abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
-}
-
-function _dlerror() {
- abort("To use dlopen, you need to use Emscripten's linking support, see https://github.com/emscripten-core/emscripten/wiki/Linking");
 }
 
 function _dlopen(filename, flag) {
@@ -7608,179 +7973,6 @@ function _getTempRet0() {
  return getTempRet0() | 0;
 }
 
-function _getaddrinfo(node, service, hint, out) {
- var addrs = [];
- var canon = null;
- var addr = 0;
- var port = 0;
- var flags = 0;
- var family = 0;
- var type = 0;
- var proto = 0;
- var ai, last;
- function allocaddrinfo(family, type, proto, canon, addr, port) {
-  var sa, salen, ai;
-  var res;
-  salen = family === 10 ? 28 : 16;
-  addr = family === 10 ? __inet_ntop6_raw(addr) : __inet_ntop4_raw(addr);
-  sa = _malloc(salen);
-  res = __write_sockaddr(sa, family, addr, port);
-  assert(!res.errno);
-  ai = _malloc(32);
-  _asan_js_store_4(ai + 4 >> 2, family);
-  _asan_js_store_4(ai + 8 >> 2, type);
-  _asan_js_store_4(ai + 12 >> 2, proto);
-  _asan_js_store_4(ai + 24 >> 2, canon);
-  _asan_js_store_4(ai + 20 >> 2, sa);
-  if (family === 10) {
-   _asan_js_store_4(ai + 16 >> 2, 28);
-  } else {
-   _asan_js_store_4(ai + 16 >> 2, 16);
-  }
-  _asan_js_store_4(ai + 28 >> 2, 0);
-  return ai;
- }
- if (hint) {
-  flags = _asan_js_load_4(hint >> 2);
-  family = _asan_js_load_4(hint + 4 >> 2);
-  type = _asan_js_load_4(hint + 8 >> 2);
-  proto = _asan_js_load_4(hint + 12 >> 2);
- }
- if (type && !proto) {
-  proto = type === 2 ? 17 : 6;
- }
- if (!type && proto) {
-  type = proto === 17 ? 2 : 1;
- }
- if (proto === 0) {
-  proto = 6;
- }
- if (type === 0) {
-  type = 1;
- }
- if (!node && !service) {
-  return -2;
- }
- if (flags & ~(1 | 2 | 4 | 1024 | 8 | 16 | 32)) {
-  return -1;
- }
- if (hint !== 0 && _asan_js_load_4(hint >> 2) & 2 && !node) {
-  return -1;
- }
- if (flags & 32) {
-  return -2;
- }
- if (type !== 0 && type !== 1 && type !== 2) {
-  return -7;
- }
- if (family !== 0 && family !== 2 && family !== 10) {
-  return -6;
- }
- if (service) {
-  service = UTF8ToString(service);
-  port = parseInt(service, 10);
-  if (isNaN(port)) {
-   if (flags & 1024) {
-    return -2;
-   }
-   return -8;
-  }
- }
- if (!node) {
-  if (family === 0) {
-   family = 2;
-  }
-  if ((flags & 1) === 0) {
-   if (family === 2) {
-    addr = _htonl(2130706433);
-   } else {
-    addr = [ 0, 0, 0, 1 ];
-   }
-  }
-  ai = allocaddrinfo(family, type, proto, null, addr, port);
-  _asan_js_store_4(out >> 2, ai);
-  return 0;
- }
- node = UTF8ToString(node);
- addr = __inet_pton4_raw(node);
- if (addr !== null) {
-  if (family === 0 || family === 2) {
-   family = 2;
-  } else if (family === 10 && flags & 8) {
-   addr = [ 0, 0, _htonl(65535), addr ];
-   family = 10;
-  } else {
-   return -2;
-  }
- } else {
-  addr = __inet_pton6_raw(node);
-  if (addr !== null) {
-   if (family === 0 || family === 10) {
-    family = 10;
-   } else {
-    return -2;
-   }
-  }
- }
- if (addr != null) {
-  ai = allocaddrinfo(family, type, proto, node, addr, port);
-  _asan_js_store_4(out >> 2, ai);
-  return 0;
- }
- if (flags & 4) {
-  return -2;
- }
- node = DNS.lookup_name(node);
- addr = __inet_pton4_raw(node);
- if (family === 0) {
-  family = 2;
- } else if (family === 10) {
-  addr = [ 0, 0, _htonl(65535), addr ];
- }
- ai = allocaddrinfo(family, type, proto, null, addr, port);
- _asan_js_store_4(out >> 2, ai);
- return 0;
-}
-
-function _getnameinfo(sa, salen, node, nodelen, serv, servlen, flags) {
- var info = __read_sockaddr(sa, salen);
- if (info.errno) {
-  return -6;
- }
- var port = info.port;
- var addr = info.addr;
- var overflowed = false;
- if (node && nodelen) {
-  var lookup;
-  if (flags & 1 || !(lookup = DNS.lookup_addr(addr))) {
-   if (flags & 8) {
-    return -2;
-   }
-  } else {
-   addr = lookup;
-  }
-  var numBytesWrittenExclNull = stringToUTF8(addr, node, nodelen);
-  if (numBytesWrittenExclNull + 1 >= nodelen) {
-   overflowed = true;
-  }
- }
- if (serv && servlen) {
-  port = "" + port;
-  var numBytesWrittenExclNull = stringToUTF8(port, serv, servlen);
-  if (numBytesWrittenExclNull + 1 >= servlen) {
-   overflowed = true;
-  }
- }
- if (overflowed) {
-  return -12;
- }
- return 0;
-}
-
-function _getpwuid_r() {
- throw "getpwuid_r: TODO";
-}
-
 function _gettimeofday(ptr) {
  var now = Date.now();
  _asan_js_store_4(ptr >> 2, now / 1e3 | 0);
@@ -7822,51 +8014,9 @@ function _inflateInit2_() {
  abort(-1);
 }
 
-function _tzset() {
- if (_tzset.called) return;
- _tzset.called = true;
- _asan_js_store_4(__get_timezone() >> 2, new Date().getTimezoneOffset() * 60);
- var currentYear = new Date().getFullYear();
- var winter = new Date(currentYear, 0, 1);
- var summer = new Date(currentYear, 6, 1);
- _asan_js_store_4(__get_daylight() >> 2, Number(winter.getTimezoneOffset() != summer.getTimezoneOffset()));
- function extractZone(date) {
-  var match = date.toTimeString().match(/\(([A-Za-z ]+)\)$/);
-  return match ? match[1] : "GMT";
- }
- var winterName = extractZone(winter);
- var summerName = extractZone(summer);
- var winterNamePtr = allocateUTF8(winterName);
- var summerNamePtr = allocateUTF8(summerName);
- if (summer.getTimezoneOffset() < winter.getTimezoneOffset()) {
-  _asan_js_store_4(__get_tzname() >> 2, winterNamePtr);
-  _asan_js_store_4(__get_tzname() + 4 >> 2, summerNamePtr);
- } else {
-  _asan_js_store_4(__get_tzname() >> 2, summerNamePtr);
-  _asan_js_store_4(__get_tzname() + 4 >> 2, winterNamePtr);
- }
-}
-
-function _mktime(tmPtr) {
- _tzset();
- var date = new Date(_asan_js_load_4(tmPtr + 20 >> 2) + 1900, _asan_js_load_4(tmPtr + 16 >> 2), _asan_js_load_4(tmPtr + 12 >> 2), _asan_js_load_4(tmPtr + 8 >> 2), _asan_js_load_4(tmPtr + 4 >> 2), _asan_js_load_4(tmPtr >> 2), 0);
- var dst = _asan_js_load_4(tmPtr + 32 >> 2);
- var guessedOffset = date.getTimezoneOffset();
- var start = new Date(date.getFullYear(), 0, 1);
- var summerOffset = new Date(date.getFullYear(), 6, 1).getTimezoneOffset();
- var winterOffset = start.getTimezoneOffset();
- var dstOffset = Math.min(winterOffset, summerOffset);
- if (dst < 0) {
-  _asan_js_store_4(tmPtr + 32 >> 2, Number(summerOffset != winterOffset && dstOffset == guessedOffset));
- } else if (dst > 0 != (dstOffset == guessedOffset)) {
-  var nonDstOffset = Math.max(winterOffset, summerOffset);
-  var trueOffset = dst > 0 ? dstOffset : nonDstOffset;
-  date.setTime(date.getTime() + (trueOffset - guessedOffset) * 6e4);
- }
- _asan_js_store_4(tmPtr + 24 >> 2, date.getDay());
- var yday = (date.getTime() - start.getTime()) / (1e3 * 60 * 60 * 24) | 0;
- _asan_js_store_4(tmPtr + 28 >> 2, yday);
- return date.getTime() / 1e3 | 0;
+function _ioctlsocket() {
+ err("missing function: ioctlsocket");
+ abort(-1);
 }
 
 function _usleep(useconds) {
@@ -7927,26 +8077,6 @@ function _pthread_condattr_setclock() {
 }
 
 function _pthread_getattr_np(thread, attr) {
- return 0;
-}
-
-function _pthread_rwlock_destroy() {
- return 0;
-}
-
-function _pthread_rwlock_init() {
- return 0;
-}
-
-function _pthread_rwlock_rdlock() {
- return 0;
-}
-
-function _pthread_rwlock_unlock() {
- return 0;
-}
-
-function _pthread_rwlock_wrlock() {
  return 0;
 }
 
@@ -8566,23 +8696,149 @@ __ATINIT__.push({
 });
 
 var asmLibraryArg = {
+ "AcceptSecurityContext": _AcceptSecurityContext,
+ "AcquireCredentialsHandleW": _AcquireCredentialsHandleW,
+ "ApplyControlToken": _ApplyControlToken,
+ "BCryptCloseAlgorithmProvider": _BCryptCloseAlgorithmProvider,
+ "BCryptCreateHash": _BCryptCreateHash,
+ "BCryptDestroyHash": _BCryptDestroyHash,
+ "BCryptDestroyKey": _BCryptDestroyKey,
+ "BCryptExportKey": _BCryptExportKey,
+ "BCryptFinishHash": _BCryptFinishHash,
+ "BCryptGenRandom": _BCryptGenRandom,
+ "BCryptGetProperty": _BCryptGetProperty,
+ "BCryptHashData": _BCryptHashData,
+ "BCryptOpenAlgorithmProvider": _BCryptOpenAlgorithmProvider,
+ "CancelIoEx": _CancelIoEx,
+ "CertAddCertificateLinkToStore": _CertAddCertificateLinkToStore,
+ "CertCloseStore": _CertCloseStore,
+ "CertControlStore": _CertControlStore,
+ "CertCreateCertificateChainEngine": _CertCreateCertificateChainEngine,
+ "CertDuplicateCertificateContext": _CertDuplicateCertificateContext,
+ "CertEnumCertificatesInStore": _CertEnumCertificatesInStore,
+ "CertFindCertificateInStore": _CertFindCertificateInStore,
+ "CertFindExtension": _CertFindExtension,
+ "CertFreeCertificateChain": _CertFreeCertificateChain,
+ "CertFreeCertificateChainEngine": _CertFreeCertificateChainEngine,
+ "CertFreeCertificateContext": _CertFreeCertificateContext,
+ "CertGetCertificateChain": _CertGetCertificateChain,
+ "CertGetCertificateContextProperty": _CertGetCertificateContextProperty,
+ "CertGetIntendedKeyUsage": _CertGetIntendedKeyUsage,
+ "CertGetNameStringW": _CertGetNameStringW,
+ "CertGetValidUsages": _CertGetValidUsages,
+ "CertNameToStrW": _CertNameToStrW,
+ "CertOpenStore": _CertOpenStore,
+ "CertVerifyCertificateChainPolicy": _CertVerifyCertificateChainPolicy,
+ "CertVerifyTimeValidity": _CertVerifyTimeValidity,
  "CompareStringEx": _CompareStringEx,
  "CompareStringOrdinal": _CompareStringOrdinal,
+ "CompleteAuthToken": _CompleteAuthToken,
+ "CopyFileExW": _CopyFileExW,
+ "CreateFileW": _CreateFileW,
+ "CryptAcquireContextW": _CryptAcquireContextW,
+ "CryptDecodeObject": _CryptDecodeObject,
+ "CryptDestroyKey": _CryptDestroyKey,
+ "CryptFindOIDInfo": _CryptFindOIDInfo,
+ "CryptFormatObject": _CryptFormatObject,
+ "CryptGenKey": _CryptGenKey,
+ "CryptGetDefaultProviderW": _CryptGetDefaultProviderW,
+ "CryptGetKeyParam": _CryptGetKeyParam,
+ "CryptGetProvParam": _CryptGetProvParam,
+ "CryptGetUserKey": _CryptGetUserKey,
+ "CryptImportKey": _CryptImportKey,
+ "CryptImportPublicKeyInfoEx2": _CryptImportPublicKeyInfoEx2,
+ "CryptReleaseContext": _CryptReleaseContext,
+ "CryptSetProvParam": _CryptSetProvParam,
+ "DecryptMessage": _DecryptMessage,
+ "DeleteFileW": _DeleteFileW,
+ "DeleteSecurityContext": _DeleteSecurityContext,
+ "DeleteVolumeMountPointW": _DeleteVolumeMountPointW,
+ "EncryptMessage": _EncryptMessage,
  "EnumCalendarInfoExEx": _EnumCalendarInfoExEx,
  "EnumSystemLocalesEx": _EnumSystemLocalesEx,
  "EnumTimeFormatsEx": _EnumTimeFormatsEx,
+ "EnumerateSecurityPackagesW": _EnumerateSecurityPackagesW,
+ "FindClose": _FindClose,
+ "FindFirstFileExW": _FindFirstFileExW,
  "FindNLSStringEx": _FindNLSStringEx,
+ "FindNextFileW": _FindNextFileW,
  "FindStringOrdinal": _FindStringOrdinal,
+ "FormatMessageW": _FormatMessageW,
+ "FreeAddrInfoExW": _FreeAddrInfoExW,
+ "FreeAddrInfoW": _FreeAddrInfoW,
+ "FreeContextBuffer": _FreeContextBuffer,
+ "FreeCredentialsHandle": _FreeCredentialsHandle,
+ "GetAdaptersAddresses": _GetAdaptersAddresses,
+ "GetAddrInfoExW": _GetAddrInfoExW,
+ "GetAddrInfoW": _GetAddrInfoW,
+ "GetCPInfoExW": _GetCPInfoExW,
  "GetCalendarInfoEx": _GetCalendarInfoEx,
+ "GetConsoleMode": _GetConsoleMode,
+ "GetConsoleOutputCP": _GetConsoleOutputCP,
+ "GetConsoleScreenBufferInfo": _GetConsoleScreenBufferInfo,
+ "GetFileAttributesExW": _GetFileAttributesExW,
+ "GetFileType": _GetFileType,
  "GetLocaleInfoEx": _GetLocaleInfoEx,
+ "GetNameInfoW": _GetNameInfoW,
+ "GetNetworkParams": _GetNetworkParams,
+ "GetPerAdapterInfo": _GetPerAdapterInfo,
+ "GetStdHandle": _GetStdHandle,
+ "GetTokenInformation": _GetTokenInformation,
  "GetUserPreferredUILanguages": _GetUserPreferredUILanguages,
  "IdnToAscii": _IdnToAscii,
  "IdnToUnicode": _IdnToUnicode,
+ "ImpersonateLoggedOnUser": _ImpersonateLoggedOnUser,
+ "InitializeSecurityContextW": _InitializeSecurityContextW,
  "LCIDToLocaleName": _LCIDToLocaleName,
  "LCMapStringEx": _LCMapStringEx,
  "LocaleNameToLCID": _LocaleNameToLCID,
+ "LsaClose": _LsaClose,
+ "LsaFreeMemory": _LsaFreeMemory,
+ "LsaFreeReturnBuffer": _LsaFreeReturnBuffer,
+ "LsaGetLogonSessionData": _LsaGetLogonSessionData,
+ "LsaLookupNames2": _LsaLookupNames2,
+ "LsaLookupSids": _LsaLookupSids,
+ "LsaNtStatusToWinError": _LsaNtStatusToWinError,
+ "LsaOpenPolicy": _LsaOpenPolicy,
+ "MoveFileExW": _MoveFileExW,
+ "MultiByteToWideChar": _MultiByteToWideChar,
+ "NCryptDeleteKey": _NCryptDeleteKey,
+ "NCryptFreeObject": _NCryptFreeObject,
+ "NCryptGetProperty": _NCryptGetProperty,
+ "NCryptImportKey": _NCryptImportKey,
+ "NCryptOpenKey": _NCryptOpenKey,
+ "NCryptOpenStorageProvider": _NCryptOpenStorageProvider,
+ "NCryptSetProperty": _NCryptSetProperty,
  "NormalizeString": _NormalizeString,
+ "OpenProcessToken": _OpenProcessToken,
+ "OpenThreadToken": _OpenThreadToken,
+ "QueryContextAttributesW": _QueryContextAttributesW,
+ "ReadConsoleW": _ReadConsoleW,
+ "ReadFile": _ReadFile,
+ "RemoveDirectoryW": _RemoveDirectoryW,
+ "ReplaceFileW": _ReplaceFileW,
  "ResolveLocaleName": _ResolveLocaleName,
+ "RevertToSelf": _RevertToSelf,
+ "SetConsoleTextAttribute": _SetConsoleTextAttribute,
+ "SetFileCompletionNotificationModes": _SetFileCompletionNotificationModes,
+ "SetThreadErrorMode": _SetThreadErrorMode,
+ "SspiEncodeStringsAsAuthIdentity": _SspiEncodeStringsAsAuthIdentity,
+ "SspiFreeAuthIdentity": _SspiFreeAuthIdentity,
+ "WSAConnect": _WSAConnect,
+ "WSAEventSelect": _WSAEventSelect,
+ "WSAGetOverlappedResult": _WSAGetOverlappedResult,
+ "WSAIoctl": _WSAIoctl,
+ "WSARecv": _WSARecv,
+ "WSASend": _WSASend,
+ "WSASocketW": _WSASocketW,
+ "WSAStartup": _WSAStartup,
+ "WideCharToMultiByte": _WideCharToMultiByte,
+ "WinHttpCloseHandle": _WinHttpCloseHandle,
+ "WinHttpGetIEProxyConfigForCurrentUser": _WinHttpGetIEProxyConfigForCurrentUser,
+ "WinHttpGetProxyForUrl": _WinHttpGetProxyForUrl,
+ "WinHttpOpen": _WinHttpOpen,
+ "WriteConsoleW": _WriteConsoleW,
+ "WriteFile": _WriteFile,
  "__assert_fail": ___assert_fail,
  "__cxa_allocate_exception": ___cxa_allocate_exception,
  "__cxa_atexit": ___cxa_atexit,
@@ -8593,60 +8849,45 @@ var asmLibraryArg = {
  "__cxa_throw": ___cxa_throw,
  "__cxa_uncaught_exceptions": ___cxa_uncaught_exceptions,
  "__resumeException": ___resumeException,
- "__sys_chmod": ___sys_chmod,
+ "__sys__newselect": ___sys__newselect,
  "__sys_dup": ___sys_dup,
  "__sys_exit_group": ___sys_exit_group,
  "__sys_fadvise64_64": ___sys_fadvise64_64,
- "__sys_fchmod": ___sys_fchmod,
  "__sys_fcntl64": ___sys_fcntl64,
  "__sys_fstat64": ___sys_fstat64,
  "__sys_ftruncate64": ___sys_ftruncate64,
  "__sys_getcwd": ___sys_getcwd,
  "__sys_getdents64": ___sys_getdents64,
- "__sys_getegid32": ___sys_getegid32,
- "__sys_geteuid32": ___sys_geteuid32,
- "__sys_getgid32": ___sys_getgid32,
  "__sys_getpid": ___sys_getpid,
  "__sys_getrusage": ___sys_getrusage,
- "__sys_getuid32": ___sys_getuid32,
  "__sys_ioctl": ___sys_ioctl,
- "__sys_link": ___sys_link,
  "__sys_lstat64": ___sys_lstat64,
  "__sys_madvise1": ___sys_madvise1,
- "__sys_mkdir": ___sys_mkdir,
  "__sys_mlock": ___sys_mlock,
  "__sys_mmap2": ___sys_mmap2,
  "__sys_mprotect": ___sys_mprotect,
  "__sys_munlock": ___sys_munlock,
  "__sys_munmap": ___sys_munmap,
  "__sys_open": ___sys_open,
- "__sys_pipe": ___sys_pipe,
- "__sys_pipe2": ___sys_pipe2,
- "__sys_poll": ___sys_poll,
  "__sys_prlimit64": ___sys_prlimit64,
  "__sys_read": ___sys_read,
  "__sys_readlink": ___sys_readlink,
- "__sys_rename": ___sys_rename,
- "__sys_rmdir": ___sys_rmdir,
  "__sys_setrlimit": ___sys_setrlimit,
  "__sys_socketcall": ___sys_socketcall,
  "__sys_stat64": ___sys_stat64,
  "__sys_ugetrlimit": ___sys_ugetrlimit,
  "__sys_uname": ___sys_uname,
  "__sys_unlink": ___sys_unlink,
- "__sys_utimensat": ___sys_utimensat,
  "__sys_write": ___sys_write,
  "abort": _abort,
  "atexit": _atexit,
  "clock_gettime": _clock_gettime,
+ "closesocket": _closesocket,
  "corert_wasm_invoke_js": _corert_wasm_invoke_js,
  "corert_wasm_invoke_js_unmarshalled": _corert_wasm_invoke_js_unmarshalled,
  "deflate": _deflate,
  "deflateEnd": _deflateEnd,
  "deflateInit2_": _deflateInit2_,
- "dladdr": _dladdr,
- "dlclose": _dlclose,
- "dlerror": _dlerror,
  "dlopen": _dlopen,
  "dlsym": _dlsym,
  "emscripten_asm_const_int": _emscripten_asm_const_int,
@@ -8677,9 +8918,6 @@ var asmLibraryArg = {
  "flock": _flock,
  "gai_strerror": _gai_strerror,
  "getTempRet0": _getTempRet0,
- "getaddrinfo": _getaddrinfo,
- "getnameinfo": _getnameinfo,
- "getpwuid_r": _getpwuid_r,
  "gettimeofday": _gettimeofday,
  "gmtime_r": _gmtime_r,
  "inflate": _inflate,
@@ -8694,13 +8932,10 @@ var asmLibraryArg = {
  "invoke_diiii": invoke_diiii,
  "invoke_diiiii": invoke_diiiii,
  "invoke_fi": invoke_fi,
- "invoke_fid": invoke_fid,
  "invoke_ii": invoke_ii,
  "invoke_iid": invoke_iid,
  "invoke_iidd": invoke_iidd,
- "invoke_iidddd": invoke_iidddd,
  "invoke_iidddddddd": invoke_iidddddddd,
- "invoke_iiddi": invoke_iiddi,
  "invoke_iiddiiiiiiiiii": invoke_iiddiiiiiiiiii,
  "invoke_iii": invoke_iii,
  "invoke_iiii": invoke_iiii,
@@ -8712,13 +8947,11 @@ var asmLibraryArg = {
  "invoke_iiiiiiiiii": invoke_iiiiiiiiii,
  "invoke_iiiiiiiiiii": invoke_iiiiiiiiiii,
  "invoke_iiiiiiiiiiii": invoke_iiiiiiiiiiii,
- "invoke_iiiiiiiiiiiii": invoke_iiiiiiiiiiiii,
  "invoke_iiiiiiiiiiiiiiiiiiiiiiii": invoke_iiiiiiiiiiiiiiiiiiiiiiii,
  "invoke_iiiiij": invoke_iiiiij,
  "invoke_iiiij": invoke_iiiij,
  "invoke_iiij": invoke_iiij,
  "invoke_iij": invoke_iij,
- "invoke_iiji": invoke_iiji,
  "invoke_iijj": invoke_iijj,
  "invoke_iijjj": invoke_iijjj,
  "invoke_iijjji": invoke_iijjji,
@@ -8777,9 +9010,10 @@ var asmLibraryArg = {
  "invoke_viijj": invoke_viijj,
  "invoke_vij": invoke_vij,
  "invoke_viji": invoke_viji,
+ "invoke_vijii": invoke_vijii,
  "invoke_vijj": invoke_vijj,
+ "ioctlsocket": _ioctlsocket,
  "memory": wasmMemory,
- "mktime": _mktime,
  "nanosleep": _nanosleep,
  "pthread_attr_destroy": _pthread_attr_destroy,
  "pthread_attr_getdetachstate": _pthread_attr_getdetachstate,
@@ -8791,11 +9025,6 @@ var asmLibraryArg = {
  "pthread_condattr_init": _pthread_condattr_init,
  "pthread_condattr_setclock": _pthread_condattr_setclock,
  "pthread_getattr_np": _pthread_getattr_np,
- "pthread_rwlock_destroy": _pthread_rwlock_destroy,
- "pthread_rwlock_init": _pthread_rwlock_init,
- "pthread_rwlock_rdlock": _pthread_rwlock_rdlock,
- "pthread_rwlock_unlock": _pthread_rwlock_unlock,
- "pthread_rwlock_wrlock": _pthread_rwlock_wrlock,
  "pthread_setcancelstate": _pthread_setcancelstate,
  "setTempRet0": _setTempRet0,
  "sigaction": _sigaction,
@@ -8813,6 +9042,8 @@ var _malloc = Module["_malloc"] = createExportWrapper("malloc");
 
 var _memset = Module["_memset"] = createExportWrapper("memset");
 
+var _uno__ui_windows_ui_xaml_window_resize = Module["_uno__ui_windows_ui_xaml_window_resize"] = createExportWrapper("uno__ui_windows_ui_xaml_window_resize");
+
 var _uno_windows_ui_core_coredispatcher_dispatchercallback = Module["_uno_windows_ui_core_coredispatcher_dispatchercallback"] = createExportWrapper("uno_windows_ui_core_coredispatcher_dispatchercallback");
 
 var _corert_wasm_invoke_method = Module["_corert_wasm_invoke_method"] = createExportWrapper("corert_wasm_invoke_method");
@@ -8825,13 +9056,13 @@ var _free = Module["_free"] = createExportWrapper("free");
 
 var _main = Module["_main"] = createExportWrapper("main");
 
-var _ntohs = Module["_ntohs"] = createExportWrapper("ntohs");
-
-var _fflush = Module["_fflush"] = createExportWrapper("fflush");
+var _htonl = Module["_htonl"] = createExportWrapper("htonl");
 
 var _htons = Module["_htons"] = createExportWrapper("htons");
 
-var _htonl = Module["_htonl"] = createExportWrapper("htonl");
+var _ntohs = Module["_ntohs"] = createExportWrapper("ntohs");
+
+var _fflush = Module["_fflush"] = createExportWrapper("fflush");
 
 var __get_tzname = Module["__get_tzname"] = createExportWrapper("_get_tzname");
 
@@ -8901,45 +9132,39 @@ var _asan_c_store_f = Module["_asan_c_store_f"] = createExportWrapper("asan_c_st
 
 var _asan_c_store_d = Module["_asan_c_store_d"] = createExportWrapper("asan_c_store_d");
 
-var dynCall_iiij = Module["dynCall_iiij"] = createExportWrapper("dynCall_iiij");
-
-var dynCall_viji = Module["dynCall_viji"] = createExportWrapper("dynCall_viji");
-
-var dynCall_iiiij = Module["dynCall_iiiij"] = createExportWrapper("dynCall_iiiij");
-
-var dynCall_jii = Module["dynCall_jii"] = createExportWrapper("dynCall_jii");
-
-var dynCall_iijj = Module["dynCall_iijj"] = createExportWrapper("dynCall_iijj");
-
-var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
-
-var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iiiiij");
-
 var dynCall_ji = Module["dynCall_ji"] = createExportWrapper("dynCall_ji");
 
-var dynCall_jid = Module["dynCall_jid"] = createExportWrapper("dynCall_jid");
-
-var dynCall_viij = Module["dynCall_viij"] = createExportWrapper("dynCall_viij");
+var dynCall_iiij = Module["dynCall_iiij"] = createExportWrapper("dynCall_iiij");
 
 var dynCall_vij = Module["dynCall_vij"] = createExportWrapper("dynCall_vij");
 
-var dynCall_jijj = Module["dynCall_jijj"] = createExportWrapper("dynCall_jijj");
+var dynCall_viij = Module["dynCall_viij"] = createExportWrapper("dynCall_viij");
 
-var dynCall_viiiiiiij = Module["dynCall_viiiiiiij"] = createExportWrapper("dynCall_viiiiiiij");
+var dynCall_iiiij = Module["dynCall_iiiij"] = createExportWrapper("dynCall_iiiij");
 
-var dynCall_viiij = Module["dynCall_viiij"] = createExportWrapper("dynCall_viiij");
+var dynCall_iij = Module["dynCall_iij"] = createExportWrapper("dynCall_iij");
 
-var dynCall_jij = Module["dynCall_jij"] = createExportWrapper("dynCall_jij");
+var dynCall_viji = Module["dynCall_viji"] = createExportWrapper("dynCall_viji");
+
+var dynCall_iiiiij = Module["dynCall_iiiiij"] = createExportWrapper("dynCall_iiiiij");
 
 var dynCall_viiiiiiiiiiiij = Module["dynCall_viiiiiiiiiiiij"] = createExportWrapper("dynCall_viiiiiiiiiiiij");
 
 var dynCall_viiiiiiiiiiiiji = Module["dynCall_viiiiiiiiiiiiji"] = createExportWrapper("dynCall_viiiiiiiiiiiiji");
 
-var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
+var dynCall_jii = Module["dynCall_jii"] = createExportWrapper("dynCall_jii");
+
+var dynCall_iijj = Module["dynCall_iijj"] = createExportWrapper("dynCall_iijj");
+
+var dynCall_jid = Module["dynCall_jid"] = createExportWrapper("dynCall_jid");
 
 var dynCall_viijj = Module["dynCall_viijj"] = createExportWrapper("dynCall_viijj");
 
 var dynCall_vijj = Module["dynCall_vijj"] = createExportWrapper("dynCall_vijj");
+
+var dynCall_viiij = Module["dynCall_viiij"] = createExportWrapper("dynCall_viiij");
+
+var dynCall_jijj = Module["dynCall_jijj"] = createExportWrapper("dynCall_jijj");
 
 var dynCall_viiiiiij = Module["dynCall_viiiiiij"] = createExportWrapper("dynCall_viiiiiij");
 
@@ -8949,9 +9174,13 @@ var dynCall_iijjji = Module["dynCall_iijjji"] = createExportWrapper("dynCall_iij
 
 var dynCall_viiiiijj = Module["dynCall_viiiiijj"] = createExportWrapper("dynCall_viiiiijj");
 
+var dynCall_jij = Module["dynCall_jij"] = createExportWrapper("dynCall_jij");
+
+var dynCall_viiiiiiij = Module["dynCall_viiiiiiij"] = createExportWrapper("dynCall_viiiiiiij");
+
 var dynCall_jiii = Module["dynCall_jiii"] = createExportWrapper("dynCall_jiii");
 
-var dynCall_iiji = Module["dynCall_iiji"] = createExportWrapper("dynCall_iiji");
+var dynCall_vijii = Module["dynCall_vijii"] = createExportWrapper("dynCall_vijii");
 
 var dynCall_viiiiiijj = Module["dynCall_viiiiiijj"] = createExportWrapper("dynCall_viiiiiijj");
 
@@ -8961,15 +9190,25 @@ var dynCall_jif = Module["dynCall_jif"] = createExportWrapper("dynCall_jif");
 
 var dynCall_jiiiijiiij = Module["dynCall_jiiiijiiij"] = createExportWrapper("dynCall_jiiiijiiij");
 
+var dynCall_jiiii = Module["dynCall_jiiii"] = createExportWrapper("dynCall_jiiii");
+
+var dynCall_iiji = Module["dynCall_iiji"] = createExportWrapper("dynCall_iiji");
+
 var dynCall_viiiiiiiiiijijj = Module["dynCall_viiiiiiiiiijijj"] = createExportWrapper("dynCall_viiiiiiiiiijijj");
 
-var dynCall_viijjjj = Module["dynCall_viijjjj"] = createExportWrapper("dynCall_viijjjj");
+var dynCall_viiiji = Module["dynCall_viiiji"] = createExportWrapper("dynCall_viiiji");
+
+var dynCall_viiji = Module["dynCall_viiji"] = createExportWrapper("dynCall_viiji");
 
 var dynCall_viijjjjjjjj = Module["dynCall_viijjjjjjjj"] = createExportWrapper("dynCall_viijjjjjjjj");
 
 var dynCall_iijjjj = Module["dynCall_iijjjj"] = createExportWrapper("dynCall_iijjjj");
 
-var dynCall_viiji = Module["dynCall_viiji"] = createExportWrapper("dynCall_viiji");
+var dynCall_viijjjj = Module["dynCall_viijjjj"] = createExportWrapper("dynCall_viijjjj");
+
+var dynCall_jiji = Module["dynCall_jiji"] = createExportWrapper("dynCall_jiji");
+
+var dynCall_iijii = Module["dynCall_iijii"] = createExportWrapper("dynCall_iijii");
 
 var dynCall_viijjjjjji = Module["dynCall_viijjjjjji"] = createExportWrapper("dynCall_viijjjjjji");
 
@@ -8977,17 +9216,21 @@ var dynCall_viijji = Module["dynCall_viijji"] = createExportWrapper("dynCall_vii
 
 var dynCall_viijii = Module["dynCall_viijii"] = createExportWrapper("dynCall_viijii");
 
-var dynCall_iijiiii = Module["dynCall_iijiiii"] = createExportWrapper("dynCall_iijiiii");
-
-var dynCall_iijiiiij = Module["dynCall_iijiiiij"] = createExportWrapper("dynCall_iijiiiij");
+var dynCall_viiiiij = Module["dynCall_viiiiij"] = createExportWrapper("dynCall_viiiiij");
 
 var dynCall_jiiiii = Module["dynCall_jiiiii"] = createExportWrapper("dynCall_jiiiii");
 
-var dynCall_iijii = Module["dynCall_iijii"] = createExportWrapper("dynCall_iijii");
+var dynCall_dij = Module["dynCall_dij"] = createExportWrapper("dynCall_dij");
 
-var dynCall_iijji = Module["dynCall_iijji"] = createExportWrapper("dynCall_iijji");
+var dynCall_iijiiiiiii = Module["dynCall_iijiiiiiii"] = createExportWrapper("dynCall_iijiiiiiii");
 
-var dynCall_iijjjji = Module["dynCall_iijjjji"] = createExportWrapper("dynCall_iijjjji");
+var dynCall_viijjjjjj = Module["dynCall_viijjjjjj"] = createExportWrapper("dynCall_viijjjjjj");
+
+var dynCall_viiijj = Module["dynCall_viiijj"] = createExportWrapper("dynCall_viiijj");
+
+var dynCall_iijiiii = Module["dynCall_iijiiii"] = createExportWrapper("dynCall_iijiiii");
+
+var dynCall_iijiiiij = Module["dynCall_iijiiiij"] = createExportWrapper("dynCall_iijiiiij");
 
 var dynCall_vijiiii = Module["dynCall_vijiiii"] = createExportWrapper("dynCall_vijiiii");
 
@@ -8997,31 +9240,41 @@ var dynCall_iijjii = Module["dynCall_iijjii"] = createExportWrapper("dynCall_iij
 
 var dynCall_viijiij = Module["dynCall_viijiij"] = createExportWrapper("dynCall_viijiij");
 
-var dynCall_jiiii = Module["dynCall_jiiii"] = createExportWrapper("dynCall_jiiii");
+var dynCall_iijiii = Module["dynCall_iijiii"] = createExportWrapper("dynCall_iijiii");
+
+var dynCall_viijiddddi = Module["dynCall_viijiddddi"] = createExportWrapper("dynCall_viijiddddi");
+
+var dynCall_jidd = Module["dynCall_jidd"] = createExportWrapper("dynCall_jidd");
+
+var dynCall_dijj = Module["dynCall_dijj"] = createExportWrapper("dynCall_dijj");
+
+var dynCall_iijji = Module["dynCall_iijji"] = createExportWrapper("dynCall_iijji");
+
+var dynCall_iijjjji = Module["dynCall_iijjjji"] = createExportWrapper("dynCall_iijjjji");
+
+var dynCall_iiiiijiiij = Module["dynCall_iiiiijiiij"] = createExportWrapper("dynCall_iiiiijiiij");
+
+var dynCall_viiiiiijiiiiij = Module["dynCall_viiiiiijiiiiij"] = createExportWrapper("dynCall_viiiiiijiiiiij");
+
+var dynCall_fijj = Module["dynCall_fijj"] = createExportWrapper("dynCall_fijj");
+
+var dynCall_viijjjjjjjji = Module["dynCall_viijjjjjjjji"] = createExportWrapper("dynCall_viijjjjjjjji");
+
+var dynCall_jijii = Module["dynCall_jijii"] = createExportWrapper("dynCall_jijii");
+
+var dynCall_iiiiijjjjj = Module["dynCall_iiiiijjjjj"] = createExportWrapper("dynCall_iiiiijjjjj");
+
+var dynCall_iiiiijjj = Module["dynCall_iiiiijjj"] = createExportWrapper("dynCall_iiiiijjj");
+
+var dynCall_vijiiiiiiiiiiii = Module["dynCall_vijiiiiiiiiiiii"] = createExportWrapper("dynCall_vijiiiiiiiiiiii");
 
 var dynCall_viiiij = Module["dynCall_viiiij"] = createExportWrapper("dynCall_viiiij");
 
-var dynCall_vijii = Module["dynCall_vijii"] = createExportWrapper("dynCall_vijii");
-
-var dynCall_iijiii = Module["dynCall_iijiii"] = createExportWrapper("dynCall_iijiii");
-
-var dynCall_jidd = Module["dynCall_jidd"] = createExportWrapper("dynCall_jidd");
+var dynCall_iijiiiiiiiii = Module["dynCall_iijiiiiiiiii"] = createExportWrapper("dynCall_iijiiiiiiiii");
 
 var dynCall_iiiijiji = Module["dynCall_iiiijiji"] = createExportWrapper("dynCall_iiiijiji");
 
 var dynCall_viijiiii = Module["dynCall_viijiiii"] = createExportWrapper("dynCall_viijiiii");
-
-var dynCall_iijiiiiiii = Module["dynCall_iijiiiiiii"] = createExportWrapper("dynCall_iijiiiiiii");
-
-var dynCall_dij = Module["dynCall_dij"] = createExportWrapper("dynCall_dij");
-
-var dynCall_dijj = Module["dynCall_dijj"] = createExportWrapper("dynCall_dijj");
-
-var dynCall_fijj = Module["dynCall_fijj"] = createExportWrapper("dynCall_fijj");
-
-var dynCall_viiiiij = Module["dynCall_viiiiij"] = createExportWrapper("dynCall_viiiiij");
-
-var dynCall_fij = Module["dynCall_fij"] = createExportWrapper("dynCall_fij");
 
 var dynCall_jijjj = Module["dynCall_jijjj"] = createExportWrapper("dynCall_jijjj");
 
@@ -9033,41 +9286,35 @@ var dynCall_iijiiiiiiiiijiiiiiiiii = Module["dynCall_iijiiiiiiiiijiiiiiiiii"] = 
 
 var dynCall_vijjii = Module["dynCall_vijjii"] = createExportWrapper("dynCall_vijjii");
 
-var dynCall_viijjjjjj = Module["dynCall_viijjjjjj"] = createExportWrapper("dynCall_viijjjjjj");
+var dynCall_iijjiii = Module["dynCall_iijjiii"] = createExportWrapper("dynCall_iijjiii");
 
-var dynCall_viiijj = Module["dynCall_viiijj"] = createExportWrapper("dynCall_viiijj");
+var dynCall_fij = Module["dynCall_fij"] = createExportWrapper("dynCall_fij");
+
+var dynCall_viijjj = Module["dynCall_viijjj"] = createExportWrapper("dynCall_viijjj");
+
+var dynCall_jijji = Module["dynCall_jijji"] = createExportWrapper("dynCall_jijji");
+
+var dynCall_dijji = Module["dynCall_dijji"] = createExportWrapper("dynCall_dijji");
+
+var dynCall_jijd = Module["dynCall_jijd"] = createExportWrapper("dynCall_jijd");
+
+var dynCall_iiiiiij = Module["dynCall_iiiiiij"] = createExportWrapper("dynCall_iiiiiij");
 
 var dynCall_jidi = Module["dynCall_jidi"] = createExportWrapper("dynCall_jidi");
-
-var dynCall_iijiiiiiiiii = Module["dynCall_iijiiiiiiiii"] = createExportWrapper("dynCall_iijiiiiiiiii");
 
 var dynCall_jijjji = Module["dynCall_jijjji"] = createExportWrapper("dynCall_jijjji");
 
 var dynCall_iijijiiiii = Module["dynCall_iijijiiiii"] = createExportWrapper("dynCall_iijijiiiii");
 
-var dynCall_jijii = Module["dynCall_jijii"] = createExportWrapper("dynCall_jijii");
-
-var dynCall_iiiiijjjjj = Module["dynCall_iiiiijjjjj"] = createExportWrapper("dynCall_iiiiijjjjj");
-
-var dynCall_iiiiijjj = Module["dynCall_iiiiijjj"] = createExportWrapper("dynCall_iiiiijjj");
-
-var dynCall_viijiddddi = Module["dynCall_viijiddddi"] = createExportWrapper("dynCall_viijiddddi");
-
-var dynCall_iijjiii = Module["dynCall_iijjiii"] = createExportWrapper("dynCall_iijjiii");
-
 var dynCall_jijiiiii = Module["dynCall_jijiiiii"] = createExportWrapper("dynCall_jijiiiii");
-
-var dynCall_fijji = Module["dynCall_fijji"] = createExportWrapper("dynCall_fijji");
-
-var dynCall_dijji = Module["dynCall_dijji"] = createExportWrapper("dynCall_dijji");
-
-var dynCall_jijji = Module["dynCall_jijji"] = createExportWrapper("dynCall_jijji");
 
 var dynCall_vijjjjj = Module["dynCall_vijjjjj"] = createExportWrapper("dynCall_vijjjjj");
 
-var dynCall_vijiiiiiiiiiiii = Module["dynCall_vijiiiiiiiiiiii"] = createExportWrapper("dynCall_vijiiiiiiiiiiii");
+var dynCall_fijji = Module["dynCall_fijji"] = createExportWrapper("dynCall_fijji");
 
-var dynCall_viijjjjjjjji = Module["dynCall_viijjjjjjjji"] = createExportWrapper("dynCall_viijjjjjjjji");
+var dynCall_fijjjji = Module["dynCall_fijjjji"] = createExportWrapper("dynCall_fijjjji");
+
+var dynCall_dijjjji = Module["dynCall_dijjjji"] = createExportWrapper("dynCall_dijjjji");
 
 var dynCall_viiiiiiiijiiiiiiij = Module["dynCall_viiiiiiiijiiiiiiij"] = createExportWrapper("dynCall_viiiiiiiijiiiiiiij");
 
@@ -9075,65 +9322,45 @@ var dynCall_viiiijiiij = Module["dynCall_viiiijiiij"] = createExportWrapper("dyn
 
 var dynCall_iidjii = Module["dynCall_iidjii"] = createExportWrapper("dynCall_iidjii");
 
-var dynCall_iiiiijiiij = Module["dynCall_iiiiijiiij"] = createExportWrapper("dynCall_iiiiijiiij");
+var dynCall_jiiiiiiiii = Module["dynCall_jiiiiiiiii"] = createExportWrapper("dynCall_jiiiiiiiii");
 
 var dynCall_viiiiiiiij = Module["dynCall_viiiiiiiij"] = createExportWrapper("dynCall_viiiiiiiij");
 
-var dynCall_viijjj = Module["dynCall_viijjj"] = createExportWrapper("dynCall_viijjj");
-
-var dynCall_viijjjjiiiiiiiiijiiiiiiiiiji = Module["dynCall_viijjjjiiiiiiiiijiiiiiiiiiji"] = createExportWrapper("dynCall_viijjjjiiiiiiiiijiiiiiiiiiji");
-
-var dynCall_iiiiiij = Module["dynCall_iiiiiij"] = createExportWrapper("dynCall_iiiiiij");
+var dynCall_vijiiiijii = Module["dynCall_vijiiiijii"] = createExportWrapper("dynCall_vijiiiijii");
 
 var dynCall_viijiiiiijiiiii = Module["dynCall_viijiiiiijiiiii"] = createExportWrapper("dynCall_viijiiiiijiiiii");
 
 var dynCall_iijiiiiijiiiii = Module["dynCall_iijiiiiijiiiii"] = createExportWrapper("dynCall_iijiiiiijiiiii");
 
-var dynCall_vijiiiii = Module["dynCall_vijiiiii"] = createExportWrapper("dynCall_vijiiiii");
-
-var dynCall_vijjjjiiiiiiiiijiiiiiiiiiji = Module["dynCall_vijjjjiiiiiiiiijiiiiiiiiiji"] = createExportWrapper("dynCall_vijjjjiiiiiiiiijiiiiiiiiiji");
-
-var dynCall_vijjjjiiiiiiiiijiiiiiiiiii = Module["dynCall_vijjjjiiiiiiiiijiiiiiiiiii"] = createExportWrapper("dynCall_vijjjjiiiiiiiiijiiiiiiiiii");
-
-var dynCall_viijiii = Module["dynCall_viijiii"] = createExportWrapper("dynCall_viijiii");
-
-var dynCall_fijjjji = Module["dynCall_fijjjji"] = createExportWrapper("dynCall_fijjjji");
-
-var dynCall_dijjjji = Module["dynCall_dijjjji"] = createExportWrapper("dynCall_dijjjji");
-
-var dynCall_vidjii = Module["dynCall_vidjii"] = createExportWrapper("dynCall_vidjii");
-
-var dynCall_iiiiiji = Module["dynCall_iiiiiji"] = createExportWrapper("dynCall_iiiiiji");
-
-var dynCall_viiiiiijiiiiij = Module["dynCall_viiiiiijiiiiij"] = createExportWrapper("dynCall_viiiiiijiiiiij");
-
-var dynCall_vijjdd = Module["dynCall_vijjdd"] = createExportWrapper("dynCall_vijjdd");
-
-var dynCall_jiiiiiiiii = Module["dynCall_jiiiiiiiii"] = createExportWrapper("dynCall_jiiiiiiiii");
-
-var dynCall_iijjdd = Module["dynCall_iijjdd"] = createExportWrapper("dynCall_iijjdd");
-
-var dynCall_viijiiiii = Module["dynCall_viijiiiii"] = createExportWrapper("dynCall_viijiiiii");
-
-var dynCall_iiiijiij = Module["dynCall_iiiijiij"] = createExportWrapper("dynCall_iiiijiij");
-
-var dynCall_viiiji = Module["dynCall_viiiji"] = createExportWrapper("dynCall_viiiji");
-
-var dynCall_jijd = Module["dynCall_jijd"] = createExportWrapper("dynCall_jijd");
-
-var dynCall_vijiiiijii = Module["dynCall_vijiiiijii"] = createExportWrapper("dynCall_vijiiiijii");
-
 var dynCall_iiijii = Module["dynCall_iiijii"] = createExportWrapper("dynCall_iiijii");
+
+var dynCall_jiiij = Module["dynCall_jiiij"] = createExportWrapper("dynCall_jiiij");
 
 var dynCall_iijjiiii = Module["dynCall_iijjiiii"] = createExportWrapper("dynCall_iijjiiii");
 
 var dynCall_vijiiiij = Module["dynCall_vijiiiij"] = createExportWrapper("dynCall_vijiiiij");
 
+var dynCall_vijjdd = Module["dynCall_vijjdd"] = createExportWrapper("dynCall_vijjdd");
+
+var dynCall_viijjjjiiiiiiiiijiiiiiiiiiji = Module["dynCall_viijjjjiiiiiiiiijiiiiiiiiiji"] = createExportWrapper("dynCall_viijjjjiiiiiiiiijiiiiiiiiiji");
+
+var dynCall_vijiiiii = Module["dynCall_vijiiiii"] = createExportWrapper("dynCall_vijiiiii");
+
+var dynCall_vijjjjiiiiiiiiijiiiiiiiiiji = Module["dynCall_vijjjjiiiiiiiiijiiiiiiiiiji"] = createExportWrapper("dynCall_vijjjjiiiiiiiiijiiiiiiiiiji");
+
+var dynCall_iijjdd = Module["dynCall_iijjdd"] = createExportWrapper("dynCall_iijjdd");
+
+var dynCall_iiiiiji = Module["dynCall_iiiiiji"] = createExportWrapper("dynCall_iiiiiji");
+
+var dynCall_vijjjjiiiiiiiiijiiiiiiiiii = Module["dynCall_vijjjjiiiiiiiiijiiiiiiiiii"] = createExportWrapper("dynCall_vijjjjiiiiiiiiijiiiiiiiiii");
+
+var dynCall_viijiii = Module["dynCall_viijiii"] = createExportWrapper("dynCall_viijiii");
+
+var dynCall_vidjii = Module["dynCall_vidjii"] = createExportWrapper("dynCall_vidjii");
+
 var dynCall_viijiiiij = Module["dynCall_viijiiiij"] = createExportWrapper("dynCall_viijiiiij");
 
-var dynCall_jiiij = Module["dynCall_jiiij"] = createExportWrapper("dynCall_jiiij");
-
-var dynCall_viijjji = Module["dynCall_viijjji"] = createExportWrapper("dynCall_viijjji");
+var dynCall_viijiiiii = Module["dynCall_viijiiiii"] = createExportWrapper("dynCall_viijiiiii");
 
 var dynCall_viijiiiiji = Module["dynCall_viijiiiiji"] = createExportWrapper("dynCall_viijiiiiji");
 
@@ -9141,37 +9368,11 @@ var dynCall_iijiiiijjiiiij = Module["dynCall_iijiiiijjiiiij"] = createExportWrap
 
 var dynCall_iiiiiijiiiij = Module["dynCall_iiiiiijiiiij"] = createExportWrapper("dynCall_iiiiiijiiiij");
 
-var dynCall_jijjjji = Module["dynCall_jijjjji"] = createExportWrapper("dynCall_jijjjji");
+var dynCall_iiiijiij = Module["dynCall_iiiijiij"] = createExportWrapper("dynCall_iiiijiij");
 
-var dynCall_iiiijj = Module["dynCall_iiiijj"] = createExportWrapper("dynCall_iiiijj");
-
-var dynCall_iiijj = Module["dynCall_iiijj"] = createExportWrapper("dynCall_iiijj");
-
-var ___heap_base = Module["___heap_base"] = 102129072;
+var ___heap_base = Module["___heap_base"] = 98764400;
 
 var ___global_base = Module["___global_base"] = 48234496;
-
-function invoke_vi(index, a1) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_ii(index, a1) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
 
 function invoke_vii(index, a1, a2) {
  var sp = stackSave();
@@ -9184,21 +9385,10 @@ function invoke_vii(index, a1, a2) {
  }
 }
 
-function invoke_iiiii(index, a1, a2, a3, a4) {
+function invoke_iii(index, a1, a2) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiii(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4);
+  return wasmTable.get(index)(a1, a2);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9217,10 +9407,43 @@ function invoke_viii(index, a1, a2, a3) {
  }
 }
 
-function invoke_iii(index, a1, a2) {
+function invoke_iiiii(index, a1, a2, a3, a4) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1, a2);
+  return wasmTable.get(index)(a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_ii(index, a1) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_vi(index, a1) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiii(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9272,17 +9495,6 @@ function invoke_iiiiiii(index, a1, a2, a3, a4, a5, a6) {
  }
 }
 
-function invoke_viiiiii(index, a1, a2, a3, a4, a5, a6) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
 function invoke_iiiiiiiiiiiiiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22, a23) {
  var sp = stackSave();
  try {
@@ -9294,43 +9506,10 @@ function invoke_iiiiiiiiiiiiiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, 
  }
 }
 
-function invoke_di(index, a1) {
+function invoke_viiiiii(index, a1, a2, a3, a4, a5, a6) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viddi(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iid(index, a1, a2) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2);
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9349,43 +9528,10 @@ function invoke_vidd(index, a1, a2, a3) {
  }
 }
 
-function invoke_didd(index, a1, a2, a3) {
+function invoke_vidddd(index, a1, a2, a3, a4, a5) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1, a2, a3);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_vid(index, a1, a2) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viidd(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiffffffffffff(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+  wasmTable.get(index)(a1, a2, a3, a4, a5);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9404,10 +9550,10 @@ function invoke_viiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8) {
  }
 }
 
-function invoke_viiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
+function invoke_iiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
  var sp = stackSave();
  try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9415,164 +9561,10 @@ function invoke_viiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11
  }
 }
 
-function invoke_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
+function invoke_iiddiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
  var sp = stackSave();
  try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viid(index, a1, a2, a3) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iidd(index, a1, a2, a3) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiddi(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiiid(index, a1, a2, a3, a4, a5, a6) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viddddii(index, a1, a2, a3, a4, a5, a6, a7) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiddddddiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiiiid(index, a1, a2, a3, a4, a5, a6, a7) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_vidddd(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_dii(index, a1, a2) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viidddd(index, a1, a2, a3, a4, a5, a6) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9602,10 +9594,10 @@ function invoke_viiddiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a
  }
 }
 
-function invoke_diii(index, a1, a2, a3) {
+function invoke_viiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1, a2, a3);
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9635,7 +9627,51 @@ function invoke_diiiii(index, a1, a2, a3, a4, a5) {
  }
 }
 
+function invoke_di(index, a1) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_diid(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viidd(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_didd(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_diii(index, a1, a2, a3) {
  var sp = stackSave();
  try {
   return wasmTable.get(index)(a1, a2, a3);
@@ -9657,10 +9693,263 @@ function invoke_diiii(index, a1, a2, a3, a4) {
  }
 }
 
+function invoke_vid(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viffffff(index, a1, a2, a3, a4, a5, a6, a7) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiffffffffffff(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iidd(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viddi(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_vidddddd(index, a1, a2, a3, a4, a5, a6, a7) {
  var sp = stackSave();
  try {
   wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iid(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiddi(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiddddddiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_did(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiddii(index, a1, a2, a3, a4, a5, a6, a7) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viddii(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iidddddddd(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viid(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_dii(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viidddd(index, a1, a2, a3, a4, a5, a6) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiiid(index, a1, a2, a3, a4, a5, a6) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viddddii(index, a1, a2, a3, a4, a5, a6, a7) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iiiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9712,39 +10001,6 @@ function invoke_vif(index, a1, a2) {
  }
 }
 
-function invoke_viiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiddiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viffffff(index, a1, a2, a3, a4, a5, a6, a7) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
 function invoke_iiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
  var sp = stackSave();
  try {
@@ -9756,10 +10012,10 @@ function invoke_iiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
  }
 }
 
-function invoke_did(index, a1, a2) {
+function invoke_viiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10) {
  var sp = stackSave();
  try {
-  return wasmTable.get(index)(a1, a2);
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9767,87 +10023,10 @@ function invoke_did(index, a1, a2) {
  }
 }
 
-function invoke_fid(index, a1, a2) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iidddddddd(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiddii(index, a1, a2, a3, a4, a5, a6, a7) {
+function invoke_viiiiiid(index, a1, a2, a3, a4, a5, a6, a7) {
  var sp = stackSave();
  try {
   wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viddii(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  wasmTable.get(index)(a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiiiiii(index, a1, a2, a3, a4, a5, a6, a7) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiddi(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iidddd(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8) {
- var sp = stackSave();
- try {
-  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9866,72 +10045,6 @@ function invoke_viiiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a1
  }
 }
 
-function invoke_iiij(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  return dynCall_iiij(index, a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iiiij(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  return dynCall_iiiij(index, a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viji(index, a1, a2, a3, a4) {
- var sp = stackSave();
- try {
-  dynCall_viji(index, a1, a2, a3, a4);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_jii(index, a1, a2) {
- var sp = stackSave();
- try {
-  return dynCall_jii(index, a1, a2);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iijj(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  return dynCall_iijj(index, a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_iij(index, a1, a2, a3) {
- var sp = stackSave();
- try {
-  return dynCall_iij(index, a1, a2, a3);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
 function invoke_ji(index, a1) {
  var sp = stackSave();
  try {
@@ -9943,10 +10056,21 @@ function invoke_ji(index, a1) {
  }
 }
 
-function invoke_jid(index, a1, a2) {
+function invoke_iiij(index, a1, a2, a3, a4) {
  var sp = stackSave();
  try {
-  return dynCall_jid(index, a1, a2);
+  return dynCall_iiij(index, a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_vij(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  dynCall_vij(index, a1, a2, a3);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9976,10 +10100,10 @@ function invoke_jiji(index, a1, a2, a3, a4) {
  }
 }
 
-function invoke_iiiiij(index, a1, a2, a3, a4, a5, a6) {
+function invoke_iiiij(index, a1, a2, a3, a4, a5) {
  var sp = stackSave();
  try {
-  return dynCall_iiiiij(index, a1, a2, a3, a4, a5, a6);
+  return dynCall_iiiij(index, a1, a2, a3, a4, a5);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9987,10 +10111,10 @@ function invoke_iiiiij(index, a1, a2, a3, a4, a5, a6) {
  }
 }
 
-function invoke_vij(index, a1, a2, a3) {
+function invoke_iij(index, a1, a2, a3) {
  var sp = stackSave();
  try {
-  dynCall_vij(index, a1, a2, a3);
+  return dynCall_iij(index, a1, a2, a3);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -9998,54 +10122,10 @@ function invoke_vij(index, a1, a2, a3) {
  }
 }
 
-function invoke_jijj(index, a1, a2, a3, a4, a5) {
+function invoke_viji(index, a1, a2, a3, a4) {
  var sp = stackSave();
  try {
-  return dynCall_jijj(index, a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_jij(index, a1, a2, a3) {
- var sp = stackSave();
- try {
-  return dynCall_jij(index, a1, a2, a3);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_jiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
- var sp = stackSave();
- try {
-  return dynCall_jiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiij(index, a1, a2, a3, a4, a5) {
- var sp = stackSave();
- try {
-  dynCall_viiij(index, a1, a2, a3, a4, a5);
- } catch (e) {
-  stackRestore(sp);
-  if (e !== e + 0 && e !== "longjmp") throw e;
-  _setThrew(1, 0);
- }
-}
-
-function invoke_viiiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
- var sp = stackSave();
- try {
-  dynCall_viiiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+  dynCall_viji(index, a1, a2, a3, a4);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -10064,10 +10144,54 @@ function invoke_viiiiiiiiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a
  }
 }
 
+function invoke_iiiiij(index, a1, a2, a3, a4, a5, a6) {
+ var sp = stackSave();
+ try {
+  return dynCall_iiiiij(index, a1, a2, a3, a4, a5, a6);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_jii(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return dynCall_jii(index, a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_iijj(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  return dynCall_iijj(index, a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_viiiiiiiiiiiiji(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15) {
  var sp = stackSave();
  try {
   dynCall_viiiiiiiiiiiiji(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_jid(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  return dynCall_jid(index, a1, a2);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -10097,10 +10221,43 @@ function invoke_vijj(index, a1, a2, a3, a4, a5) {
  }
 }
 
+function invoke_viiij(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  dynCall_viiij(index, a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_jijj(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  return dynCall_jijj(index, a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_viiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8) {
  var sp = stackSave();
  try {
   dynCall_viiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_jiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+ var sp = stackSave();
+ try {
+  return dynCall_jiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -10141,6 +10298,28 @@ function invoke_viiiiijj(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
  }
 }
 
+function invoke_jij(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return dynCall_jij(index, a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
+function invoke_viiiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8, a9) {
+ var sp = stackSave();
+ try {
+  dynCall_viiiiiiij(index, a1, a2, a3, a4, a5, a6, a7, a8, a9);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_jiii(index, a1, a2, a3) {
  var sp = stackSave();
  try {
@@ -10152,10 +10331,10 @@ function invoke_jiii(index, a1, a2, a3) {
  }
 }
 
-function invoke_iiji(index, a1, a2, a3, a4) {
+function invoke_vijii(index, a1, a2, a3, a4, a5) {
  var sp = stackSave();
  try {
-  return dynCall_iiji(index, a1, a2, a3, a4);
+  dynCall_vijii(index, a1, a2, a3, a4, a5);
  } catch (e) {
   stackRestore(sp);
   if (e !== e + 0 && e !== "longjmp") throw e;
@@ -11628,10 +11807,21 @@ var Uno;
  var Utils;
  (function(Utils) {
   class Clipboard {
+   static startContentChanged() {
+    [ "cut", "copy", "paste" ].forEach(function(event) {
+     document.addEventListener(event, Clipboard.onClipboardChanged);
+    });
+   }
+   static stopContentChanged() {
+    [ "cut", "copy", "paste" ].forEach(function(event) {
+     document.removeEventListener(event, Clipboard.onClipboardChanged);
+    });
+   }
    static setText(text) {
     const nav = navigator;
     if (nav.clipboard) {
-     nav.clipboard.setText(text);
+     nav.clipboard.writeText(text);
+     Clipboard.onClipboardChanged();
     } else {
      const textarea = document.createElement("textarea");
      textarea.value = text;
@@ -11641,6 +11831,19 @@ var Uno;
      document.body.removeChild(textarea);
     }
     return "ok";
+   }
+   static getText() {
+    const nav = navigator;
+    if (nav.clipboard) {
+     return nav.clipboard.readText();
+    }
+    return Promise.resolve(null);
+   }
+   static onClipboardChanged() {
+    if (!Clipboard.dispatchContentChanged) {
+     Clipboard.dispatchContentChanged = Module.mono_bind_static_method("[Uno] Windows.ApplicationModel.DataTransfer.Clipboard:DispatchContentChanged");
+    }
+    Clipboard.dispatchContentChanged();
    }
   }
   Utils.Clipboard = Clipboard;
@@ -11659,8 +11862,6 @@ var Windows;
      MonoSupport.jsCallDispatcher.registerScope("CoreDispatcher", Windows.UI.Core.CoreDispatcher);
      CoreDispatcher.initMethods();
      CoreDispatcher._isReady = isReady;
-     CoreDispatcher._isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-     CoreDispatcher._isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
     }
     static WakeUp() {
      if (CoreDispatcher._isReady) {
@@ -11677,20 +11878,14 @@ var Windows;
      return true;
     }
     static InnerWakeUp() {
-     if ((CoreDispatcher._isIOS || CoreDispatcher._isSafari) && CoreDispatcher._isFirstCall) {
-      CoreDispatcher._isFirstCall = false;
-      console.warn("Detected iOS, delaying first CoreDispatcher dispatch for 5 seconds (see https://github.com/mono/mono/issues/12357)");
-      window.setTimeout(() => this.WakeUp(), 5e3);
-     } else {
-      window.setImmediate(() => {
-       try {
-        CoreDispatcher._coreDispatcherCallback();
-       } catch (e) {
-        console.error(`Unhandled dispatcher exception: ${e} (${e.stack})`);
-        throw e;
-       }
-      });
-     }
+     window.setImmediate(() => {
+      try {
+       CoreDispatcher._coreDispatcherCallback();
+      } catch (e) {
+       console.error(`Unhandled dispatcher exception: ${e} (${e.stack})`);
+       throw e;
+      }
+     });
     }
     static initMethods() {
      if (Uno.UI.WindowManager.isHosted) {
@@ -11824,7 +12019,7 @@ var Uno;
     if (this.dispatchResponseMethod) {
      return;
     }
-    const asm = MonoRuntime.assembly_load("Uno.UI.Wasm");
+    const asm = MonoRuntime.assembly_load("Uno.UI.Runtime.WebAssembly");
     const httpClass = MonoRuntime.find_class(asm, "Uno.UI.Wasm", "WasmHttpHandler");
     this.dispatchResponseMethod = MonoRuntime.find_method(httpClass, "DispatchResponse", -1);
     this.dispatchErrorMethod = MonoRuntime.find_method(httpClass, "DispatchError", -1);
@@ -11848,6 +12043,7 @@ var MonoSupport;
     if (!jsCallDispatcher._isUnoRegistered) {
      jsCallDispatcher.registerScope("UnoStatic", Uno.UI.WindowManager);
      jsCallDispatcher.registerScope("UnoStatic_Windows_Storage_StorageFolder", Windows.Storage.StorageFolder);
+     jsCallDispatcher.registerScope("UnoStatic_Windows_Storage_ApplicationDataContainer", Windows.Storage.ApplicationDataContainer);
      jsCallDispatcher._isUnoRegistered = true;
     }
     const {ns: ns, methodName: methodName} = jsCallDispatcher.parseIdentifier(identifier);
@@ -11862,7 +12058,7 @@ var MonoSupport;
    }
   }
   static dispatch(id, pParams, pRet) {
-   return jsCallDispatcher.methodMap[id](pParams, pRet);
+   return jsCallDispatcher.methodMap[id + ""](pParams, pRet);
   }
   static parseIdentifier(identifier) {
    var parts = identifier.split(":");
@@ -11875,8 +12071,11 @@ var MonoSupport;
   }
   static cacheMethod(boundMethod) {
    var methodId = Object.keys(jsCallDispatcher.methodMap).length;
-   jsCallDispatcher.methodMap[methodId] = boundMethod;
+   jsCallDispatcher.methodMap[methodId + ""] = boundMethod;
    return methodId;
+  }
+  static getMethodMapId(methodHandle) {
+   return methodHandle + "";
   }
  }
  jsCallDispatcher.registrations = new Map();
@@ -11896,6 +12095,7 @@ var Uno;
     this.containerElementId = containerElementId;
     this.loadingElementId = loadingElementId;
     this.allActiveElementsById = {};
+    this.uiElementRegistrations = {};
     this.initDom();
    }
    static get isHosted() {
@@ -11993,24 +12193,26 @@ var Uno;
    createContentNative(pParams) {
     const params = WindowManagerCreateContentParams.unmarshal(pParams);
     const def = {
-     id: params.HtmlId,
+     id: this.handleToString(params.HtmlId),
      handle: params.Handle,
      isFocusable: params.IsFocusable,
-     isFrameworkElement: params.IsFrameworkElement,
      isSvg: params.IsSvg,
      tagName: params.TagName,
-     type: params.Type,
-     classes: params.Classes
+     uiElementRegistrationId: params.UIElementRegistrationId
     };
     this.createContentInternal(def);
     return true;
    }
    createContentInternal(contentDefinition) {
     const element = contentDefinition.isSvg ? document.createElementNS("http://www.w3.org/2000/svg", contentDefinition.tagName) : document.createElement(contentDefinition.tagName);
-    element.id = String(contentDefinition.id);
-    element.setAttribute("XamlType", contentDefinition.type);
-    element.setAttribute("XamlHandle", `${contentDefinition.handle}`);
-    if (contentDefinition.isFrameworkElement) {
+    element.id = contentDefinition.id;
+    const uiElementRegistration = this.uiElementRegistrations[this.handleToString(contentDefinition.uiElementRegistrationId)];
+    if (!uiElementRegistration) {
+     throw `UIElement registration id ${contentDefinition.uiElementRegistrationId} is unknown.`;
+    }
+    element.setAttribute("XamlType", uiElementRegistration.typeName);
+    element.setAttribute("XamlHandle", this.handleToString(contentDefinition.handle));
+    if (uiElementRegistration.isFrameworkElement) {
      this.setAsUnarranged(element);
     }
     if (element.hasOwnProperty("tabindex")) {
@@ -12019,14 +12221,33 @@ var Uno;
      element.setAttribute("tabindex", contentDefinition.isFocusable ? "0" : "-1");
     }
     if (contentDefinition) {
-     for (const className of contentDefinition.classes) {
-      element.classList.add(`uno-${className}`);
+     let classes = element.classList.value;
+     for (const className of uiElementRegistration.classNames) {
+      classes += " uno-" + className;
      }
+     element.classList.value = classes;
     }
     this.allActiveElementsById[contentDefinition.id] = element;
    }
+   registerUIElement(typeName, isFrameworkElement, classNames) {
+    const registrationId = Object.keys(this.uiElementRegistrations).length;
+    this.uiElementRegistrations[this.handleToString(registrationId)] = {
+     classNames: classNames,
+     isFrameworkElement: isFrameworkElement,
+     typeName: typeName
+    };
+    return registrationId;
+   }
+   registerUIElementNative(pParams, pReturn) {
+    const params = WindowManagerRegisterUIElementParams.unmarshal(pParams);
+    const registrationId = this.registerUIElement(params.TypeName, params.IsFrameworkElement, params.Classes);
+    const ret = new WindowManagerRegisterUIElementReturn();
+    ret.RegistrationId = registrationId;
+    ret.marshal(pReturn);
+    return true;
+   }
    getView(elementHandle) {
-    const element = this.allActiveElementsById[elementHandle];
+    const element = this.allActiveElementsById[this.handleToString(elementHandle)];
     if (!element) {
      throw `Element id ${elementHandle} not found.`;
     }
@@ -12128,18 +12349,12 @@ var Uno;
     const element = this.getView(elementId);
     return element[name] || "";
    }
-   setStyle(elementId, styles, setAsArranged = false, clipToBounds) {
+   setStyle(elementId, styles) {
     const element = this.getView(elementId);
     for (const style in styles) {
      if (styles.hasOwnProperty(style)) {
       element.style.setProperty(style, styles[style]);
      }
-    }
-    if (setAsArranged) {
-     this.setAsArranged(element);
-    }
-    if (typeof clipToBounds === "boolean") {
-     this.setClipToBounds(element, clipToBounds);
     }
     return "ok";
    }
@@ -12153,17 +12368,19 @@ var Uno;
      const value = pairs[i + 1];
      elementStyle.setProperty(key, value);
     }
-    if (params.SetAsArranged) {
-     this.setAsArranged(element);
-    }
-    this.setClipToBounds(element, params.ClipToBounds);
     return true;
    }
    setStyleDoubleNative(pParams) {
     const params = WindowManagerSetStyleDoubleParams.unmarshal(pParams);
     const element = this.getView(params.HtmlId);
-    element.style.setProperty(params.Name, String(params.Value));
+    element.style.setProperty(params.Name, this.handleToString(params.Value));
     return true;
+   }
+   setArrangeProperties(elementId, clipToBounds) {
+    const element = this.getView(elementId);
+    this.setAsArranged(element);
+    this.setClipToBounds(element, clipToBounds);
+    return "ok";
    }
    resetStyle(elementId, names) {
     this.resetStyleInternal(elementId, names);
@@ -12179,6 +12396,30 @@ var Uno;
     for (const name of names) {
      element.style.setProperty(name, "");
     }
+   }
+   isCssPropertySupported(propertyName, value) {
+    return CSS.supports(propertyName, value);
+   }
+   isCssConditionSupported(supportCondition) {
+    return CSS.supports(supportCondition);
+   }
+   setUnsetClasses(elementId, cssClassesToSet, cssClassesToUnset) {
+    const element = this.getView(elementId);
+    if (cssClassesToSet) {
+     cssClassesToSet.forEach(c => {
+      element.classList.add(c);
+     });
+    }
+    if (cssClassesToUnset) {
+     cssClassesToUnset.forEach(c => {
+      element.classList.remove(c);
+     });
+    }
+   }
+   setUnsetClassesNative(pParams) {
+    const params = WindowManagerSetUnsetClassesParams.unmarshal(pParams);
+    this.setUnsetClasses(params.HtmlId, params.CssClassesToSet, params.CssClassesToUnset);
+    return true;
    }
    setClasses(elementId, cssClassesList, classIndex) {
     const element = this.getView(elementId);
@@ -12231,8 +12472,19 @@ var Uno;
     const params = WindowManagerSetElementTransformParams.unmarshal(pParams);
     const element = this.getView(params.HtmlId);
     var style = element.style;
-    style.transform = `matrix(${params.M11},${params.M12},${params.M21},${params.M22},${params.M31},${params.M32})`;
-    element.classList.remove(WindowManager.unoUnarrangedClassName);
+    const matrix = `matrix(${params.M11},${params.M12},${params.M21},${params.M22},${params.M31},${params.M32})`;
+    style.transform = matrix;
+    this.setAsArranged(element);
+    this.setClipToBounds(element, params.ClipToBounds);
+    return true;
+   }
+   setPointerEvents(htmlId, enabled) {
+    const element = this.getView(htmlId);
+    element.style.pointerEvents = enabled ? "auto" : "none";
+   }
+   setPointerEventsNative(pParams) {
+    const params = WindowManagerSetPointerEventsParams.unmarshal(pParams);
+    this.setPointerEvents(params.HtmlId, params.Enabled);
     return true;
    }
    open(url) {
@@ -12250,14 +12502,76 @@ var Uno;
    getWindowTitle() {
     return document.title || UnoAppManifest.displayName;
    }
-   registerEventOnView(elementId, eventName, onCapturePhase = false, eventFilterName, eventExtractorName) {
-    this.registerEventOnViewInternal(elementId, eventName, onCapturePhase, eventFilterName, eventExtractorName);
+   registerEventOnView(elementId, eventName, onCapturePhase = false, eventExtractorId) {
+    this.registerEventOnViewInternal(elementId, eventName, onCapturePhase, eventExtractorId);
     return "ok";
    }
    registerEventOnViewNative(pParams) {
     const params = WindowManagerRegisterEventOnViewParams.unmarshal(pParams);
-    this.registerEventOnViewInternal(params.HtmlId, params.EventName, params.OnCapturePhase, params.EventFilterName, params.EventExtractorName);
+    this.registerEventOnViewInternal(params.HtmlId, params.EventName, params.OnCapturePhase, params.EventExtractorId);
     return true;
+   }
+   registerPointerEventsOnView(pParams) {
+    const params = WindowManagerRegisterEventOnViewParams.unmarshal(pParams);
+    const element = this.getView(params.HtmlId);
+    element.addEventListener("pointerenter", WindowManager.onPointerEnterReceived);
+    element.addEventListener("pointerleave", WindowManager.onPointerLeaveReceived);
+    element.addEventListener("pointerdown", WindowManager.onPointerEventReceived);
+    element.addEventListener("pointerup", WindowManager.onPointerEventReceived);
+    element.addEventListener("pointercancel", WindowManager.onPointerEventReceived);
+   }
+   static onPointerEventReceived(evt) {
+    WindowManager.dispatchPointerEvent(evt.currentTarget, evt);
+   }
+   static dispatchPointerEvent(element, evt) {
+    const payload = WindowManager.pointerEventExtractor(evt);
+    const handled = WindowManager.current.dispatchEvent(element, evt.type, payload);
+    if (handled) {
+     evt.stopPropagation();
+    }
+   }
+   static onPointerEnterReceived(evt) {
+    const element = evt.currentTarget;
+    const e = evt;
+    if (e.explicitOriginalTarget) {
+     for (let elt of document.elementsFromPoint(evt.pageX, evt.pageY)) {
+      if (elt == element) {
+       WindowManager.onPointerEventReceived(evt);
+       return;
+      }
+      let htmlElt = elt;
+      if (htmlElt.style.pointerEvents != "none") {
+       while (htmlElt.parentElement) {
+        htmlElt = htmlElt.parentElement;
+        if (htmlElt == element) {
+         WindowManager.onPointerEventReceived(evt);
+         return;
+        }
+       }
+       return;
+      }
+     }
+    } else {
+     WindowManager.onPointerEventReceived(evt);
+    }
+   }
+   static onPointerLeaveReceived(evt) {
+    const element = evt.currentTarget;
+    const e = evt;
+    if (e.explicitOriginalTarget && e.explicitOriginalTarget !== element && event.isOver(element)) {
+     var attempt = 3;
+     WindowManager.current.ensurePendingLeaveEventProcessing();
+     WindowManager.current.processPendingLeaveEvent = (move => {
+      if (!move.isOverDeep(element)) {
+       WindowManager.dispatchPointerEvent(element, evt);
+       WindowManager.current.processPendingLeaveEvent = null;
+      } else if (--attempt <= 0) {
+       WindowManager.current.processPendingLeaveEvent = null;
+      } else {}
+     });
+    } else {
+     WindowManager.onPointerEventReceived(evt);
+    }
    }
    ensurePendingLeaveEventProcessing() {
     if (this._isPendingLeaveProcessingEnabled) {
@@ -12270,9 +12584,9 @@ var Uno;
     }, true);
     this._isPendingLeaveProcessingEnabled = true;
    }
-   registerEventOnViewInternal(elementId, eventName, onCapturePhase = false, eventFilterName, eventExtractorName) {
+   registerEventOnViewInternal(elementId, eventName, onCapturePhase = false, eventExtractorId) {
     const element = this.getView(elementId);
-    const eventExtractor = this.getEventExtractor(eventExtractorName);
+    const eventExtractor = this.getEventExtractor(eventExtractorId);
     const eventHandler = event => {
      const eventPayload = eventExtractor ? `${eventExtractor(event)}` : "";
      var handled = this.dispatchEvent(element, eventName, eventPayload);
@@ -12280,84 +12594,21 @@ var Uno;
       event.stopPropagation();
      }
     };
-    if (eventName == "pointerenter") {
-     const enterPointerHandler = event => {
-      const e = event;
-      if (e.explicitOriginalTarget) {
-       const evt = event;
-       for (let elt of document.elementsFromPoint(evt.pageX, evt.pageY)) {
-        if (elt == element) {
-         eventHandler(event);
-         return;
-        }
-        let htmlElt = elt;
-        if (htmlElt.style.pointerEvents != "none") {
-         while (htmlElt.parentElement) {
-          htmlElt = htmlElt.parentElement;
-          if (htmlElt == element) {
-           eventHandler(event);
-           return;
-          }
-         }
-         return;
-        }
-       }
-      } else {
-       eventHandler(event);
-      }
-     };
-     element.addEventListener(eventName, enterPointerHandler, onCapturePhase);
-    } else if (eventName == "pointerleave") {
-     const leavePointerHandler = event => {
-      const e = event;
-      if (e.explicitOriginalTarget && e.explicitOriginalTarget !== event.currentTarget && event.isOver(element)) {
-       var attempt = 3;
-       this.ensurePendingLeaveEventProcessing();
-       this.processPendingLeaveEvent = (move => {
-        if (!move.isOverDeep(element)) {
-         console.log("Raising deferred pointerleave on element " + elementId);
-         eventHandler(event);
-         this.processPendingLeaveEvent = null;
-        } else if (--attempt <= 0) {
-         console.log("Drop deferred pointerleave on element " + elementId);
-         this.processPendingLeaveEvent = null;
-        } else {
-         console.log("Requeue deferred pointerleave on element " + elementId);
-        }
-       });
-      } else {
-       eventHandler(event);
-      }
-     };
-     element.addEventListener(eventName, leavePointerHandler, onCapturePhase);
-    } else {
-     element.addEventListener(eventName, eventHandler, onCapturePhase);
-    }
+    element.addEventListener(eventName, eventHandler, onCapturePhase);
    }
-   leftPointerEventFilter(evt) {
-    return evt ? evt.eventPhase === 2 || evt.eventPhase === 3 && (!evt.button || evt.button === 0) : false;
-   }
-   defaultEventFilter(evt) {
-    return evt ? evt.eventPhase === 2 || evt.eventPhase === 3 : false;
-   }
-   getEventFilter(eventFilterName) {
-    if (eventFilterName) {
-     switch (eventFilterName) {
-     case "LeftPointerEventFilter":
-      return this.leftPointerEventFilter;
-
-     case "Default":
-      return this.defaultEventFilter;
-     }
-     throw `Event filter ${eventFilterName} is not supported`;
-    }
-    return null;
-   }
-   pointerEventExtractor(evt) {
+   static pointerEventExtractor(evt) {
     if (!evt) {
      return "";
     }
     let src = evt.target;
+    if (src instanceof SVGElement) {
+     const shape = src.ownerSVGElement;
+     if (shape) {
+      src = shape;
+     }
+    } else if (src instanceof HTMLImageElement) {
+     src = src.parentElement;
+    }
     let srcHandle = "0";
     while (src) {
      let handle = src.getAttribute("XamlHandle");
@@ -12367,7 +12618,47 @@ var Uno;
      }
      src = src.parentElement;
     }
-    return `${evt.pointerId};${evt.clientX};${evt.clientY};${evt.ctrlKey ? "1" : "0"};${evt.shiftKey ? "1" : "0"};${evt.button};${evt.pointerType};${srcHandle};${evt.timeStamp}`;
+    let pointerId, pointerType, pressure;
+    let wheelDeltaX, wheelDeltaY;
+    if (evt instanceof WheelEvent) {
+     pointerId = evt.mozInputSource ? 0 : 1;
+     pointerType = "mouse";
+     pressure = .5;
+     wheelDeltaX = evt.deltaX;
+     wheelDeltaY = evt.deltaY;
+     switch (evt.deltaMode) {
+     case WheelEvent.DOM_DELTA_LINE:
+      const lineSize = WindowManager.wheelLineSize;
+      wheelDeltaX *= lineSize;
+      wheelDeltaY *= lineSize;
+      break;
+
+     case WheelEvent.DOM_DELTA_PAGE:
+      wheelDeltaX *= document.documentElement.clientWidth;
+      wheelDeltaY *= document.documentElement.clientHeight;
+      break;
+     }
+    } else {
+     pointerId = evt.pointerId;
+     pointerType = evt.pointerType;
+     pressure = evt.pressure;
+     wheelDeltaX = 0;
+     wheelDeltaY = 0;
+    }
+    return `${pointerId};${evt.clientX};${evt.clientY};${evt.ctrlKey ? "1" : "0"};${evt.shiftKey ? "1" : "0"};${evt.buttons};${evt.button};${pointerType};${srcHandle};${evt.timeStamp};${pressure};${wheelDeltaX};${wheelDeltaY}`;
+   }
+   static get wheelLineSize() {
+    if (this._wheelLineSize == undefined) {
+     const el = document.createElement("div");
+     el.style.fontSize = "initial";
+     el.style.display = "none";
+     document.body.appendChild(el);
+     const fontSize = window.getComputedStyle(el).fontSize;
+     document.body.removeChild(el);
+     this._wheelLineSize = fontSize ? parseInt(fontSize) : 16;
+     this._wheelLineSize *= 2;
+    }
+    return this._wheelLineSize;
    }
    keyboardEventExtractor(evt) {
     return evt instanceof KeyboardEvent ? evt.key : "0";
@@ -12399,28 +12690,28 @@ var Uno;
    customEventDetailStringExtractor(evt) {
     return evt ? `${evt.detail}` : "";
    }
-   getEventExtractor(eventExtractorName) {
-    if (eventExtractorName) {
-     switch (eventExtractorName) {
-     case "PointerEventExtractor":
-      return this.pointerEventExtractor;
+   getEventExtractor(eventExtractorId) {
+    if (eventExtractorId) {
+     switch (eventExtractorId) {
+     case 1:
+      return WindowManager.pointerEventExtractor;
 
-     case "KeyboardEventExtractor":
+     case 3:
       return this.keyboardEventExtractor;
 
-     case "TappedEventExtractor":
+     case 2:
       return this.tappedEventExtractor;
 
-     case "FocusEventExtractor":
+     case 4:
       return this.focusEventExtractor;
 
-     case "CustomEventDetailJsonExtractor":
+     case 6:
       return this.customEventDetailExtractor;
 
-     case "CustomEventDetailStringExtractor":
+     case 5:
       return this.customEventDetailStringExtractor;
      }
-     throw `Event filter ${eventExtractorName} is not supported`;
+     throw `Event extractor ${eventExtractorId} is not supported`;
     }
     return null;
    }
@@ -12472,7 +12763,7 @@ var Uno;
       this.dispatchEvent(childElement, "loading");
      }
     }
-    if (index && index < parentElement.childElementCount) {
+    if (index != null && index < parentElement.childElementCount) {
      const insertBeforeElement = parentElement.children[index];
      parentElement.insertBefore(childElement, insertBeforeElement);
     } else {
@@ -12538,6 +12829,15 @@ var Uno;
    }
    getBBoxInternal(elementId) {
     return this.getView(elementId).getBBox();
+   }
+   setSvgElementRect(pParams) {
+    const params = WindowManagerSetSvgElementRectParams.unmarshal(pParams);
+    const element = this.getView(params.HtmlId);
+    element.x.baseVal.value = params.X;
+    element.y.baseVal.value = params.Y;
+    element.width.baseVal.value = params.Width;
+    element.height.baseVal.value = params.Height;
+    return true;
    }
    measureView(viewId, maxWidth, maxHeight) {
     const ret = this.measureViewInternal(Number(viewId), maxWidth ? Number(maxWidth) : NaN, maxHeight ? Number(maxHeight) : NaN);
@@ -12644,26 +12944,21 @@ var Uno;
     elt.scrollTo(opts);
     return true;
    }
-   setImageRawData(viewId, dataPtr, width, height) {
-    const element = this.getView(viewId);
-    if (element.tagName.toUpperCase() === "IMG") {
-     const imgElement = element;
-     const rawCanvas = document.createElement("canvas");
-     rawCanvas.width = width;
-     rawCanvas.height = height;
-     const ctx = rawCanvas.getContext("2d");
-     const imgData = ctx.createImageData(width, height);
-     const bufferSize = width * height * 4;
-     for (let i = 0; i < bufferSize; i += 4) {
-      imgData.data[i + 0] = Module.HEAPU8[dataPtr + i + 2];
-      imgData.data[i + 1] = Module.HEAPU8[dataPtr + i + 1];
-      imgData.data[i + 2] = Module.HEAPU8[dataPtr + i + 0];
-      imgData.data[i + 3] = Module.HEAPU8[dataPtr + i + 3];
-     }
-     ctx.putImageData(imgData, 0, 0);
-     imgElement.src = rawCanvas.toDataURL();
-     return "ok";
+   rawPixelsToBase64EncodeImage(dataPtr, width, height) {
+    const rawCanvas = document.createElement("canvas");
+    rawCanvas.width = width;
+    rawCanvas.height = height;
+    const ctx = rawCanvas.getContext("2d");
+    const imgData = ctx.createImageData(width, height);
+    const bufferSize = width * height * 4;
+    for (let i = 0; i < bufferSize; i += 4) {
+     imgData.data[i + 0] = Module.HEAPU8[dataPtr + i + 2];
+     imgData.data[i + 1] = Module.HEAPU8[dataPtr + i + 1];
+     imgData.data[i + 2] = Module.HEAPU8[dataPtr + i + 0];
+     imgData.data[i + 3] = Module.HEAPU8[dataPtr + i + 3];
     }
+    ctx.putImageData(imgData, 0, 0);
+    return rawCanvas.toDataURL();
    }
    setImageAsMonochrome(viewId, url, color) {
     const element = this.getView(viewId);
@@ -12756,6 +13051,7 @@ var Uno;
     if (UnoAppManifest.displayName) {
      document.title = UnoAppManifest.displayName;
     }
+    window.addEventListener("beforeunload", () => WindowManager.dispatchSuspendingMethod());
    }
    static initMethods() {
     if (WindowManager.isHosted) {
@@ -12767,15 +13063,28 @@ var Uno;
      if (!WindowManager.dispatchEventMethod) {
       WindowManager.dispatchEventMethod = Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.UIElement:DispatchEvent");
      }
+     if (!WindowManager.focusInMethod) {
+      WindowManager.focusInMethod = Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.Input.FocusManager:ReceiveFocusNative");
+     }
+     if (!WindowManager.dispatchSuspendingMethod) {
+      WindowManager.dispatchSuspendingMethod = Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.Application:DispatchSuspending");
+     }
     }
    }
    initDom() {
     this.containerElement = document.getElementById(this.containerElementId);
     if (!this.containerElement) {
      this.containerElement = document.createElement("div");
-     document.body.appendChild(this.containerElement);
     }
+    document.body.addEventListener("focusin", this.onfocusin);
+    document.body.appendChild(this.containerElement);
     window.addEventListener("resize", x => this.resize());
+    window.addEventListener("contextmenu", x => {
+     if (!(x.target instanceof HTMLInputElement)) {
+      x.preventDefault();
+     }
+    });
+    window.addEventListener("blur", this.onWindowBlur);
    }
    removeLoading() {
     if (!this.loadingElementId) {
@@ -12795,13 +13104,30 @@ var Uno;
      WindowManager.resizeMethod(document.documentElement.clientWidth, document.documentElement.clientHeight);
     }
    }
+   onfocusin(event) {
+    if (WindowManager.isHosted) {
+     console.warn("Focus not supported in hosted mode");
+    } else {
+     const newFocus = event.target;
+     const handle = newFocus.getAttribute("XamlHandle");
+     const htmlId = handle ? Number(handle) : -1;
+     WindowManager.focusInMethod(htmlId);
+    }
+   }
+   onWindowBlur() {
+    if (WindowManager.isHosted) {
+     console.warn("Focus not supported in hosted mode");
+    } else {
+     WindowManager.focusInMethod(-1);
+    }
+   }
    dispatchEvent(element, eventName, eventPayload = null) {
     const htmlId = Number(element.getAttribute("XamlHandle"));
     if (!htmlId) {
      throw `No attribute XamlHandle on element ${element}. Can't raise event.`;
     }
     if (WindowManager.isHosted) {
-     UnoDispatch.dispatch(String(htmlId), eventName, eventPayload);
+     UnoDispatch.dispatch(this.handleToString(htmlId), eventName, eventPayload);
      return true;
     } else {
      return WindowManager.dispatchEventMethod(htmlId, eventName, eventPayload || "");
@@ -12814,6 +13140,25 @@ var Uno;
     }
     return rootElement === element || rootElement.contains(element);
    }
+   handleToString(handle) {
+    return handle + "";
+   }
+   setCursor(cssCursor) {
+    const unoBody = document.getElementById(this.containerElementId);
+    if (unoBody) {
+     if (this.cursorStyleElement != undefined) {
+      this.cursorStyleElement.remove();
+      this.cursorStyleElement = undefined;
+     }
+     if (cssCursor != "auto") {
+      this.cursorStyleElement = document.createElement("style");
+      this.cursorStyleElement.innerHTML = ".uno-buttonbase { cursor: " + cssCursor + "; }";
+      document.body.appendChild(this.cursorStyleElement);
+     }
+     unoBody.style.cursor = cssCursor;
+    }
+    return "ok";
+   }
   }
   WindowManager._isHosted = false;
   WindowManager._isLoadEventsEnabled = false;
@@ -12824,11 +13169,12 @@ var Uno;
    WindowManager.initMethods();
    UI.HtmlDom.initPolyfills();
   })();
+  WindowManager._wheelLineSize = undefined;
   WindowManager.MAX_WIDTH = `${Number.MAX_SAFE_INTEGER}vw`;
   WindowManager.MAX_HEIGHT = `${Number.MAX_SAFE_INTEGER}vh`;
   UI.WindowManager = WindowManager;
   if (typeof define === "function") {
-   define([ "AppManifest" ], () => {});
+   define([ `${config.uno_app_base}/AppManifest` ], () => {});
   } else {
    throw `The Uno.Wasm.Boostrap is not up to date, please upgrade to a later version`;
   }
@@ -12837,18 +13183,246 @@ var Uno;
 
 window.Uno = Uno;
 
+window.Windows = Windows;
+
+class ApplicationDataContainer_ClearParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_ClearParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_ContainsKeyParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_ContainsKeyParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Key = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Key = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 4, "*");
+   if (ptr !== 0) {
+    ret.Value = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Value = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 8, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_ContainsKeyReturn {
+ marshal(pData) {
+  Module.setValue(pData + 0, this.ContainsKey, "i32");
+ }
+}
+
+class ApplicationDataContainer_GetCountParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_GetCountParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_GetCountReturn {
+ marshal(pData) {
+  Module.setValue(pData + 0, this.Count, "i32");
+ }
+}
+
+class ApplicationDataContainer_GetKeyByIndexParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_GetKeyByIndexParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  {
+   ret.Index = Number(Module.getValue(pData + 4, "i32"));
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_GetKeyByIndexReturn {
+ marshal(pData) {
+  {
+   const stringLength = lengthBytesUTF8(this.Value);
+   const pString = Module._malloc(stringLength + 1);
+   stringToUTF8(this.Value, pString, stringLength + 1);
+   Module.setValue(pData + 0, pString, "*");
+  }
+ }
+}
+
+class ApplicationDataContainer_GetValueByIndexParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_GetValueByIndexParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  {
+   ret.Index = Number(Module.getValue(pData + 4, "i32"));
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_GetValueByIndexReturn {
+ marshal(pData) {
+  {
+   const stringLength = lengthBytesUTF8(this.Value);
+   const pString = Module._malloc(stringLength + 1);
+   stringToUTF8(this.Value, pString, stringLength + 1);
+   Module.setValue(pData + 0, pString, "*");
+  }
+ }
+}
+
+class ApplicationDataContainer_RemoveParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_RemoveParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 4, "*");
+   if (ptr !== 0) {
+    ret.Key = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Key = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_RemoveReturn {
+ marshal(pData) {
+  Module.setValue(pData + 0, this.Removed, "i32");
+ }
+}
+
+class ApplicationDataContainer_SetValueParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_SetValueParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Key = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Key = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 4, "*");
+   if (ptr !== 0) {
+    ret.Value = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Value = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 8, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_TryGetValueParams {
+ static unmarshal(pData) {
+  const ret = new ApplicationDataContainer_TryGetValueParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
+   if (ptr !== 0) {
+    ret.Key = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Key = null;
+   }
+  }
+  {
+   const ptr = Module.getValue(pData + 4, "*");
+   if (ptr !== 0) {
+    ret.Locality = String(Module.UTF8ToString(ptr));
+   } else {
+    ret.Locality = null;
+   }
+  }
+  return ret;
+ }
+}
+
+class ApplicationDataContainer_TryGetValueReturn {
+ marshal(pData) {
+  {
+   const stringLength = lengthBytesUTF8(this.Value);
+   const pString = Module._malloc(stringLength + 1);
+   stringToUTF8(this.Value, pString, stringLength + 1);
+   Module.setValue(pData + 0, pString, "*");
+  }
+  Module.setValue(pData + 4, this.HasValue, "i32");
+ }
+}
+
 class StorageFolderMakePersistentParams {
  static unmarshal(pData) {
-  let ret = new StorageFolderMakePersistentParams();
+  const ret = new StorageFolderMakePersistentParams();
   {
    ret.Paths_Length = Number(Module.getValue(pData + 0, "i32"));
   }
   {
-   var pArray = Module.getValue(pData + 4, "*");
+   const pArray = Module.getValue(pData + 4, "*");
    if (pArray !== 0) {
     ret.Paths = new Array();
     for (var i = 0; i < ret.Paths_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.Paths.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -12865,7 +13439,7 @@ class StorageFolderMakePersistentParams {
 
 class WindowManagerAddViewParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerAddViewParams();
+  const ret = new WindowManagerAddViewParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -12881,7 +13455,7 @@ class WindowManagerAddViewParams {
 
 class WindowManagerArrangeElementParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerArrangeElementParams();
+  const ret = new WindowManagerArrangeElementParams();
   {
    ret.Top = Number(Module.getValue(pData + 0, "double"));
   }
@@ -12921,12 +13495,12 @@ class WindowManagerArrangeElementParams {
 
 class WindowManagerCreateContentParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerCreateContentParams();
+  const ret = new WindowManagerCreateContentParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.TagName = String(Module.UTF8ToString(ptr));
    } else {
@@ -12937,40 +13511,13 @@ class WindowManagerCreateContentParams {
    ret.Handle = Number(Module.getValue(pData + 8, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 12, "*");
-   if (ptr !== 0) {
-    ret.Type = String(Module.UTF8ToString(ptr));
-   } else {
-    ret.Type = null;
-   }
+   ret.UIElementRegistrationId = Number(Module.getValue(pData + 12, "i32"));
   }
   {
    ret.IsSvg = Boolean(Module.getValue(pData + 16, "i32"));
   }
   {
-   ret.IsFrameworkElement = Boolean(Module.getValue(pData + 20, "i32"));
-  }
-  {
-   ret.IsFocusable = Boolean(Module.getValue(pData + 24, "i32"));
-  }
-  {
-   ret.Classes_Length = Number(Module.getValue(pData + 28, "i32"));
-  }
-  {
-   var pArray = Module.getValue(pData + 32, "*");
-   if (pArray !== 0) {
-    ret.Classes = new Array();
-    for (var i = 0; i < ret.Classes_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
-     if (value !== 0) {
-      ret.Classes.push(String(MonoRuntime.conv_string(value)));
-     } else {
-      ret.Classes.push(null);
-     }
-    }
-   } else {
-    ret.Classes = null;
-   }
+   ret.IsFocusable = Boolean(Module.getValue(pData + 20, "i32"));
   }
   return ret;
  }
@@ -12978,7 +13525,7 @@ class WindowManagerCreateContentParams {
 
 class WindowManagerDestroyViewParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerDestroyViewParams();
+  const ret = new WindowManagerDestroyViewParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -12988,7 +13535,7 @@ class WindowManagerDestroyViewParams {
 
 class WindowManagerGetBBoxParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerGetBBoxParams();
+  const ret = new WindowManagerGetBBoxParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13007,7 +13554,7 @@ class WindowManagerGetBBoxReturn {
 
 class WindowManagerGetClientViewSizeParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerGetClientViewSizeParams();
+  const ret = new WindowManagerGetClientViewSizeParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13026,7 +13573,7 @@ class WindowManagerGetClientViewSizeReturn {
 
 class WindowManagerInitParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerInitParams();
+  const ret = new WindowManagerInitParams();
   {
    ret.IsHostedMode = Boolean(Module.getValue(pData + 0, "i32"));
   }
@@ -13039,7 +13586,7 @@ class WindowManagerInitParams {
 
 class WindowManagerMeasureViewParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerMeasureViewParams();
+  const ret = new WindowManagerMeasureViewParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13062,12 +13609,12 @@ class WindowManagerMeasureViewReturn {
 
 class WindowManagerRegisterEventOnViewParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerRegisterEventOnViewParams();
+  const ret = new WindowManagerRegisterEventOnViewParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.EventName = String(Module.UTF8ToString(ptr));
    } else {
@@ -13078,33 +13625,73 @@ class WindowManagerRegisterEventOnViewParams {
    ret.OnCapturePhase = Boolean(Module.getValue(pData + 8, "i32"));
   }
   {
-   var ptr = Module.getValue(pData + 12, "*");
+   ret.EventExtractorId = Number(Module.getValue(pData + 12, "i32"));
+  }
+  return ret;
+ }
+}
+
+class WindowManagerRegisterPointerEventsOnViewParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerRegisterPointerEventsOnViewParams();
+  {
+   ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
+  }
+  return ret;
+ }
+}
+
+class WindowManagerRegisterUIElementParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerRegisterUIElementParams();
+  {
+   const ptr = Module.getValue(pData + 0, "*");
    if (ptr !== 0) {
-    ret.EventFilterName = String(Module.UTF8ToString(ptr));
+    ret.TypeName = String(Module.UTF8ToString(ptr));
    } else {
-    ret.EventFilterName = null;
+    ret.TypeName = null;
    }
   }
   {
-   var ptr = Module.getValue(pData + 16, "*");
-   if (ptr !== 0) {
-    ret.EventExtractorName = String(Module.UTF8ToString(ptr));
+   ret.IsFrameworkElement = Boolean(Module.getValue(pData + 4, "i32"));
+  }
+  {
+   ret.Classes_Length = Number(Module.getValue(pData + 8, "i32"));
+  }
+  {
+   const pArray = Module.getValue(pData + 12, "*");
+   if (pArray !== 0) {
+    ret.Classes = new Array();
+    for (var i = 0; i < ret.Classes_Length; i++) {
+     const value = Module.getValue(pArray + i * 4, "*");
+     if (value !== 0) {
+      ret.Classes.push(String(MonoRuntime.conv_string(value)));
+     } else {
+      ret.Classes.push(null);
+     }
+    }
    } else {
-    ret.EventExtractorName = null;
+    ret.Classes = null;
    }
   }
   return ret;
  }
 }
 
+class WindowManagerRegisterUIElementReturn {
+ marshal(pData) {
+  Module.setValue(pData + 0, this.RegistrationId, "i32");
+ }
+}
+
 class WindowManagerRemoveAttributeParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerRemoveAttributeParams();
+  const ret = new WindowManagerRemoveAttributeParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Name = String(Module.UTF8ToString(ptr));
    } else {
@@ -13117,7 +13704,7 @@ class WindowManagerRemoveAttributeParams {
 
 class WindowManagerRemoveViewParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerRemoveViewParams();
+  const ret = new WindowManagerRemoveViewParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13130,7 +13717,7 @@ class WindowManagerRemoveViewParams {
 
 class WindowManagerResetStyleParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerResetStyleParams();
+  const ret = new WindowManagerResetStyleParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13138,11 +13725,11 @@ class WindowManagerResetStyleParams {
    ret.Styles_Length = Number(Module.getValue(pData + 4, "i32"));
   }
   {
-   var pArray = Module.getValue(pData + 8, "*");
+   const pArray = Module.getValue(pData + 8, "*");
    if (pArray !== 0) {
     ret.Styles = new Array();
     for (var i = 0; i < ret.Styles_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.Styles.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -13159,7 +13746,7 @@ class WindowManagerResetStyleParams {
 
 class WindowManagerScrollToOptionsParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerScrollToOptionsParams();
+  const ret = new WindowManagerScrollToOptionsParams();
   {
    ret.Left = Number(Module.getValue(pData + 0, "double"));
   }
@@ -13184,12 +13771,12 @@ class WindowManagerScrollToOptionsParams {
 
 class WindowManagerSetAttributeParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetAttributeParams();
+  const ret = new WindowManagerSetAttributeParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Name = String(Module.UTF8ToString(ptr));
    } else {
@@ -13197,7 +13784,7 @@ class WindowManagerSetAttributeParams {
    }
   }
   {
-   var ptr = Module.getValue(pData + 8, "*");
+   const ptr = Module.getValue(pData + 8, "*");
    if (ptr !== 0) {
     ret.Value = String(Module.UTF8ToString(ptr));
    } else {
@@ -13210,7 +13797,7 @@ class WindowManagerSetAttributeParams {
 
 class WindowManagerSetAttributesParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetAttributesParams();
+  const ret = new WindowManagerSetAttributesParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13218,11 +13805,11 @@ class WindowManagerSetAttributesParams {
    ret.Pairs_Length = Number(Module.getValue(pData + 4, "i32"));
   }
   {
-   var pArray = Module.getValue(pData + 8, "*");
+   const pArray = Module.getValue(pData + 8, "*");
    if (pArray !== 0) {
     ret.Pairs = new Array();
     for (var i = 0; i < ret.Pairs_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.Pairs.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -13239,7 +13826,7 @@ class WindowManagerSetAttributesParams {
 
 class WindowManagerSetClassesParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetClassesParams();
+  const ret = new WindowManagerSetClassesParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13247,11 +13834,11 @@ class WindowManagerSetClassesParams {
    ret.CssClasses_Length = Number(Module.getValue(pData + 4, "i32"));
   }
   {
-   var pArray = Module.getValue(pData + 8, "*");
+   const pArray = Module.getValue(pData + 8, "*");
    if (pArray !== 0) {
     ret.CssClasses = new Array();
     for (var i = 0; i < ret.CssClasses_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.CssClasses.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -13271,12 +13858,12 @@ class WindowManagerSetClassesParams {
 
 class WindowManagerSetContentHtmlParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetContentHtmlParams();
+  const ret = new WindowManagerSetContentHtmlParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Html = String(Module.UTF8ToString(ptr));
    } else {
@@ -13289,27 +13876,30 @@ class WindowManagerSetContentHtmlParams {
 
 class WindowManagerSetElementTransformParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetElementTransformParams();
+  const ret = new WindowManagerSetElementTransformParams();
   {
-   ret.M11 = Number(Module.getValue(pData + 0, "double"));
+   ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   ret.M12 = Number(Module.getValue(pData + 8, "double"));
+   ret.M11 = Number(Module.getValue(pData + 8, "double"));
   }
   {
-   ret.M21 = Number(Module.getValue(pData + 16, "double"));
+   ret.M12 = Number(Module.getValue(pData + 16, "double"));
   }
   {
-   ret.M22 = Number(Module.getValue(pData + 24, "double"));
+   ret.M21 = Number(Module.getValue(pData + 24, "double"));
   }
   {
-   ret.M31 = Number(Module.getValue(pData + 32, "double"));
+   ret.M22 = Number(Module.getValue(pData + 32, "double"));
   }
   {
-   ret.M32 = Number(Module.getValue(pData + 40, "double"));
+   ret.M31 = Number(Module.getValue(pData + 40, "double"));
   }
   {
-   ret.HtmlId = Number(Module.getValue(pData + 48, "*"));
+   ret.M32 = Number(Module.getValue(pData + 48, "double"));
+  }
+  {
+   ret.ClipToBounds = Boolean(Module.getValue(pData + 56, "i32"));
   }
   return ret;
  }
@@ -13317,12 +13907,12 @@ class WindowManagerSetElementTransformParams {
 
 class WindowManagerSetNameParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetNameParams();
+  const ret = new WindowManagerSetNameParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Name = String(Module.UTF8ToString(ptr));
    } else {
@@ -13333,9 +13923,22 @@ class WindowManagerSetNameParams {
  }
 }
 
+class WindowManagerSetPointerEventsParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerSetPointerEventsParams();
+  {
+   ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
+  }
+  {
+   ret.Enabled = Boolean(Module.getValue(pData + 4, "i32"));
+  }
+  return ret;
+ }
+}
+
 class WindowManagerSetPropertyParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetPropertyParams();
+  const ret = new WindowManagerSetPropertyParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
@@ -13343,11 +13946,11 @@ class WindowManagerSetPropertyParams {
    ret.Pairs_Length = Number(Module.getValue(pData + 4, "i32"));
   }
   {
-   var pArray = Module.getValue(pData + 8, "*");
+   const pArray = Module.getValue(pData + 8, "*");
    if (pArray !== 0) {
     ret.Pairs = new Array();
     for (var i = 0; i < ret.Pairs_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.Pairs.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -13364,12 +13967,12 @@ class WindowManagerSetPropertyParams {
 
 class WindowManagerSetStyleDoubleParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetStyleDoubleParams();
+  const ret = new WindowManagerSetStyleDoubleParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Name = String(Module.UTF8ToString(ptr));
    } else {
@@ -13385,22 +13988,19 @@ class WindowManagerSetStyleDoubleParams {
 
 class WindowManagerSetStylesParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetStylesParams();
+  const ret = new WindowManagerSetStylesParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   ret.SetAsArranged = Boolean(Module.getValue(pData + 4, "i32"));
+   ret.Pairs_Length = Number(Module.getValue(pData + 4, "i32"));
   }
   {
-   ret.Pairs_Length = Number(Module.getValue(pData + 8, "i32"));
-  }
-  {
-   var pArray = Module.getValue(pData + 12, "*");
+   const pArray = Module.getValue(pData + 8, "*");
    if (pArray !== 0) {
     ret.Pairs = new Array();
     for (var i = 0; i < ret.Pairs_Length; i++) {
-     var value = Module.getValue(pArray + i * 4, "*");
+     const value = Module.getValue(pArray + i * 4, "*");
      if (value !== 0) {
       ret.Pairs.push(String(MonoRuntime.conv_string(value)));
      } else {
@@ -13411,8 +14011,75 @@ class WindowManagerSetStylesParams {
     ret.Pairs = null;
    }
   }
+  return ret;
+ }
+}
+
+class WindowManagerSetSvgElementRectParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerSetSvgElementRectParams();
   {
-   ret.ClipToBounds = Boolean(Module.getValue(pData + 16, "i32"));
+   ret.X = Number(Module.getValue(pData + 0, "double"));
+  }
+  {
+   ret.Y = Number(Module.getValue(pData + 8, "double"));
+  }
+  {
+   ret.Width = Number(Module.getValue(pData + 16, "double"));
+  }
+  {
+   ret.Height = Number(Module.getValue(pData + 24, "double"));
+  }
+  {
+   ret.HtmlId = Number(Module.getValue(pData + 32, "*"));
+  }
+  return ret;
+ }
+}
+
+class WindowManagerSetUnsetClassesParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerSetUnsetClassesParams();
+  {
+   ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
+  }
+  {
+   ret.CssClassesToSet_Length = Number(Module.getValue(pData + 4, "i32"));
+  }
+  {
+   const pArray = Module.getValue(pData + 8, "*");
+   if (pArray !== 0) {
+    ret.CssClassesToSet = new Array();
+    for (var i = 0; i < ret.CssClassesToSet_Length; i++) {
+     const value = Module.getValue(pArray + i * 4, "*");
+     if (value !== 0) {
+      ret.CssClassesToSet.push(String(MonoRuntime.conv_string(value)));
+     } else {
+      ret.CssClassesToSet.push(null);
+     }
+    }
+   } else {
+    ret.CssClassesToSet = null;
+   }
+  }
+  {
+   ret.CssClassesToUnset_Length = Number(Module.getValue(pData + 12, "i32"));
+  }
+  {
+   const pArray = Module.getValue(pData + 16, "*");
+   if (pArray !== 0) {
+    ret.CssClassesToUnset = new Array();
+    for (var i = 0; i < ret.CssClassesToUnset_Length; i++) {
+     const value = Module.getValue(pArray + i * 4, "*");
+     if (value !== 0) {
+      ret.CssClassesToUnset.push(String(MonoRuntime.conv_string(value)));
+     } else {
+      ret.CssClassesToUnset.push(null);
+     }
+    }
+   } else {
+    ret.CssClassesToUnset = null;
+   }
   }
   return ret;
  }
@@ -13420,12 +14087,12 @@ class WindowManagerSetStylesParams {
 
 class WindowManagerSetXUidParams {
  static unmarshal(pData) {
-  let ret = new WindowManagerSetXUidParams();
+  const ret = new WindowManagerSetXUidParams();
   {
    ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
   }
   {
-   var ptr = Module.getValue(pData + 4, "*");
+   const ptr = Module.getValue(pData + 4, "*");
    if (ptr !== 0) {
     ret.Uid = String(Module.UTF8ToString(ptr));
    } else {
@@ -13458,13 +14125,51 @@ PointerEvent.prototype.isOverDeep = function(element) {
 var Uno;
 
 (function(Uno) {
+ var UI;
+ (function(UI) {
+  var Interop;
+  (function(Interop) {
+   class AsyncInteropHelper {
+    static init() {
+     if (AsyncInteropHelper.dispatchErrorMethod) {
+      return;
+     }
+     const w = window;
+     AsyncInteropHelper.dispatchResultMethod = w.Module.mono_bind_static_method("[Uno.Foundation.Runtime.WebAssembly] Uno.Foundation.WebAssemblyRuntime:DispatchAsyncResult");
+     AsyncInteropHelper.dispatchErrorMethod = w.Module.mono_bind_static_method("[Uno.Foundation.Runtime.WebAssembly] Uno.Foundation.WebAssemblyRuntime:DispatchAsyncError");
+    }
+    static Invoke(handle, promiseFunction) {
+     AsyncInteropHelper.init();
+     try {
+      promiseFunction().then(str => {
+       if (typeof str == "string") {
+        AsyncInteropHelper.dispatchResultMethod(handle, str);
+       } else {
+        AsyncInteropHelper.dispatchResultMethod(handle, null);
+       }
+      }).catch(err => {
+       AsyncInteropHelper.dispatchErrorMethod(handle, err);
+      });
+     } catch (err) {
+      AsyncInteropHelper.dispatchErrorMethod(handle, err);
+     }
+    }
+   }
+   Interop.AsyncInteropHelper = AsyncInteropHelper;
+  })(Interop = UI.Interop || (UI.Interop = {}));
+ })(UI = Uno.UI || (Uno.UI = {}));
+})(Uno || (Uno = {}));
+
+var Uno;
+
+(function(Uno) {
  var Foundation;
  (function(Foundation) {
   var Interop;
   (function(Interop) {
    class ManagedObject {
     static init() {
-     ManagedObject.dispatchMethod = Module.mono_bind_static_method("[Uno.Foundation] Uno.Foundation.Interop.JSObject:Dispatch");
+     ManagedObject.dispatchMethod = Module.mono_bind_static_method("[Uno.Foundation.Runtime.WebAssembly] Uno.Foundation.Interop.JSObject:Dispatch");
     }
     static dispatch(handle, method, parameters) {
      if (!ManagedObject.dispatchMethod) {
@@ -13512,6 +14217,228 @@ var Uno;
 var Windows;
 
 (function(Windows) {
+ var Media;
+ (function(Media) {
+  class SpeechRecognizer {
+   constructor(managedId, culture) {
+    this.onResult = (event => {
+     if (event.results[0].isFinal) {
+      if (!SpeechRecognizer.dispatchResult) {
+       SpeechRecognizer.dispatchResult = Module.mono_bind_static_method("[Uno] Windows.Media.SpeechRecognition.SpeechRecognizer:DispatchResult");
+      }
+      SpeechRecognizer.dispatchResult(this.managedId, event.results[0][0].transcript, event.results[0][0].confidence);
+     } else {
+      if (!SpeechRecognizer.dispatchHypothesis) {
+       SpeechRecognizer.dispatchHypothesis = Module.mono_bind_static_method("[Uno] Windows.Media.SpeechRecognition.SpeechRecognizer:DispatchHypothesis");
+      }
+      SpeechRecognizer.dispatchHypothesis(this.managedId, event.results[0][0].transcript);
+     }
+    });
+    this.onSpeechStart = (() => {
+     if (!SpeechRecognizer.dispatchStatus) {
+      SpeechRecognizer.dispatchStatus = Module.mono_bind_static_method("[Uno] Windows.Media.SpeechRecognition.SpeechRecognizer:DispatchStatus");
+     }
+     SpeechRecognizer.dispatchStatus(this.managedId, "SpeechDetected");
+    });
+    this.onError = (event => {
+     if (!SpeechRecognizer.dispatchError) {
+      SpeechRecognizer.dispatchError = Module.mono_bind_static_method("[Uno] Windows.Media.SpeechRecognition.SpeechRecognizer:DispatchError");
+     }
+     SpeechRecognizer.dispatchError(this.managedId, event.error);
+    });
+    this.managedId = managedId;
+    if (window.SpeechRecognition) {
+     this.recognition = new window.SpeechRecognition(culture);
+    } else if (window.webkitSpeechRecognition) {
+     this.recognition = new window.webkitSpeechRecognition(culture);
+    }
+    if (this.recognition) {
+     this.recognition.addEventListener("result", this.onResult);
+     this.recognition.addEventListener("speechstart", this.onSpeechStart);
+     this.recognition.addEventListener("error", this.onError);
+    }
+   }
+   static initialize(managedId, culture) {
+    const recognizer = new SpeechRecognizer(managedId, culture);
+    SpeechRecognizer.instanceMap[managedId] = recognizer;
+   }
+   static recognize(managedId) {
+    const recognizer = SpeechRecognizer.instanceMap[managedId];
+    if (recognizer.recognition) {
+     recognizer.recognition.continuous = false;
+     recognizer.recognition.interimResults = true;
+     recognizer.recognition.start();
+     return true;
+    } else {
+     return false;
+    }
+   }
+   static removeInstance(managedId) {
+    const recognizer = SpeechRecognizer.instanceMap[managedId];
+    recognizer.recognition.removeEventListener("result", recognizer.onResult);
+    recognizer.recognition.removeEventListener("speechstart", recognizer.onSpeechStart);
+    recognizer.recognition.removeEventListener("error", recognizer.onError);
+    delete SpeechRecognizer.instanceMap[managedId];
+   }
+  }
+  SpeechRecognizer.instanceMap = {};
+  Media.SpeechRecognizer = SpeechRecognizer;
+ })(Media = Windows.Media || (Windows.Media = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Storage;
+ (function(Storage) {
+  class ApplicationDataContainer {
+   static buildStorageKey(locality, key) {
+    return `UnoApplicationDataContainer_${locality}_${key}`;
+   }
+   static buildStoragePrefix(locality) {
+    return `UnoApplicationDataContainer_${locality}_`;
+   }
+   static tryGetValue(pParams, pReturn) {
+    const params = ApplicationDataContainer_TryGetValueParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_TryGetValueReturn();
+    const storageKey = ApplicationDataContainer.buildStorageKey(params.Locality, params.Key);
+    if (localStorage.hasOwnProperty(storageKey)) {
+     ret.HasValue = true;
+     ret.Value = localStorage.getItem(storageKey);
+    } else {
+     ret.Value = "";
+     ret.HasValue = false;
+    }
+    ret.marshal(pReturn);
+    return true;
+   }
+   static setValue(pParams) {
+    const params = ApplicationDataContainer_SetValueParams.unmarshal(pParams);
+    const storageKey = ApplicationDataContainer.buildStorageKey(params.Locality, params.Key);
+    localStorage.setItem(storageKey, params.Value);
+    return true;
+   }
+   static containsKey(pParams, pReturn) {
+    const params = ApplicationDataContainer_ContainsKeyParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_ContainsKeyReturn();
+    const storageKey = ApplicationDataContainer.buildStorageKey(params.Locality, params.Key);
+    ret.ContainsKey = localStorage.hasOwnProperty(storageKey);
+    ret.marshal(pReturn);
+    return true;
+   }
+   static getKeyByIndex(pParams, pReturn) {
+    const params = ApplicationDataContainer_GetKeyByIndexParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_GetKeyByIndexReturn();
+    let localityIndex = 0;
+    let returnKey = "";
+    const prefix = ApplicationDataContainer.buildStoragePrefix(params.Locality);
+    for (let i = 0; i < localStorage.length; i++) {
+     const storageKey = localStorage.key(i);
+     if (storageKey.startsWith(prefix)) {
+      if (localityIndex === params.Index) {
+       returnKey = storageKey.substr(prefix.length);
+      }
+      localityIndex++;
+     }
+    }
+    ret.Value = returnKey;
+    ret.marshal(pReturn);
+    return true;
+   }
+   static getCount(pParams, pReturn) {
+    const params = ApplicationDataContainer_GetCountParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_GetCountReturn();
+    ret.Count = 0;
+    const prefix = ApplicationDataContainer.buildStoragePrefix(params.Locality);
+    for (let i = 0; i < localStorage.length; i++) {
+     const storageKey = localStorage.key(i);
+     if (storageKey.startsWith(prefix)) {
+      ret.Count++;
+     }
+    }
+    ret.marshal(pReturn);
+    return true;
+   }
+   static clear(pParams) {
+    const params = ApplicationDataContainer_ClearParams.unmarshal(pParams);
+    const prefix = ApplicationDataContainer.buildStoragePrefix(params.Locality);
+    const itemsToRemove = [];
+    for (let i = 0; i < localStorage.length; i++) {
+     const storageKey = localStorage.key(i);
+     if (storageKey.startsWith(prefix)) {
+      itemsToRemove.push(storageKey);
+     }
+    }
+    for (const item in itemsToRemove) {
+     localStorage.removeItem(itemsToRemove[item]);
+    }
+    return true;
+   }
+   static remove(pParams, pReturn) {
+    const params = ApplicationDataContainer_RemoveParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_RemoveReturn();
+    const storageKey = ApplicationDataContainer.buildStorageKey(params.Locality, params.Key);
+    ret.Removed = localStorage.hasOwnProperty(storageKey);
+    if (ret.Removed) {
+     localStorage.removeItem(storageKey);
+    }
+    ret.marshal(pReturn);
+    return true;
+   }
+   static getValueByIndex(pParams, pReturn) {
+    const params = ApplicationDataContainer_GetValueByIndexParams.unmarshal(pParams);
+    const ret = new ApplicationDataContainer_GetKeyByIndexReturn();
+    let localityIndex = 0;
+    let returnKey = "";
+    const prefix = ApplicationDataContainer.buildStoragePrefix(params.Locality);
+    for (let i = 0; i < localStorage.length; i++) {
+     const storageKey = localStorage.key(i);
+     if (storageKey.startsWith(prefix)) {
+      if (localityIndex === params.Index) {
+       returnKey = localStorage.getItem(storageKey);
+      }
+      localityIndex++;
+     }
+    }
+    ret.Value = returnKey;
+    ret.marshal(pReturn);
+    return true;
+   }
+  }
+  Storage.ApplicationDataContainer = ApplicationDataContainer;
+ })(Storage = Windows.Storage || (Windows.Storage = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Storage;
+ (function(Storage) {
+  var Pickers;
+  (function(Pickers) {
+   class FileSavePicker {
+    static SaveAs(fileName, dataPtr, size) {
+     const buffer = new Uint8Array(size);
+     for (var i = 0; i < size; i++) {
+      buffer[i] = Module.getValue(dataPtr + i, "i8");
+     }
+     const a = window.document.createElement("a");
+     const blob = new Blob([ buffer ]);
+     a.href = window.URL.createObjectURL(blob);
+     a.download = fileName;
+     document.body.appendChild(a);
+     a.click();
+     document.body.removeChild(a);
+    }
+   }
+   Pickers.FileSavePicker = FileSavePicker;
+  })(Pickers = Storage.Pickers || (Storage.Pickers = {}));
+ })(Storage = Windows.Storage || (Windows.Storage = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
  var Storage;
  (function(Storage) {
   class StorageFolder {
@@ -13532,31 +14459,44 @@ var Windows;
    static setupStorage(path) {
     if (Uno.UI.WindowManager.isHosted) {
      console.debug("Hosted Mode: skipping IndexDB initialization");
+     StorageFolder.onStorageInitialized();
      return;
     }
     if (!this.isIndexDBAvailable()) {
      console.warn("IndexedDB is not available (private mode or uri starts with file:// ?), changes will not be persisted.");
+     StorageFolder.onStorageInitialized();
+     return;
+    }
+    if (typeof IDBFS === "undefined") {
+     console.warn(`IDBFS is not enabled in mono's configuration, persistence is disabled`);
+     StorageFolder.onStorageInitialized();
      return;
     }
     console.debug("Making persistent: " + path);
     FS.mkdir(path);
     FS.mount(IDBFS, {}, path);
-    const that = this;
-    FS.syncfs(true, err => {
-     if (err) {
-      console.error(`Error synchronizing filesystem from IndexDB: ${err}`);
-     }
-    });
     if (!this._isInit) {
+     FS.syncfs(true, err => {
+      if (err) {
+       console.error(`Error synchronizing filesystem from IndexDB: ${err} (errno: ${err.errno})`);
+      }
+      StorageFolder.onStorageInitialized();
+     });
      window.addEventListener("beforeunload", this.synchronizeFileSystem);
      setInterval(this.synchronizeFileSystem, 1e4);
      this._isInit = true;
     }
    }
+   static onStorageInitialized() {
+    if (!StorageFolder.dispatchStorageInitialized) {
+     StorageFolder.dispatchStorageInitialized = Module.mono_bind_static_method("[Uno] Windows.Storage.StorageFolder:DispatchStorageInitialized");
+    }
+    StorageFolder.dispatchStorageInitialized();
+   }
    static synchronizeFileSystem() {
     FS.syncfs(err => {
      if (err) {
-      console.error(`Error synchronizing filesystem from IndexDB: ${err}`);
+      console.error(`Error synchronizing filesystem from IndexDB: ${err} (errno: ${err.errno})`);
      }
     });
    }
@@ -13701,6 +14641,73 @@ var Windows;
 (function(Windows) {
  var Devices;
  (function(Devices) {
+  var Midi;
+  (function(Midi) {
+   class MidiInPort {
+    constructor(managedId, inputPort) {
+     this.messageReceived = (event => {
+      var serializedMessage = event.data[0].toString();
+      for (var i = 1; i < event.data.length; i++) {
+       serializedMessage += ":" + event.data[i];
+      }
+      MidiInPort.dispatchMessage(this.managedId, serializedMessage, event.timeStamp);
+     });
+     this.managedId = managedId;
+     this.inputPort = inputPort;
+    }
+    static createPort(managedId, encodedDeviceId) {
+     const midi = Uno.Devices.Midi.Internal.WasmMidiAccess.getMidi();
+     const deviceId = decodeURIComponent(encodedDeviceId);
+     const input = midi.inputs.get(deviceId);
+     MidiInPort.instanceMap[managedId] = new MidiInPort(managedId, input);
+    }
+    static removePort(managedId) {
+     MidiInPort.stopMessageListener(managedId);
+     delete MidiInPort.instanceMap[managedId];
+    }
+    static startMessageListener(managedId) {
+     if (!MidiInPort.dispatchMessage) {
+      MidiInPort.dispatchMessage = Module.mono_bind_static_method("[Uno] Windows.Devices.Midi.MidiInPort:DispatchMessage");
+     }
+     const instance = MidiInPort.instanceMap[managedId];
+     instance.inputPort.addEventListener("midimessage", instance.messageReceived);
+    }
+    static stopMessageListener(managedId) {
+     const instance = MidiInPort.instanceMap[managedId];
+     instance.inputPort.removeEventListener("midimessage", instance.messageReceived);
+    }
+   }
+   MidiInPort.instanceMap = {};
+   Midi.MidiInPort = MidiInPort;
+  })(Midi = Devices.Midi || (Devices.Midi = {}));
+ })(Devices = Windows.Devices || (Windows.Devices = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Devices;
+ (function(Devices) {
+  var Midi;
+  (function(Midi) {
+   class MidiOutPort {
+    static sendBuffer(encodedDeviceId, timestamp, ...args) {
+     const midi = Uno.Devices.Midi.Internal.WasmMidiAccess.getMidi();
+     const deviceId = decodeURIComponent(encodedDeviceId);
+     const output = midi.outputs.get(deviceId);
+     output.send(args, timestamp);
+    }
+   }
+   Midi.MidiOutPort = MidiOutPort;
+  })(Midi = Devices.Midi || (Devices.Midi = {}));
+ })(Devices = Windows.Devices || (Windows.Devices = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Devices;
+ (function(Devices) {
   var Sensors;
   (function(Sensors) {
    class Accelerometer {
@@ -13809,6 +14816,129 @@ var Windows;
 var Windows;
 
 (function(Windows) {
+ var Graphics;
+ (function(Graphics) {
+  var Display;
+  (function(Display) {
+   class DisplayInformation {
+    static startOrientationChanged() {
+     window.screen.orientation.addEventListener("change", DisplayInformation.onOrientationChange);
+    }
+    static stopOrientationChanged() {
+     window.screen.orientation.removeEventListener("change", DisplayInformation.onOrientationChange);
+    }
+    static startDpiChanged() {
+     DisplayInformation.lastDpi = window.devicePixelRatio;
+     DisplayInformation.dpiWatcher = window.setInterval(DisplayInformation.updateDpi, DisplayInformation.DpiCheckInterval);
+    }
+    static stopDpiChanged() {
+     window.clearInterval(DisplayInformation.dpiWatcher);
+    }
+    static updateDpi() {
+     const currentDpi = window.devicePixelRatio;
+     if (Math.abs(DisplayInformation.lastDpi - currentDpi) > .001) {
+      if (DisplayInformation.dispatchDpiChanged == null) {
+       DisplayInformation.dispatchDpiChanged = Module.mono_bind_static_method("[Uno] Windows.Graphics.Display.DisplayInformation:DispatchDpiChanged");
+      }
+      DisplayInformation.dispatchDpiChanged(currentDpi);
+     }
+     DisplayInformation.lastDpi = currentDpi;
+    }
+    static onOrientationChange() {
+     if (DisplayInformation.dispatchOrientationChanged == null) {
+      DisplayInformation.dispatchOrientationChanged = Module.mono_bind_static_method("[Uno] Windows.Graphics.Display.DisplayInformation:DispatchOrientationChanged");
+     }
+     DisplayInformation.dispatchOrientationChanged(window.screen.orientation.type);
+    }
+   }
+   DisplayInformation.DpiCheckInterval = 1e3;
+   Display.DisplayInformation = DisplayInformation;
+  })(Display = Graphics.Display || (Graphics.Display = {}));
+ })(Graphics = Windows.Graphics || (Windows.Graphics = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Networking;
+ (function(Networking) {
+  var Connectivity;
+  (function(Connectivity) {
+   class ConnectionProfile {
+    static hasInternetAccess() {
+     return navigator.onLine;
+    }
+   }
+   Connectivity.ConnectionProfile = ConnectionProfile;
+  })(Connectivity = Networking.Connectivity || (Networking.Connectivity = {}));
+ })(Networking = Windows.Networking || (Windows.Networking = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var Networking;
+ (function(Networking) {
+  var Connectivity;
+  (function(Connectivity) {
+   class NetworkInformation {
+    static startStatusChanged() {
+     window.addEventListener("online", NetworkInformation.networkStatusChanged);
+     window.addEventListener("offline", NetworkInformation.networkStatusChanged);
+    }
+    static stopStatusChanged() {
+     window.removeEventListener("online", NetworkInformation.networkStatusChanged);
+     window.removeEventListener("offline", NetworkInformation.networkStatusChanged);
+    }
+    static networkStatusChanged() {
+     if (NetworkInformation.dispatchStatusChanged == null) {
+      NetworkInformation.dispatchStatusChanged = Module.mono_bind_static_method("[Uno] Windows.Networking.Connectivity.NetworkInformation:DispatchStatusChanged");
+     }
+     NetworkInformation.dispatchStatusChanged();
+    }
+   }
+   Connectivity.NetworkInformation = NetworkInformation;
+  })(Connectivity = Networking.Connectivity || (Networking.Connectivity = {}));
+ })(Networking = Windows.Networking || (Windows.Networking = {}));
+})(Windows || (Windows = {}));
+
+var WakeLockType;
+
+(function(WakeLockType) {
+ WakeLockType["screen"] = "screen";
+})(WakeLockType || (WakeLockType = {}));
+
+var Windows;
+
+(function(Windows) {
+ var System;
+ (function(System) {
+  var Display;
+  (function(Display) {
+   class DisplayRequest {
+    static activateScreenLock() {
+     if (navigator.wakeLock) {
+      DisplayRequest.activeScreenLockPromise = navigator.wakeLock.request(WakeLockType.screen);
+      DisplayRequest.activeScreenLockPromise.catch(reason => console.log("Could not acquire screen lock (" + reason + ")"));
+     } else {
+      console.log("Wake Lock API is not available in this browser.");
+     }
+    }
+    static deactivateScreenLock() {
+     if (DisplayRequest.activeScreenLockPromise) {
+      DisplayRequest.activeScreenLockPromise.then(sentinel => sentinel.release());
+      DisplayRequest.activeScreenLockPromise = null;
+     }
+    }
+   }
+   Display.DisplayRequest = DisplayRequest;
+  })(Display = System.Display || (System.Display = {}));
+ })(System = Windows.System || (Windows.System = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
  var System;
  (function(System) {
   var Profile;
@@ -13901,17 +15031,89 @@ var Windows;
 (function(Windows) {
  var UI;
  (function(UI) {
+  var ViewManagement;
+  (function(ViewManagement) {
+   class ApplicationView {
+    static setFullScreenMode(turnOn) {
+     if (turnOn) {
+      if (document.fullscreenEnabled) {
+       document.documentElement.requestFullscreen();
+       return true;
+      } else {
+       return false;
+      }
+     } else {
+      document.exitFullscreen();
+      return true;
+     }
+    }
+   }
+   ViewManagement.ApplicationView = ApplicationView;
+  })(ViewManagement = UI.ViewManagement || (UI.ViewManagement = {}));
+ })(UI = Windows.UI || (Windows.UI = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var UI;
+ (function(UI) {
+  var ViewManagement;
+  (function(ViewManagement) {
+   class ApplicationViewTitleBar {
+    static setBackgroundColor(colorString) {
+     if (colorString == null) {
+      var metaThemeColorEntries = document.querySelectorAll("meta[name='theme-color']");
+      for (let entry of metaThemeColorEntries) {
+       entry.remove();
+      }
+     } else {
+      var metaThemeColorEntries = document.querySelectorAll("meta[name='theme-color']");
+      var metaThemeColor;
+      if (metaThemeColorEntries.length == 0) {
+       metaThemeColor = document.createElement("meta");
+       metaThemeColor.setAttribute("name", "theme-color");
+       document.head.appendChild(metaThemeColor);
+      } else {
+       metaThemeColor = metaThemeColorEntries[0];
+      }
+      metaThemeColor.setAttribute("content", colorString);
+     }
+    }
+   }
+   ViewManagement.ApplicationViewTitleBar = ApplicationViewTitleBar;
+  })(ViewManagement = UI.ViewManagement || (UI.ViewManagement = {}));
+ })(UI = Windows.UI || (Windows.UI = {}));
+})(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var UI;
+ (function(UI) {
   var Xaml;
   (function(Xaml) {
    class Application {
     static getDefaultSystemTheme() {
-     if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return Xaml.ApplicationTheme.Dark;
-     }
-     if (window.matchMedia("(prefers-color-scheme: light)").matches) {
-      return Xaml.ApplicationTheme.Light;
+     if (window.matchMedia) {
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+       return Xaml.ApplicationTheme.Dark;
+      }
+      if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+       return Xaml.ApplicationTheme.Light;
+      }
      }
      return null;
+    }
+    static observeSystemTheme() {
+     if (!this.dispatchThemeChange) {
+      this.dispatchThemeChange = Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.Application:DispatchSystemThemeChange");
+     }
+     if (window.matchMedia) {
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+       Application.dispatchThemeChange();
+      });
+     }
     }
    }
    Xaml.Application = Application;
@@ -13934,6 +15136,38 @@ var Windows;
   })(Xaml = UI.Xaml || (UI.Xaml = {}));
  })(UI = Windows.UI || (Windows.UI = {}));
 })(Windows || (Windows = {}));
+
+var Uno;
+
+(function(Uno) {
+ var Devices;
+ (function(Devices) {
+  var Midi;
+  (function(Midi) {
+   var Internal;
+   (function(Internal) {
+    class WasmMidiAccess {
+     static request(systemExclusive) {
+      if (navigator.requestMIDIAccess) {
+       return navigator.requestMIDIAccess({
+        sysex: systemExclusive
+       }).then(midi => {
+        WasmMidiAccess.midiAccess = midi;
+        return "true";
+       }, () => "false");
+      } else {
+       return Promise.resolve("false");
+      }
+     }
+     static getMidi() {
+      return WasmMidiAccess.midiAccess;
+     }
+    }
+    Internal.WasmMidiAccess = WasmMidiAccess;
+   })(Internal = Midi.Internal || (Midi.Internal = {}));
+  })(Midi = Devices.Midi || (Devices.Midi = {}));
+ })(Devices = Uno.Devices || (Uno.Devices = {}));
+})(Uno || (Uno = {}));
 
 var Windows;
 
@@ -13961,6 +15195,174 @@ var Windows;
   })(Devices = Phone.Devices || (Phone.Devices = {}));
  })(Phone = Windows.Phone || (Windows.Phone = {}));
 })(Windows || (Windows = {}));
+
+var Windows;
+
+(function(Windows) {
+ var UI;
+ (function(UI) {
+  var Xaml;
+  (function(Xaml) {
+   var Media;
+   (function(Media) {
+    var Animation;
+    (function(Animation) {
+     class RenderingLoopFloatAnimator {
+      constructor(managedHandle) {
+       this.managedHandle = managedHandle;
+       this._isEnabled = false;
+      }
+      static createInstance(managedHandle, jsHandle) {
+       RenderingLoopFloatAnimator.activeInstances[jsHandle] = new RenderingLoopFloatAnimator(managedHandle);
+      }
+      static getInstance(jsHandle) {
+       return RenderingLoopFloatAnimator.activeInstances[jsHandle];
+      }
+      static destroyInstance(jsHandle) {
+       delete RenderingLoopFloatAnimator.activeInstances[jsHandle];
+      }
+      SetStartFrameDelay(delay) {
+       this.unscheduleFrame();
+       if (this._isEnabled) {
+        this.scheduleDelayedFrame(delay);
+       }
+      }
+      SetAnimationFramesInterval() {
+       this.unscheduleFrame();
+       if (this._isEnabled) {
+        this.onFrame();
+       }
+      }
+      EnableFrameReporting() {
+       if (this._isEnabled) {
+        return;
+       }
+       this._isEnabled = true;
+       this.scheduleAnimationFrame();
+      }
+      DisableFrameReporting() {
+       this._isEnabled = false;
+       this.unscheduleFrame();
+      }
+      onFrame() {
+       Uno.Foundation.Interop.ManagedObject.dispatch(this.managedHandle, "OnFrame", null);
+       if (this._isEnabled && this._frameRequestId == null && this._delayRequestId == null) {
+        this.scheduleAnimationFrame();
+       }
+      }
+      unscheduleFrame() {
+       if (this._delayRequestId != null) {
+        clearTimeout(this._delayRequestId);
+        this._delayRequestId = null;
+       }
+       if (this._frameRequestId != null) {
+        window.cancelAnimationFrame(this._frameRequestId);
+        this._frameRequestId = null;
+       }
+      }
+      scheduleDelayedFrame(delay) {
+       this._delayRequestId = setTimeout(() => {
+        this._delayRequestId = null;
+        this.onFrame();
+       }, delay);
+      }
+      scheduleAnimationFrame() {
+       this._frameRequestId = window.requestAnimationFrame(() => {
+        this._frameRequestId = null;
+        this.onFrame();
+       });
+      }
+     }
+     RenderingLoopFloatAnimator.activeInstances = {};
+     Animation.RenderingLoopFloatAnimator = RenderingLoopFloatAnimator;
+    })(Animation = Media.Animation || (Media.Animation = {}));
+   })(Media = Xaml.Media || (Xaml.Media = {}));
+  })(Xaml = UI.Xaml || (UI.Xaml = {}));
+ })(UI = Windows.UI || (Windows.UI = {}));
+})(Windows || (Windows = {}));
+
+var Uno;
+
+(function(Uno) {
+ var Devices;
+ (function(Devices) {
+  var Enumeration;
+  (function(Enumeration) {
+   var Internal;
+   (function(Internal) {
+    var Providers;
+    (function(Providers) {
+     var Midi;
+     (function(Midi) {
+      class MidiDeviceClassProvider {
+       static findDevices(findInputDevices) {
+        var result = "";
+        const midi = Uno.Devices.Midi.Internal.WasmMidiAccess.getMidi();
+        if (findInputDevices) {
+         midi.inputs.forEach((input, key) => {
+          const inputId = input.id;
+          const name = input.name;
+          const encodedMetadata = encodeURIComponent(inputId) + "#" + encodeURIComponent(name);
+          result += encodedMetadata + "&";
+         });
+        } else {
+         midi.outputs.forEach((output, key) => {
+          const outputId = output.id;
+          const name = output.name;
+          const encodedMetadata = encodeURIComponent(outputId) + "#" + encodeURIComponent(name);
+          result += encodedMetadata + "&";
+         });
+        }
+        return result;
+       }
+      }
+      Midi.MidiDeviceClassProvider = MidiDeviceClassProvider;
+     })(Midi = Providers.Midi || (Providers.Midi = {}));
+    })(Providers = Internal.Providers || (Internal.Providers = {}));
+   })(Internal = Enumeration.Internal || (Enumeration.Internal = {}));
+  })(Enumeration = Devices.Enumeration || (Devices.Enumeration = {}));
+ })(Devices = Uno.Devices || (Uno.Devices = {}));
+})(Uno || (Uno = {}));
+
+var Uno;
+
+(function(Uno) {
+ var Devices;
+ (function(Devices) {
+  var Enumeration;
+  (function(Enumeration) {
+   var Internal;
+   (function(Internal) {
+    var Providers;
+    (function(Providers) {
+     var Midi;
+     (function(Midi) {
+      class MidiDeviceConnectionWatcher {
+       static startStateChanged() {
+        const midi = Uno.Devices.Midi.Internal.WasmMidiAccess.getMidi();
+        midi.addEventListener("statechange", MidiDeviceConnectionWatcher.onStateChanged);
+       }
+       static stopStateChanged() {
+        const midi = Uno.Devices.Midi.Internal.WasmMidiAccess.getMidi();
+        midi.removeEventListener("statechange", MidiDeviceConnectionWatcher.onStateChanged);
+       }
+       static onStateChanged(event) {
+        if (!MidiDeviceConnectionWatcher.dispatchStateChanged) {
+         MidiDeviceConnectionWatcher.dispatchStateChanged = Module.mono_bind_static_method("[Uno] Uno.Devices.Enumeration.Internal.Providers.Midi.MidiDeviceConnectionWatcher:DispatchStateChanged");
+        }
+        const port = event.port;
+        const isInput = port.type == "input";
+        const isConnected = port.state == "connected";
+        MidiDeviceConnectionWatcher.dispatchStateChanged(port.id, port.name, isInput, isConnected);
+       }
+      }
+      Midi.MidiDeviceConnectionWatcher = MidiDeviceConnectionWatcher;
+     })(Midi = Providers.Midi || (Providers.Midi = {}));
+    })(Providers = Internal.Providers || (Internal.Providers = {}));
+   })(Internal = Enumeration.Internal || (Enumeration.Internal = {}));
+  })(Enumeration = Devices.Enumeration || (Devices.Enumeration = {}));
+ })(Devices = Uno.Devices || (Uno.Devices = {}));
+})(Uno || (Uno = {}));
 
 (function(global, undefined) {
  "use strict";

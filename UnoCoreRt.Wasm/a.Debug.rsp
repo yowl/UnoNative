@@ -1,4 +1,4 @@
-E:\GitHub\UnoCoreRt\UnoCoreRt.Wasm\bin\Release\netstandard2.0\UnoCoreRt.Wasm.dll
+E:\GitHub\UnoCoreRt\UnoCoreRt.Wasm\bin\Debug\netstandard2.0\UnoCoreRt.Wasm.dll
 -o:E:\GitHub\UnoCoreRt\UnoCoreRt.Wasm\bin\Debug\netstandard2.0\UnoCoreRt.Wasm.bc
 -r:E:\GitHub\corert\tests\src\Simple\HelloWasm\obj\Debug\wasm\\CpObj.dll
 -r:E:\GitHub\corert\tests\src\Simple\HelloWasm\obj\Debug\wasm\\ILHelpers.dll

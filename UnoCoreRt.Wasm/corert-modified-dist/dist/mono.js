@@ -476,19 +476,114 @@ if (Module["wasmBinary"]) wasmBinary = Module["wasmBinary"];
     @param {string} type
     @param {number|boolean=} noSafe */
 function getValue(ptr, type, noSafe) {
-  type = type || 'i8';
-  if (type.charAt(type.length-1) === '*') type = 'i32'; // pointers are 32-bit
-    switch(type) {
-      case 'i1': return HEAP8[((ptr)>>0)];
-      case 'i8': return HEAP8[((ptr)>>0)];
-      case 'i16': return HEAP16[((ptr)>>1)];
-      case 'i32': return HEAP32[((ptr)>>2)];
-      case 'i64': return HEAP32[((ptr)>>2)];
-      case 'float': return HEAPF32[((ptr)>>2)];
-      case 'double': return HEAPF64[((ptr)>>3)];
-      default: abort('invalid type for getValue: ' + type);
-    }
-  return null;
+ type = type || "i8";
+ if (type.charAt(type.length - 1) === "*") type = "i32";
+ switch (type) {
+ case "i1":
+  return _asan_js_load_1(ptr >> 0);
+
+ case "i8":
+  return _asan_js_load_1(ptr >> 0);
+
+ case "i16":
+  return _asan_js_load_2(ptr >> 1);
+
+ case "i32":
+  return _asan_js_load_4(ptr >> 2);
+
+ case "i64":
+  return _asan_js_load_4(ptr >> 2);
+
+ case "float":
+  return _asan_js_load_f(ptr >> 2);
+
+ case "double":
+  return _asan_js_load_d(ptr >> 3);
+
+ default:
+  abort("invalid type for getValue: " + type);
+ }
+ return null;
+}
+
+function _asan_js_load_1(ptr) {
+ if (runtimeInitialized) return _asan_c_load_1(ptr);
+ return HEAP8[ptr];
+}
+
+function _asan_js_load_1u(ptr) {
+ if (runtimeInitialized) return _asan_c_load_1u(ptr);
+ return HEAPU8[ptr];
+}
+
+function _asan_js_load_2(ptr) {
+ if (runtimeInitialized) return _asan_c_load_2(ptr);
+ return HEAP16[ptr];
+}
+
+function _asan_js_load_2u(ptr) {
+ if (runtimeInitialized) return _asan_c_load_2u(ptr);
+ return HEAPU16[ptr];
+}
+
+function _asan_js_load_4(ptr) {
+ if (runtimeInitialized) return _asan_c_load_4(ptr);
+ return HEAP32[ptr];
+}
+
+function _asan_js_load_4u(ptr) {
+ if (runtimeInitialized) return _asan_c_load_4u(ptr) >>> 0;
+ return HEAPU32[ptr];
+}
+
+function _asan_js_load_f(ptr) {
+ if (runtimeInitialized) return _asan_c_load_f(ptr);
+ return HEAPF32[ptr];
+}
+
+function _asan_js_load_d(ptr) {
+ if (runtimeInitialized) return _asan_c_load_d(ptr);
+ return HEAPF64[ptr];
+}
+
+function _asan_js_store_1(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_1(ptr, val);
+ return HEAP8[ptr] = val;
+}
+
+function _asan_js_store_1u(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_1u(ptr, val);
+ return HEAPU8[ptr] = val;
+}
+
+function _asan_js_store_2(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_2(ptr, val);
+ return HEAP16[ptr] = val;
+}
+
+function _asan_js_store_2u(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_2u(ptr, val);
+ return HEAPU16[ptr] = val;
+}
+
+function _asan_js_store_4(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_4(ptr, val);
+ return HEAP32[ptr] = val;
+}
+
+function _asan_js_store_4u(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_4u(ptr, val) >>> 0;
+ return HEAPU32[ptr] = val;
+}
+
+function _asan_js_store_f(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_f(ptr, val);
+ return HEAPF32[ptr] = val;
+}
+
+function _asan_js_store_d(ptr, val) {
+ if (runtimeInitialized) return _asan_c_store_d(ptr, val);
+ return HEAPF64[ptr] = val;
 }
 
 
@@ -843,11 +938,7 @@ function updateGlobalBufferAndViews(buf) {
   Module['HEAPF32'] = HEAPF32 = new Float32Array(buf);
   Module['HEAPF64'] = HEAPF64 = new Float64Array(buf);
 }
-var STACK_BASE = 19439792,
-    STACKTOP = STACK_BASE,
-    STACK_MAX = 14196912;
-
-
+var STACK_BASE = 98764400, STACKTOP = STACK_BASE, STACK_MAX = 93521520;
 assert(STACK_BASE % 16 === 0, "stack must start aligned");
 
 
@@ -883,24 +974,18 @@ updateGlobalBufferAndViews(buffer);
 
 // Initializes the stack cookie. Called at the startup of main and at the startup of each thread in pthreads mode.
 function writeStackCookie() {
-  assert((STACK_MAX & 3) == 0);
-  // The stack grows downwards
-  HEAPU32[(STACK_MAX >> 2)+1] = 0x2135467;
-  HEAPU32[(STACK_MAX >> 2)+2] = 0x89BACDFE;
-  // Also test the global address 0 for integrity.
-  // We don't do this with ASan because ASan does its own checks for this.
-  HEAP32[0] = 0x63736d65; /* 'emsc' */
+ assert((STACK_MAX & 3) == 0);
+ _asan_js_store_4u((STACK_MAX >> 2) + 1, 34821223);
+ _asan_js_store_4u((STACK_MAX >> 2) + 2, 2310721022);
 }
 
+
 function checkStackCookie() {
-  var cookie1 = HEAPU32[(STACK_MAX >> 2)+1];
-  var cookie2 = HEAPU32[(STACK_MAX >> 2)+2];
-  if (cookie1 != 0x2135467 || cookie2 != 0x89BACDFE) {
-    abort('Stack overflow! Stack cookie has been overwritten, expected hex dwords 0x89BACDFE and 0x2135467, but received 0x' + cookie2.toString(16) + ' ' + cookie1.toString(16));
-  }
-  // Also test the global address 0 for integrity.
-  // We don't do this with ASan because ASan does its own checks for this.
-  if (HEAP32[0] !== 0x63736d65 /* 'emsc' */) abort('Runtime error: The application has corrupted its heap memory area (address zero)!');
+ var cookie1 = _asan_js_load_4u((STACK_MAX >> 2) + 1);
+ var cookie2 = _asan_js_load_4u((STACK_MAX >> 2) + 2);
+ if (cookie1 != 34821223 || cookie2 != 2310721022) {
+  abort("Stack overflow! Stack cookie has been overwritten, expected hex dwords 0x89BACDFE and 0x2135467, but received 0x" + cookie2.toString(16) + " " + cookie1.toString(16));
+ }
 }
 
 function callRuntimeCallbacks(callbacks) {
@@ -1274,6 +1359,13 @@ function createWasm(env) {
           var funcInstance = dotNetExports.jsCallDispatcher.findJSFunction(jsFuncName);
   
             exception="";
+            if(funcInstance){
+                console.log("func " + funcInstance);
+            }
+            else
+            {
+                console.log("no func instance");
+            }
           return funcInstance.call(null, arg0, arg1, arg2);
   //        exception = 0;
   //        return "" + res;
@@ -1432,10 +1524,36 @@ var stackAlloc = Module["stackAlloc"] = createExportWrapper("stackAlloc");
 var ___set_stack_limit = Module["___set_stack_limit"] = createExportWrapper("__set_stack_limit");
 
 
-
-
 var ASM_CONSTS = {
-  
+ 66475426: function() {
+  return withBuiltinMalloc(function() {
+   return allocateUTF8(Module["ASAN_OPTIONS"] || 0);
+  });
+ },
+ 66475524: function() {
+  return withBuiltinMalloc(function() {
+   return allocateUTF8(Module["LSAN_OPTIONS"] || 0);
+  });
+ },
+ 66475621: function() {
+  return withBuiltinMalloc(function() {
+   return allocateUTF8(Module["UBSAN_OPTIONS"] || 0);
+  });
+ },
+ 66494624: function() {
+  return STACK_BASE;
+ },
+ 66494647: function() {
+  return STACK_MAX;
+ },
+ 66509181: function() {
+  var setting = Module["printWithColors"];
+  if (setting != null) {
+   return setting;
+  } else {
+   return ENVIRONMENT_IS_NODE && process.stderr.isTTY;
+  }
+ }
 };
 function _emscripten_asm_const_i(code) {
     return ASM_CONSTS[code]()
@@ -1718,209 +1836,1445 @@ function ___cxa_atexit(a0,a1
       return (getTempRet0() | 0);
     }
   
-  /** @type {function(...*):?} */
-  function _CompareStringEx(
-  ) {
-  err('missing function: CompareStringEx'); abort(-1);
-  }
+function _ioctlsocket() {
+ err("missing function: ioctlsocket");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _CompareStringOrdinal(
-  ) {
-  err('missing function: CompareStringOrdinal'); abort(-1);
-  }
+function _closesocket() {
+ err("missing function: closesocket");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _EnumCalendarInfoExEx(
-  ) {
-  err('missing function: EnumCalendarInfoExEx'); abort(-1);
-  }
+function _AcceptSecurityContext() {
+ err("missing function: AcceptSecurityContext");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _EnumSystemLocalesEx(
-  ) {
-  err('missing function: EnumSystemLocalesEx'); abort(-1);
-  }
+function _AcquireCredentialsHandleW() {
+ err("missing function: AcquireCredentialsHandleW");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _EnumTimeFormatsEx(
-  ) {
-  err('missing function: EnumTimeFormatsEx'); abort(-1);
-  }
+function _ApplyControlToken() {
+ err("missing function: ApplyControlToken");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _FindNLSStringEx(
-  ) {
-  err('missing function: FindNLSStringEx'); abort(-1);
-  }
+function _BCryptCloseAlgorithmProvider() {
+ err("missing function: BCryptCloseAlgorithmProvider");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _FindStringOrdinal(
-  ) {
-  err('missing function: FindStringOrdinal'); abort(-1);
-  }
+function _BCryptCreateHash() {
+ err("missing function: BCryptCreateHash");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GetCalendarInfoEx(
-  ) {
-  err('missing function: GetCalendarInfoEx'); abort(-1);
-  }
+function _BCryptDestroyHash() {
+ err("missing function: BCryptDestroyHash");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GetLocaleInfoEx(
-  ) {
-  err('missing function: GetLocaleInfoEx'); abort(-1);
-  }
+function _BCryptDestroyKey() {
+ err("missing function: BCryptDestroyKey");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GetUserPreferredUILanguages(
-  ) {
-  err('missing function: GetUserPreferredUILanguages'); abort(-1);
-  }
+function _BCryptExportKey() {
+ err("missing function: BCryptExportKey");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_ChangeCase(
-  ) {
-  err('missing function: GlobalizationNative_ChangeCase'); abort(-1);
-  }
+function _BCryptFinishHash() {
+ err("missing function: BCryptFinishHash");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_ChangeCaseInvariant(
-  ) {
-  err('missing function: GlobalizationNative_ChangeCaseInvariant'); abort(-1);
-  }
+function _BCryptGenRandom() {
+ err("missing function: BCryptGenRandom");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_ChangeCaseTurkish(
-  ) {
-  err('missing function: GlobalizationNative_ChangeCaseTurkish'); abort(-1);
-  }
+function _BCryptGetProperty() {
+ err("missing function: BCryptGetProperty");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetCalendars(
-  ) {
-  err('missing function: GlobalizationNative_GetCalendars'); abort(-1);
-  }
+function _BCryptHashData() {
+ err("missing function: BCryptHashData");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetDefaultLocaleName(
-  ) {
-  err('missing function: GlobalizationNative_GetDefaultLocaleName'); abort(-1);
-  }
+function _BCryptOpenAlgorithmProvider() {
+ err("missing function: BCryptOpenAlgorithmProvider");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetJapaneseEraStartDate(
-  ) {
-  err('missing function: GlobalizationNative_GetJapaneseEraStartDate'); abort(-1);
-  }
+function _CancelIoEx() {
+ err("missing function: CancelIoEx");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLatestJapaneseEra(
-  ) {
-  err('missing function: GlobalizationNative_GetLatestJapaneseEra'); abort(-1);
-  }
+function _CertAddCertificateLinkToStore() {
+ err("missing function: CertAddCertificateLinkToStore");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocaleInfoGroupingSizes(
-  ) {
-  err('missing function: GlobalizationNative_GetLocaleInfoGroupingSizes'); abort(-1);
-  }
+function _CertCloseStore() {
+ err("missing function: CertCloseStore");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocaleInfoInt(
-  ) {
-  err('missing function: GlobalizationNative_GetLocaleInfoInt'); abort(-1);
-  }
+function _CertControlStore() {
+ err("missing function: CertControlStore");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocaleInfoString(
-  ) {
-  err('missing function: GlobalizationNative_GetLocaleInfoString'); abort(-1);
-  }
+function _CertCreateCertificateChainEngine() {
+ err("missing function: CertCreateCertificateChainEngine");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocaleName(
-  ) {
-  err('missing function: GlobalizationNative_GetLocaleName'); abort(-1);
-  }
+function _CertDuplicateCertificateContext() {
+ err("missing function: CertDuplicateCertificateContext");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocaleTimeFormat(
-  ) {
-  err('missing function: GlobalizationNative_GetLocaleTimeFormat'); abort(-1);
-  }
+function _CertEnumCertificatesInStore() {
+ err("missing function: CertEnumCertificatesInStore");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetLocales(
-  ) {
-  err('missing function: GlobalizationNative_GetLocales'); abort(-1);
-  }
+function _CertFindCertificateInStore() {
+ err("missing function: CertFindCertificateInStore");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_GetTimeZoneDisplayName(
-  ) {
-  err('missing function: GlobalizationNative_GetTimeZoneDisplayName'); abort(-1);
-  }
+function _CertFindExtension() {
+ err("missing function: CertFindExtension");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_NormalizeString(
-  ) {
-  err('missing function: GlobalizationNative_NormalizeString'); abort(-1);
-  }
+function _CertFreeCertificateChain() {
+ err("missing function: CertFreeCertificateChain");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_ToAscii(
-  ) {
-  err('missing function: GlobalizationNative_ToAscii'); abort(-1);
-  }
+function _CertFreeCertificateChainEngine() {
+ err("missing function: CertFreeCertificateChainEngine");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _GlobalizationNative_ToUnicode(
-  ) {
-  err('missing function: GlobalizationNative_ToUnicode'); abort(-1);
-  }
+function _CertFreeCertificateContext() {
+ err("missing function: CertFreeCertificateContext");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _IdnToAscii(
-  ) {
-  err('missing function: IdnToAscii'); abort(-1);
-  }
+function _CertGetCertificateChain() {
+ err("missing function: CertGetCertificateChain");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _IdnToUnicode(
-  ) {
-  err('missing function: IdnToUnicode'); abort(-1);
-  }
+function _CertGetCertificateContextProperty() {
+ err("missing function: CertGetCertificateContextProperty");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _LCIDToLocaleName(
-  ) {
-  err('missing function: LCIDToLocaleName'); abort(-1);
-  }
+function _CertGetIntendedKeyUsage() {
+ err("missing function: CertGetIntendedKeyUsage");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _LCMapStringEx(
-  ) {
-  err('missing function: LCMapStringEx'); abort(-1);
-  }
+function _CertGetNameStringW() {
+ err("missing function: CertGetNameStringW");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _LocaleNameToLCID(
-  ) {
-  err('missing function: LocaleNameToLCID'); abort(-1);
-  }
+function _CertGetValidUsages() {
+ err("missing function: CertGetValidUsages");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _NormalizeString(
-  ) {
-  err('missing function: NormalizeString'); abort(-1);
-  }
+function _CertNameToStrW() {
+ err("missing function: CertNameToStrW");
+ abort(-1);
+}
 
-  /** @type {function(...*):?} */
-  function _ResolveLocaleName(
-  ) {
-  err('missing function: ResolveLocaleName'); abort(-1);
-  }
+function _CertOpenStore() {
+ err("missing function: CertOpenStore");
+ abort(-1);
+}
+
+function _CertVerifyCertificateChainPolicy() {
+ err("missing function: CertVerifyCertificateChainPolicy");
+ abort(-1);
+}
+
+function _CertVerifyTimeValidity() {
+ err("missing function: CertVerifyTimeValidity");
+ abort(-1);
+}
+
+function _CompareStringEx() {
+ err("missing function: CompareStringEx");
+ abort(-1);
+}
+
+function _CompareStringOrdinal() {
+ err("missing function: CompareStringOrdinal");
+ abort(-1);
+}
+
+function _CompleteAuthToken() {
+ err("missing function: CompleteAuthToken");
+ abort(-1);
+}
+
+function _CopyFileExW() {
+ err("missing function: CopyFileExW");
+ abort(-1);
+}
+
+function _CreateFileW() {
+ err("missing function: CreateFileW");
+ abort(-1);
+}
+
+function _CryptAcquireContextW() {
+ err("missing function: CryptAcquireContextW");
+ abort(-1);
+}
+
+function _CryptDecodeObject() {
+ err("missing function: CryptDecodeObject");
+ abort(-1);
+}
+
+function _CryptDestroyKey() {
+ err("missing function: CryptDestroyKey");
+ abort(-1);
+}
+
+function _CryptFindOIDInfo() {
+ err("missing function: CryptFindOIDInfo");
+ abort(-1);
+}
+
+function _CryptFormatObject() {
+ err("missing function: CryptFormatObject");
+ abort(-1);
+}
+
+function _CryptGenKey() {
+ err("missing function: CryptGenKey");
+ abort(-1);
+}
+
+function _CryptGetDefaultProviderW() {
+ err("missing function: CryptGetDefaultProviderW");
+ abort(-1);
+}
+
+function _CryptGetKeyParam() {
+ err("missing function: CryptGetKeyParam");
+ abort(-1);
+}
+
+function _CryptGetProvParam() {
+ err("missing function: CryptGetProvParam");
+ abort(-1);
+}
+
+function _CryptGetUserKey() {
+ err("missing function: CryptGetUserKey");
+ abort(-1);
+}
+
+function _CryptImportKey() {
+ err("missing function: CryptImportKey");
+ abort(-1);
+}
+
+function _CryptImportPublicKeyInfoEx2() {
+ err("missing function: CryptImportPublicKeyInfoEx2");
+ abort(-1);
+}
+
+function _CryptReleaseContext() {
+ err("missing function: CryptReleaseContext");
+ abort(-1);
+}
+
+function _CryptSetProvParam() {
+ err("missing function: CryptSetProvParam");
+ abort(-1);
+}
+
+function _DecryptMessage() {
+ err("missing function: DecryptMessage");
+ abort(-1);
+}
+
+function _DeleteFileW() {
+ err("missing function: DeleteFileW");
+ abort(-1);
+}
+
+function _DeleteSecurityContext() {
+ err("missing function: DeleteSecurityContext");
+ abort(-1);
+}
+
+function _DeleteVolumeMountPointW() {
+ err("missing function: DeleteVolumeMountPointW");
+ abort(-1);
+}
+
+function _EncryptMessage() {
+ err("missing function: EncryptMessage");
+ abort(-1);
+}
+
+function _EnumCalendarInfoExEx() {
+ err("missing function: EnumCalendarInfoExEx");
+ abort(-1);
+}
+
+function _EnumSystemLocalesEx() {
+ err("missing function: EnumSystemLocalesEx");
+ abort(-1);
+}
+
+function _EnumTimeFormatsEx() {
+ err("missing function: EnumTimeFormatsEx");
+ abort(-1);
+}
+
+function _EnumerateSecurityPackagesW() {
+ err("missing function: EnumerateSecurityPackagesW");
+ abort(-1);
+}
+
+function _FindClose() {
+ err("missing function: FindClose");
+ abort(-1);
+}
+
+function _FindFirstFileExW() {
+ err("missing function: FindFirstFileExW");
+ abort(-1);
+}
+
+function _FindNLSStringEx() {
+ err("missing function: FindNLSStringEx");
+ abort(-1);
+}
+
+function _FindNextFileW() {
+ err("missing function: FindNextFileW");
+ abort(-1);
+}
+
+function _FindStringOrdinal() {
+ err("missing function: FindStringOrdinal");
+ abort(-1);
+}
+
+function _FormatMessageW() {
+ err("missing function: FormatMessageW");
+ abort(-1);
+}
+
+function _FreeAddrInfoExW() {
+ err("missing function: FreeAddrInfoExW");
+ abort(-1);
+}
+
+function _FreeAddrInfoW() {
+ err("missing function: FreeAddrInfoW");
+ abort(-1);
+}
+
+function _FreeContextBuffer() {
+ err("missing function: FreeContextBuffer");
+ abort(-1);
+}
+
+function _FreeCredentialsHandle() {
+ err("missing function: FreeCredentialsHandle");
+ abort(-1);
+}
+
+function _GetAdaptersAddresses() {
+ err("missing function: GetAdaptersAddresses");
+ abort(-1);
+}
+
+function _GetAddrInfoExW() {
+ err("missing function: GetAddrInfoExW");
+ abort(-1);
+}
+
+function _GetAddrInfoW() {
+ err("missing function: GetAddrInfoW");
+ abort(-1);
+}
+
+function _GetCPInfoExW() {
+ err("missing function: GetCPInfoExW");
+ abort(-1);
+}
+
+function _GetCalendarInfoEx() {
+ err("missing function: GetCalendarInfoEx");
+ abort(-1);
+}
+
+function _GetConsoleMode() {
+ err("missing function: GetConsoleMode");
+ abort(-1);
+}
+
+function _GetConsoleOutputCP() {
+ err("missing function: GetConsoleOutputCP");
+ abort(-1);
+}
+
+function _GetConsoleScreenBufferInfo() {
+ err("missing function: GetConsoleScreenBufferInfo");
+ abort(-1);
+}
+
+function _GetFileAttributesExW() {
+ err("missing function: GetFileAttributesExW");
+ abort(-1);
+}
+
+function _GetFileType() {
+ err("missing function: GetFileType");
+ abort(-1);
+}
+
+function _GetLocaleInfoEx() {
+ err("missing function: GetLocaleInfoEx");
+ abort(-1);
+}
+
+function _GetNameInfoW() {
+ err("missing function: GetNameInfoW");
+ abort(-1);
+}
+
+function _GetNetworkParams() {
+ err("missing function: GetNetworkParams");
+ abort(-1);
+}
+
+function _GetPerAdapterInfo() {
+ err("missing function: GetPerAdapterInfo");
+ abort(-1);
+}
+
+function _GetStdHandle() {
+ err("missing function: GetStdHandle");
+ abort(-1);
+}
+
+function _GetTokenInformation() {
+ err("missing function: GetTokenInformation");
+ abort(-1);
+}
+
+function _GetUserPreferredUILanguages() {
+ err("missing function: GetUserPreferredUILanguages");
+ abort(-1);
+}
+
+function _IdnToAscii() {
+ err("missing function: IdnToAscii");
+ abort(-1);
+}
+
+function _IdnToUnicode() {
+ err("missing function: IdnToUnicode");
+ abort(-1);
+}
+
+function _ImpersonateLoggedOnUser() {
+ err("missing function: ImpersonateLoggedOnUser");
+ abort(-1);
+}
+
+function _InitializeSecurityContextW() {
+ err("missing function: InitializeSecurityContextW");
+ abort(-1);
+}
+
+function _LCIDToLocaleName() {
+ err("missing function: LCIDToLocaleName");
+ abort(-1);
+}
+
+function _LCMapStringEx() {
+ err("missing function: LCMapStringEx");
+ abort(-1);
+}
+
+function _LocaleNameToLCID() {
+ err("missing function: LocaleNameToLCID");
+ abort(-1);
+}
+
+function _LsaClose() {
+ err("missing function: LsaClose");
+ abort(-1);
+}
+
+function _LsaFreeMemory() {
+ err("missing function: LsaFreeMemory");
+ abort(-1);
+}
+
+function _LsaFreeReturnBuffer() {
+ err("missing function: LsaFreeReturnBuffer");
+ abort(-1);
+}
+
+function _LsaGetLogonSessionData() {
+ err("missing function: LsaGetLogonSessionData");
+ abort(-1);
+}
+
+function _LsaLookupNames2() {
+ err("missing function: LsaLookupNames2");
+ abort(-1);
+}
+
+function _LsaLookupSids() {
+ err("missing function: LsaLookupSids");
+ abort(-1);
+}
+
+function _LsaNtStatusToWinError() {
+ err("missing function: LsaNtStatusToWinError");
+ abort(-1);
+}
+
+function _LsaOpenPolicy() {
+ err("missing function: LsaOpenPolicy");
+ abort(-1);
+}
+
+function _MoveFileExW() {
+ err("missing function: MoveFileExW");
+ abort(-1);
+}
+
+function _MultiByteToWideChar() {
+ err("missing function: MultiByteToWideChar");
+ abort(-1);
+}
+
+function _NCryptDeleteKey() {
+ err("missing function: NCryptDeleteKey");
+ abort(-1);
+}
+
+function _NCryptFreeObject() {
+ err("missing function: NCryptFreeObject");
+ abort(-1);
+}
+
+function _NCryptGetProperty() {
+ err("missing function: NCryptGetProperty");
+ abort(-1);
+}
+
+function _NCryptImportKey() {
+ err("missing function: NCryptImportKey");
+ abort(-1);
+}
+
+function _NCryptOpenKey() {
+ err("missing function: NCryptOpenKey");
+ abort(-1);
+}
+
+function _NCryptOpenStorageProvider() {
+ err("missing function: NCryptOpenStorageProvider");
+ abort(-1);
+}
+
+function _NCryptSetProperty() {
+ err("missing function: NCryptSetProperty");
+ abort(-1);
+}
+
+function _NormalizeString() {
+ err("missing function: NormalizeString");
+ abort(-1);
+}
+
+function _OpenProcessToken() {
+ err("missing function: OpenProcessToken");
+ abort(-1);
+}
+
+function _OpenThreadToken() {
+ err("missing function: OpenThreadToken");
+ abort(-1);
+}
+
+function _QueryContextAttributesW() {
+ err("missing function: QueryContextAttributesW");
+ abort(-1);
+}
+
+function _ReadConsoleW() {
+ err("missing function: ReadConsoleW");
+ abort(-1);
+}
+
+function _ReadFile() {
+ err("missing function: ReadFile");
+ abort(-1);
+}
+
+function _RemoveDirectoryW() {
+ err("missing function: RemoveDirectoryW");
+ abort(-1);
+}
+
+function _ReplaceFileW() {
+ err("missing function: ReplaceFileW");
+ abort(-1);
+}
+
+function _ResolveLocaleName() {
+ err("missing function: ResolveLocaleName");
+ abort(-1);
+}
+
+function _RevertToSelf() {
+ err("missing function: RevertToSelf");
+ abort(-1);
+}
+
+function _SetConsoleTextAttribute() {
+ err("missing function: SetConsoleTextAttribute");
+ abort(-1);
+}
+
+function _SetFileCompletionNotificationModes() {
+ err("missing function: SetFileCompletionNotificationModes");
+ abort(-1);
+}
+
+function _SetThreadErrorMode() {
+ err("missing function: SetThreadErrorMode");
+ abort(-1);
+}
+
+function _SspiEncodeStringsAsAuthIdentity() {
+ err("missing function: SspiEncodeStringsAsAuthIdentity");
+ abort(-1);
+}
+
+function _SspiFreeAuthIdentity() {
+ err("missing function: SspiFreeAuthIdentity");
+ abort(-1);
+}
+
+function _WSAConnect() {
+ err("missing function: WSAConnect");
+ abort(-1);
+}
+
+function _WSAEventSelect() {
+ err("missing function: WSAEventSelect");
+ abort(-1);
+}
+
+function _WSAGetOverlappedResult() {
+ err("missing function: WSAGetOverlappedResult");
+ abort(-1);
+}
+
+function _WSAIoctl() {
+ err("missing function: WSAIoctl");
+ abort(-1);
+}
+
+function _WSARecv() {
+ err("missing function: WSARecv");
+ abort(-1);
+}
+
+function _WSASend() {
+ err("missing function: WSASend");
+ abort(-1);
+}
+
+function _WSASocketW() {
+ err("missing function: WSASocketW");
+ abort(-1);
+}
+
+function _WSAStartup() {
+ err("missing function: WSAStartup");
+ abort(-1);
+}
+
+function _WideCharToMultiByte() {
+ err("missing function: WideCharToMultiByte");
+ abort(-1);
+}
+
+function _WinHttpCloseHandle() {
+ err("missing function: WinHttpCloseHandle");
+ abort(-1);
+}
+
+function _WinHttpGetIEProxyConfigForCurrentUser() {
+ err("missing function: WinHttpGetIEProxyConfigForCurrentUser");
+ abort(-1);
+}
+
+function _WinHttpGetProxyForUrl() {
+ err("missing function: WinHttpGetProxyForUrl");
+ abort(-1);
+}
+
+function _WinHttpOpen() {
+ err("missing function: WinHttpOpen");
+ abort(-1);
+}
+
+function _WriteConsoleW() {
+ err("missing function: WriteConsoleW");
+ abort(-1);
+}
+
+function _WriteFile() {
+ err("missing function: WriteFile");
+ abort(-1);
+}
+function _AcceptSecurityContext() {
+ err("missing function: AcceptSecurityContext");
+ abort(-1);
+}
+
+function _AcquireCredentialsHandleW() {
+ err("missing function: AcquireCredentialsHandleW");
+ abort(-1);
+}
+
+function _ApplyControlToken() {
+ err("missing function: ApplyControlToken");
+ abort(-1);
+}
+
+function _BCryptCloseAlgorithmProvider() {
+ err("missing function: BCryptCloseAlgorithmProvider");
+ abort(-1);
+}
+
+function _BCryptCreateHash() {
+ err("missing function: BCryptCreateHash");
+ abort(-1);
+}
+
+function _BCryptDestroyHash() {
+ err("missing function: BCryptDestroyHash");
+ abort(-1);
+}
+
+function _BCryptDestroyKey() {
+ err("missing function: BCryptDestroyKey");
+ abort(-1);
+}
+
+function _BCryptExportKey() {
+ err("missing function: BCryptExportKey");
+ abort(-1);
+}
+
+function _BCryptFinishHash() {
+ err("missing function: BCryptFinishHash");
+ abort(-1);
+}
+
+function _BCryptGenRandom() {
+ err("missing function: BCryptGenRandom");
+ abort(-1);
+}
+
+function _BCryptGetProperty() {
+ err("missing function: BCryptGetProperty");
+ abort(-1);
+}
+
+function _BCryptHashData() {
+ err("missing function: BCryptHashData");
+ abort(-1);
+}
+
+function _BCryptOpenAlgorithmProvider() {
+ err("missing function: BCryptOpenAlgorithmProvider");
+ abort(-1);
+}
+
+function _CancelIoEx() {
+ err("missing function: CancelIoEx");
+ abort(-1);
+}
+
+function _CertAddCertificateLinkToStore() {
+ err("missing function: CertAddCertificateLinkToStore");
+ abort(-1);
+}
+
+function _CertCloseStore() {
+ err("missing function: CertCloseStore");
+ abort(-1);
+}
+
+function _CertControlStore() {
+ err("missing function: CertControlStore");
+ abort(-1);
+}
+
+function _CertCreateCertificateChainEngine() {
+ err("missing function: CertCreateCertificateChainEngine");
+ abort(-1);
+}
+
+function _CertDuplicateCertificateContext() {
+ err("missing function: CertDuplicateCertificateContext");
+ abort(-1);
+}
+
+function _CertEnumCertificatesInStore() {
+ err("missing function: CertEnumCertificatesInStore");
+ abort(-1);
+}
+
+function _CertFindCertificateInStore() {
+ err("missing function: CertFindCertificateInStore");
+ abort(-1);
+}
+
+function _CertFindExtension() {
+ err("missing function: CertFindExtension");
+ abort(-1);
+}
+
+function _CertFreeCertificateChain() {
+ err("missing function: CertFreeCertificateChain");
+ abort(-1);
+}
+
+function _CertFreeCertificateChainEngine() {
+ err("missing function: CertFreeCertificateChainEngine");
+ abort(-1);
+}
+
+function _CertFreeCertificateContext() {
+ err("missing function: CertFreeCertificateContext");
+ abort(-1);
+}
+
+function _CertGetCertificateChain() {
+ err("missing function: CertGetCertificateChain");
+ abort(-1);
+}
+
+function _CertGetCertificateContextProperty() {
+ err("missing function: CertGetCertificateContextProperty");
+ abort(-1);
+}
+
+function _CertGetIntendedKeyUsage() {
+ err("missing function: CertGetIntendedKeyUsage");
+ abort(-1);
+}
+
+function _CertGetNameStringW() {
+ err("missing function: CertGetNameStringW");
+ abort(-1);
+}
+
+function _CertGetValidUsages() {
+ err("missing function: CertGetValidUsages");
+ abort(-1);
+}
+
+function _CertNameToStrW() {
+ err("missing function: CertNameToStrW");
+ abort(-1);
+}
+
+function _CertOpenStore() {
+ err("missing function: CertOpenStore");
+ abort(-1);
+}
+
+function _CertVerifyCertificateChainPolicy() {
+ err("missing function: CertVerifyCertificateChainPolicy");
+ abort(-1);
+}
+
+function _CertVerifyTimeValidity() {
+ err("missing function: CertVerifyTimeValidity");
+ abort(-1);
+}
+
+function _CompareStringEx() {
+ err("missing function: CompareStringEx");
+ abort(-1);
+}
+
+function _CompareStringOrdinal() {
+ err("missing function: CompareStringOrdinal");
+ abort(-1);
+}
+
+function _CompleteAuthToken() {
+ err("missing function: CompleteAuthToken");
+ abort(-1);
+}
+
+function _CopyFileExW() {
+ err("missing function: CopyFileExW");
+ abort(-1);
+}
+
+function _CreateFileW() {
+ err("missing function: CreateFileW");
+ abort(-1);
+}
+
+function _CryptAcquireContextW() {
+ err("missing function: CryptAcquireContextW");
+ abort(-1);
+}
+
+function _CryptDecodeObject() {
+ err("missing function: CryptDecodeObject");
+ abort(-1);
+}
+
+function _CryptDestroyKey() {
+ err("missing function: CryptDestroyKey");
+ abort(-1);
+}
+
+function _CryptFindOIDInfo() {
+ err("missing function: CryptFindOIDInfo");
+ abort(-1);
+}
+
+function _CryptFormatObject() {
+ err("missing function: CryptFormatObject");
+ abort(-1);
+}
+
+function _CryptGenKey() {
+ err("missing function: CryptGenKey");
+ abort(-1);
+}
+
+function _CryptGetDefaultProviderW() {
+ err("missing function: CryptGetDefaultProviderW");
+ abort(-1);
+}
+
+function _CryptGetKeyParam() {
+ err("missing function: CryptGetKeyParam");
+ abort(-1);
+}
+
+function _CryptGetProvParam() {
+ err("missing function: CryptGetProvParam");
+ abort(-1);
+}
+
+function _CryptGetUserKey() {
+ err("missing function: CryptGetUserKey");
+ abort(-1);
+}
+
+function _CryptImportKey() {
+ err("missing function: CryptImportKey");
+ abort(-1);
+}
+
+function _CryptImportPublicKeyInfoEx2() {
+ err("missing function: CryptImportPublicKeyInfoEx2");
+ abort(-1);
+}
+
+function _CryptReleaseContext() {
+ err("missing function: CryptReleaseContext");
+ abort(-1);
+}
+
+function _CryptSetProvParam() {
+ err("missing function: CryptSetProvParam");
+ abort(-1);
+}
+
+function _DecryptMessage() {
+ err("missing function: DecryptMessage");
+ abort(-1);
+}
+
+function _DeleteFileW() {
+ err("missing function: DeleteFileW");
+ abort(-1);
+}
+
+function _DeleteSecurityContext() {
+ err("missing function: DeleteSecurityContext");
+ abort(-1);
+}
+
+function _DeleteVolumeMountPointW() {
+ err("missing function: DeleteVolumeMountPointW");
+ abort(-1);
+}
+
+function _EncryptMessage() {
+ err("missing function: EncryptMessage");
+ abort(-1);
+}
+
+function _EnumCalendarInfoExEx() {
+ err("missing function: EnumCalendarInfoExEx");
+ abort(-1);
+}
+
+function _EnumSystemLocalesEx() {
+ err("missing function: EnumSystemLocalesEx");
+ abort(-1);
+}
+
+function _EnumTimeFormatsEx() {
+ err("missing function: EnumTimeFormatsEx");
+ abort(-1);
+}
+
+function _EnumerateSecurityPackagesW() {
+ err("missing function: EnumerateSecurityPackagesW");
+ abort(-1);
+}
+
+function _FindClose() {
+ err("missing function: FindClose");
+ abort(-1);
+}
+
+function _FindFirstFileExW() {
+ err("missing function: FindFirstFileExW");
+ abort(-1);
+}
+
+function _FindNLSStringEx() {
+ err("missing function: FindNLSStringEx");
+ abort(-1);
+}
+
+function _FindNextFileW() {
+ err("missing function: FindNextFileW");
+ abort(-1);
+}
+
+function _FindStringOrdinal() {
+ err("missing function: FindStringOrdinal");
+ abort(-1);
+}
+
+function _FormatMessageW() {
+ err("missing function: FormatMessageW");
+ abort(-1);
+}
+
+function _FreeAddrInfoExW() {
+ err("missing function: FreeAddrInfoExW");
+ abort(-1);
+}
+
+function _FreeAddrInfoW() {
+ err("missing function: FreeAddrInfoW");
+ abort(-1);
+}
+
+function _FreeContextBuffer() {
+ err("missing function: FreeContextBuffer");
+ abort(-1);
+}
+
+function _FreeCredentialsHandle() {
+ err("missing function: FreeCredentialsHandle");
+ abort(-1);
+}
+
+function _GetAdaptersAddresses() {
+ err("missing function: GetAdaptersAddresses");
+ abort(-1);
+}
+
+function _GetAddrInfoExW() {
+ err("missing function: GetAddrInfoExW");
+ abort(-1);
+}
+
+function _GetAddrInfoW() {
+ err("missing function: GetAddrInfoW");
+ abort(-1);
+}
+
+function _GetCPInfoExW() {
+ err("missing function: GetCPInfoExW");
+ abort(-1);
+}
+
+function _GetCalendarInfoEx() {
+ err("missing function: GetCalendarInfoEx");
+ abort(-1);
+}
+
+function _GetConsoleMode() {
+ err("missing function: GetConsoleMode");
+ abort(-1);
+}
+
+function _GetConsoleOutputCP() {
+ err("missing function: GetConsoleOutputCP");
+ abort(-1);
+}
+
+function _GetConsoleScreenBufferInfo() {
+ err("missing function: GetConsoleScreenBufferInfo");
+ abort(-1);
+}
+
+function _GetFileAttributesExW() {
+ err("missing function: GetFileAttributesExW");
+ abort(-1);
+}
+
+function _GetFileType() {
+ err("missing function: GetFileType");
+ abort(-1);
+}
+
+function _GetLocaleInfoEx() {
+ err("missing function: GetLocaleInfoEx");
+ abort(-1);
+}
+
+function _GetNameInfoW() {
+ err("missing function: GetNameInfoW");
+ abort(-1);
+}
+
+function _GetNetworkParams() {
+ err("missing function: GetNetworkParams");
+ abort(-1);
+}
+
+function _GetPerAdapterInfo() {
+ err("missing function: GetPerAdapterInfo");
+ abort(-1);
+}
+
+function _GetStdHandle() {
+ err("missing function: GetStdHandle");
+ abort(-1);
+}
+
+function _GetTokenInformation() {
+ err("missing function: GetTokenInformation");
+ abort(-1);
+}
+
+function _GetUserPreferredUILanguages() {
+ err("missing function: GetUserPreferredUILanguages");
+ abort(-1);
+}
+
+function _IdnToAscii() {
+ err("missing function: IdnToAscii");
+ abort(-1);
+}
+
+function _IdnToUnicode() {
+ err("missing function: IdnToUnicode");
+ abort(-1);
+}
+
+function _ImpersonateLoggedOnUser() {
+ err("missing function: ImpersonateLoggedOnUser");
+ abort(-1);
+}
+
+function _InitializeSecurityContextW() {
+ err("missing function: InitializeSecurityContextW");
+ abort(-1);
+}
+
+function _LCIDToLocaleName() {
+ err("missing function: LCIDToLocaleName");
+ abort(-1);
+}
+
+function _LCMapStringEx() {
+ err("missing function: LCMapStringEx");
+ abort(-1);
+}
+
+function _LocaleNameToLCID() {
+ err("missing function: LocaleNameToLCID");
+ abort(-1);
+}
+
+function _LsaClose() {
+ err("missing function: LsaClose");
+ abort(-1);
+}
+
+function _LsaFreeMemory() {
+ err("missing function: LsaFreeMemory");
+ abort(-1);
+}
+
+function _LsaFreeReturnBuffer() {
+ err("missing function: LsaFreeReturnBuffer");
+ abort(-1);
+}
+
+function _LsaGetLogonSessionData() {
+ err("missing function: LsaGetLogonSessionData");
+ abort(-1);
+}
+
+function _LsaLookupNames2() {
+ err("missing function: LsaLookupNames2");
+ abort(-1);
+}
+
+function _LsaLookupSids() {
+ err("missing function: LsaLookupSids");
+ abort(-1);
+}
+
+function _LsaNtStatusToWinError() {
+ err("missing function: LsaNtStatusToWinError");
+ abort(-1);
+}
+
+function _LsaOpenPolicy() {
+ err("missing function: LsaOpenPolicy");
+ abort(-1);
+}
+
+function _MoveFileExW() {
+ err("missing function: MoveFileExW");
+ abort(-1);
+}
+
+function _MultiByteToWideChar() {
+ err("missing function: MultiByteToWideChar");
+ abort(-1);
+}
+
+function _NCryptDeleteKey() {
+ err("missing function: NCryptDeleteKey");
+ abort(-1);
+}
+
+function _NCryptFreeObject() {
+ err("missing function: NCryptFreeObject");
+ abort(-1);
+}
+
+function _NCryptGetProperty() {
+ err("missing function: NCryptGetProperty");
+ abort(-1);
+}
+
+function _NCryptImportKey() {
+ err("missing function: NCryptImportKey");
+ abort(-1);
+}
+
+function _NCryptOpenKey() {
+ err("missing function: NCryptOpenKey");
+ abort(-1);
+}
+
+function _NCryptOpenStorageProvider() {
+ err("missing function: NCryptOpenStorageProvider");
+ abort(-1);
+}
+
+function _NCryptSetProperty() {
+ err("missing function: NCryptSetProperty");
+ abort(-1);
+}
+
+function _NormalizeString() {
+ err("missing function: NormalizeString");
+ abort(-1);
+}
+
+function _OpenProcessToken() {
+ err("missing function: OpenProcessToken");
+ abort(-1);
+}
+
+function _OpenThreadToken() {
+ err("missing function: OpenThreadToken");
+ abort(-1);
+}
+
+function _QueryContextAttributesW() {
+ err("missing function: QueryContextAttributesW");
+ abort(-1);
+}
+
+function _ReadConsoleW() {
+ err("missing function: ReadConsoleW");
+ abort(-1);
+}
+
+function _ReadFile() {
+ err("missing function: ReadFile");
+ abort(-1);
+}
+
+function _RemoveDirectoryW() {
+ err("missing function: RemoveDirectoryW");
+ abort(-1);
+}
+
+function _ReplaceFileW() {
+ err("missing function: ReplaceFileW");
+ abort(-1);
+}
+
+function _ResolveLocaleName() {
+ err("missing function: ResolveLocaleName");
+ abort(-1);
+}
+
+function _RevertToSelf() {
+ err("missing function: RevertToSelf");
+ abort(-1);
+}
+
+function _SetConsoleTextAttribute() {
+ err("missing function: SetConsoleTextAttribute");
+ abort(-1);
+}
+
+function _SetFileCompletionNotificationModes() {
+ err("missing function: SetFileCompletionNotificationModes");
+ abort(-1);
+}
+
+function _SetThreadErrorMode() {
+ err("missing function: SetThreadErrorMode");
+ abort(-1);
+}
+
+function _SspiEncodeStringsAsAuthIdentity() {
+ err("missing function: SspiEncodeStringsAsAuthIdentity");
+ abort(-1);
+}
+
+function _SspiFreeAuthIdentity() {
+ err("missing function: SspiFreeAuthIdentity");
+ abort(-1);
+}
+
+function _WSAConnect() {
+ err("missing function: WSAConnect");
+ abort(-1);
+}
+
+function _WSAEventSelect() {
+ err("missing function: WSAEventSelect");
+ abort(-1);
+}
+
+function _WSAGetOverlappedResult() {
+ err("missing function: WSAGetOverlappedResult");
+ abort(-1);
+}
+
+function _WSAIoctl() {
+ err("missing function: WSAIoctl");
+ abort(-1);
+}
+
+function _WSARecv() {
+ err("missing function: WSARecv");
+ abort(-1);
+}
+
+function _WSASend() {
+ err("missing function: WSASend");
+ abort(-1);
+}
+
+function _WSASocketW() {
+ err("missing function: WSASocketW");
+ abort(-1);
+}
+
+function _WSAStartup() {
+ err("missing function: WSAStartup");
+ abort(-1);
+}
+
+function _WideCharToMultiByte() {
+ err("missing function: WideCharToMultiByte");
+ abort(-1);
+}
+
+function _WinHttpCloseHandle() {
+ err("missing function: WinHttpCloseHandle");
+ abort(-1);
+}
+
+function _WinHttpGetIEProxyConfigForCurrentUser() {
+ err("missing function: WinHttpGetIEProxyConfigForCurrentUser");
+ abort(-1);
+}
+
+function _WinHttpGetProxyForUrl() {
+ err("missing function: WinHttpGetProxyForUrl");
+ abort(-1);
+}
+
+function _WinHttpOpen() {
+ err("missing function: WinHttpOpen");
+ abort(-1);
+}
+
+function _WriteConsoleW() {
+ err("missing function: WriteConsoleW");
+ abort(-1);
+}
+
+function _WriteFile() {
+ err("missing function: WriteFile");
+ abort(-1);
+}
+
  /** @type {function(...*):?} */
   function ___asan_init(
   ) {
@@ -1954,6 +3308,65 @@ function ___sys_chmod(path, mode) {try {
     return -e.errno;
   }
   }
+
+function ___sys__newselect(nfds, readfds, writefds, exceptfds, timeout) {
+ try {
+  assert(nfds <= 64, "nfds must be less than or equal to 64");
+  assert(!exceptfds, "exceptfds not supported");
+  var total = 0;
+  var srcReadLow = readfds ? _asan_js_load_4(readfds >> 2) : 0, srcReadHigh = readfds ? _asan_js_load_4(readfds + 4 >> 2) : 0;
+  var srcWriteLow = writefds ? _asan_js_load_4(writefds >> 2) : 0, srcWriteHigh = writefds ? _asan_js_load_4(writefds + 4 >> 2) : 0;
+  var srcExceptLow = exceptfds ? _asan_js_load_4(exceptfds >> 2) : 0, srcExceptHigh = exceptfds ? _asan_js_load_4(exceptfds + 4 >> 2) : 0;
+  var dstReadLow = 0, dstReadHigh = 0;
+  var dstWriteLow = 0, dstWriteHigh = 0;
+  var dstExceptLow = 0, dstExceptHigh = 0;
+  var allLow = (readfds ? _asan_js_load_4(readfds >> 2) : 0) | (writefds ? _asan_js_load_4(writefds >> 2) : 0) | (exceptfds ? _asan_js_load_4(exceptfds >> 2) : 0);
+  var allHigh = (readfds ? _asan_js_load_4(readfds + 4 >> 2) : 0) | (writefds ? _asan_js_load_4(writefds + 4 >> 2) : 0) | (exceptfds ? _asan_js_load_4(exceptfds + 4 >> 2) : 0);
+  var check = function(fd, low, high, val) {
+   return fd < 32 ? low & val : high & val;
+  };
+  for (var fd = 0; fd < nfds; fd++) {
+   var mask = 1 << fd % 32;
+   if (!check(fd, allLow, allHigh, mask)) {
+    continue;
+   }
+   var stream = FS.getStream(fd);
+   if (!stream) throw new FS.ErrnoError(8);
+   var flags = SYSCALLS.DEFAULT_POLLMASK;
+   if (stream.stream_ops.poll) {
+    flags = stream.stream_ops.poll(stream);
+   }
+   if (flags & 1 && check(fd, srcReadLow, srcReadHigh, mask)) {
+    fd < 32 ? dstReadLow = dstReadLow | mask : dstReadHigh = dstReadHigh | mask;
+    total++;
+   }
+   if (flags & 4 && check(fd, srcWriteLow, srcWriteHigh, mask)) {
+    fd < 32 ? dstWriteLow = dstWriteLow | mask : dstWriteHigh = dstWriteHigh | mask;
+    total++;
+   }
+   if (flags & 2 && check(fd, srcExceptLow, srcExceptHigh, mask)) {
+    fd < 32 ? dstExceptLow = dstExceptLow | mask : dstExceptHigh = dstExceptHigh | mask;
+    total++;
+   }
+  }
+  if (readfds) {
+   _asan_js_store_4(readfds >> 2, dstReadLow);
+   _asan_js_store_4(readfds + 4 >> 2, dstReadHigh);
+  }
+  if (writefds) {
+   _asan_js_store_4(writefds >> 2, dstWriteLow);
+   _asan_js_store_4(writefds + 4 >> 2, dstWriteHigh);
+  }
+  if (exceptfds) {
+   _asan_js_store_4(exceptfds >> 2, dstExceptLow);
+   _asan_js_store_4(exceptfds + 4 >> 2, dstExceptHigh);
+  }
+  return total;
+ } catch (e) {
+  if (typeof FS === "undefined" || !(e instanceof FS.ErrnoError)) abort(e);
+  return -e.errno;
+ }
+}
 
 function ___sys_dup(fd) {
  try {
@@ -2927,7 +4340,7 @@ function _corert_wasm_invoke_js(js, length, exception) {
 
   function _corert_wasm_invoke_js_unmarshalled(js, length, arg0, arg1, arg2, exception) {
   
-          console.log("wasm invoke unmarshalled" + js);
+          console.log("corert_wasm invoke unmarshalled" + js);
           var jsFuncName = UTF8ToString(js, length);
           console.log(jsFuncName);
           var dotNetExports = DOTNET._dotnet_get_global().DotNet;
@@ -3304,6 +4717,7 @@ ENV["UNO_BOOTSTRAP_MONO_RUNTIME_CONFIGURATION"] = "release";
 
   function _fd_seek(fd, offset_low, offset_high, whence, newOffset) {try {
   
+	  console.log("fd_seek" + fd + " " + offset_low);
       
       var stream = SYSCALLS.getStreamFromFD(fd);
       var HIGH_OFFSET = 0x100000000; // 2^32
@@ -13477,23 +14891,149 @@ var dynCall_iiijj = Module["dynCall_iiijj"] = createExportWrapper("dynCall_iiijj
 var asmGlobalArg = {};
 // copied from UnoCoreRt.js
 var asmLibraryArg = {
+ "AcceptSecurityContext": _AcceptSecurityContext,
+ "AcquireCredentialsHandleW": _AcquireCredentialsHandleW,
+ "ApplyControlToken": _ApplyControlToken,
+ "BCryptCloseAlgorithmProvider": _BCryptCloseAlgorithmProvider,
+ "BCryptCreateHash": _BCryptCreateHash,
+ "BCryptDestroyHash": _BCryptDestroyHash,
+ "BCryptDestroyKey": _BCryptDestroyKey,
+ "BCryptExportKey": _BCryptExportKey,
+ "BCryptFinishHash": _BCryptFinishHash,
+ "BCryptGenRandom": _BCryptGenRandom,
+ "BCryptGetProperty": _BCryptGetProperty,
+ "BCryptHashData": _BCryptHashData,
+ "BCryptOpenAlgorithmProvider": _BCryptOpenAlgorithmProvider,
+ "CancelIoEx": _CancelIoEx,
+ "CertAddCertificateLinkToStore": _CertAddCertificateLinkToStore,
+ "CertCloseStore": _CertCloseStore,
+ "CertControlStore": _CertControlStore,
+ "CertCreateCertificateChainEngine": _CertCreateCertificateChainEngine,
+ "CertDuplicateCertificateContext": _CertDuplicateCertificateContext,
+ "CertEnumCertificatesInStore": _CertEnumCertificatesInStore,
+ "CertFindCertificateInStore": _CertFindCertificateInStore,
+ "CertFindExtension": _CertFindExtension,
+ "CertFreeCertificateChain": _CertFreeCertificateChain,
+ "CertFreeCertificateChainEngine": _CertFreeCertificateChainEngine,
+ "CertFreeCertificateContext": _CertFreeCertificateContext,
+ "CertGetCertificateChain": _CertGetCertificateChain,
+ "CertGetCertificateContextProperty": _CertGetCertificateContextProperty,
+ "CertGetIntendedKeyUsage": _CertGetIntendedKeyUsage,
+ "CertGetNameStringW": _CertGetNameStringW,
+ "CertGetValidUsages": _CertGetValidUsages,
+ "CertNameToStrW": _CertNameToStrW,
+ "CertOpenStore": _CertOpenStore,
+ "CertVerifyCertificateChainPolicy": _CertVerifyCertificateChainPolicy,
+ "CertVerifyTimeValidity": _CertVerifyTimeValidity,
  "CompareStringEx": _CompareStringEx,
  "CompareStringOrdinal": _CompareStringOrdinal,
+ "CompleteAuthToken": _CompleteAuthToken,
+ "CopyFileExW": _CopyFileExW,
+ "CreateFileW": _CreateFileW,
+ "CryptAcquireContextW": _CryptAcquireContextW,
+ "CryptDecodeObject": _CryptDecodeObject,
+ "CryptDestroyKey": _CryptDestroyKey,
+ "CryptFindOIDInfo": _CryptFindOIDInfo,
+ "CryptFormatObject": _CryptFormatObject,
+ "CryptGenKey": _CryptGenKey,
+ "CryptGetDefaultProviderW": _CryptGetDefaultProviderW,
+ "CryptGetKeyParam": _CryptGetKeyParam,
+ "CryptGetProvParam": _CryptGetProvParam,
+ "CryptGetUserKey": _CryptGetUserKey,
+ "CryptImportKey": _CryptImportKey,
+ "CryptImportPublicKeyInfoEx2": _CryptImportPublicKeyInfoEx2,
+ "CryptReleaseContext": _CryptReleaseContext,
+ "CryptSetProvParam": _CryptSetProvParam,
+ "DecryptMessage": _DecryptMessage,
+ "DeleteFileW": _DeleteFileW,
+ "DeleteSecurityContext": _DeleteSecurityContext,
+ "DeleteVolumeMountPointW": _DeleteVolumeMountPointW,
+ "EncryptMessage": _EncryptMessage,
  "EnumCalendarInfoExEx": _EnumCalendarInfoExEx,
  "EnumSystemLocalesEx": _EnumSystemLocalesEx,
  "EnumTimeFormatsEx": _EnumTimeFormatsEx,
+ "EnumerateSecurityPackagesW": _EnumerateSecurityPackagesW,
+ "FindClose": _FindClose,
+ "FindFirstFileExW": _FindFirstFileExW,
  "FindNLSStringEx": _FindNLSStringEx,
+ "FindNextFileW": _FindNextFileW,
  "FindStringOrdinal": _FindStringOrdinal,
+ "FormatMessageW": _FormatMessageW,
+ "FreeAddrInfoExW": _FreeAddrInfoExW,
+ "FreeAddrInfoW": _FreeAddrInfoW,
+ "FreeContextBuffer": _FreeContextBuffer,
+ "FreeCredentialsHandle": _FreeCredentialsHandle,
+ "GetAdaptersAddresses": _GetAdaptersAddresses,
+ "GetAddrInfoExW": _GetAddrInfoExW,
+ "GetAddrInfoW": _GetAddrInfoW,
+ "GetCPInfoExW": _GetCPInfoExW,
  "GetCalendarInfoEx": _GetCalendarInfoEx,
+ "GetConsoleMode": _GetConsoleMode,
+ "GetConsoleOutputCP": _GetConsoleOutputCP,
+ "GetConsoleScreenBufferInfo": _GetConsoleScreenBufferInfo,
+ "GetFileAttributesExW": _GetFileAttributesExW,
+ "GetFileType": _GetFileType,
  "GetLocaleInfoEx": _GetLocaleInfoEx,
+ "GetNameInfoW": _GetNameInfoW,
+ "GetNetworkParams": _GetNetworkParams,
+ "GetPerAdapterInfo": _GetPerAdapterInfo,
+ "GetStdHandle": _GetStdHandle,
+ "GetTokenInformation": _GetTokenInformation,
  "GetUserPreferredUILanguages": _GetUserPreferredUILanguages,
  "IdnToAscii": _IdnToAscii,
  "IdnToUnicode": _IdnToUnicode,
+ "ImpersonateLoggedOnUser": _ImpersonateLoggedOnUser,
+ "InitializeSecurityContextW": _InitializeSecurityContextW,
  "LCIDToLocaleName": _LCIDToLocaleName,
  "LCMapStringEx": _LCMapStringEx,
  "LocaleNameToLCID": _LocaleNameToLCID,
+ "LsaClose": _LsaClose,
+ "LsaFreeMemory": _LsaFreeMemory,
+ "LsaFreeReturnBuffer": _LsaFreeReturnBuffer,
+ "LsaGetLogonSessionData": _LsaGetLogonSessionData,
+ "LsaLookupNames2": _LsaLookupNames2,
+ "LsaLookupSids": _LsaLookupSids,
+ "LsaNtStatusToWinError": _LsaNtStatusToWinError,
+ "LsaOpenPolicy": _LsaOpenPolicy,
+ "MoveFileExW": _MoveFileExW,
+ "MultiByteToWideChar": _MultiByteToWideChar,
+ "NCryptDeleteKey": _NCryptDeleteKey,
+ "NCryptFreeObject": _NCryptFreeObject,
+ "NCryptGetProperty": _NCryptGetProperty,
+ "NCryptImportKey": _NCryptImportKey,
+ "NCryptOpenKey": _NCryptOpenKey,
+ "NCryptOpenStorageProvider": _NCryptOpenStorageProvider,
+ "NCryptSetProperty": _NCryptSetProperty,
  "NormalizeString": _NormalizeString,
+ "OpenProcessToken": _OpenProcessToken,
+ "OpenThreadToken": _OpenThreadToken,
+ "QueryContextAttributesW": _QueryContextAttributesW,
+ "ReadConsoleW": _ReadConsoleW,
+ "ReadFile": _ReadFile,
+ "RemoveDirectoryW": _RemoveDirectoryW,
+ "ReplaceFileW": _ReplaceFileW,
  "ResolveLocaleName": _ResolveLocaleName,
+ "RevertToSelf": _RevertToSelf,
+ "SetConsoleTextAttribute": _SetConsoleTextAttribute,
+ "SetFileCompletionNotificationModes": _SetFileCompletionNotificationModes,
+ "SetThreadErrorMode": _SetThreadErrorMode,
+ "SspiEncodeStringsAsAuthIdentity": _SspiEncodeStringsAsAuthIdentity,
+ "SspiFreeAuthIdentity": _SspiFreeAuthIdentity,
+ "WSAConnect": _WSAConnect,
+ "WSAEventSelect": _WSAEventSelect,
+ "WSAGetOverlappedResult": _WSAGetOverlappedResult,
+ "WSAIoctl": _WSAIoctl,
+ "WSARecv": _WSARecv,
+ "WSASend": _WSASend,
+ "WSASocketW": _WSASocketW,
+ "WSAStartup": _WSAStartup,
+ "WideCharToMultiByte": _WideCharToMultiByte,
+ "WinHttpCloseHandle": _WinHttpCloseHandle,
+ "WinHttpGetIEProxyConfigForCurrentUser": _WinHttpGetIEProxyConfigForCurrentUser,
+ "WinHttpGetProxyForUrl": _WinHttpGetProxyForUrl,
+ "WinHttpOpen": _WinHttpOpen,
+ "WriteConsoleW": _WriteConsoleW,
+ "WriteFile": _WriteFile,
  "__assert_fail": ___assert_fail,
  "__cxa_allocate_exception": ___cxa_allocate_exception,
  "__cxa_atexit": ___cxa_atexit,
@@ -13504,60 +15044,45 @@ var asmLibraryArg = {
  "__cxa_throw": ___cxa_throw,
  "__cxa_uncaught_exceptions": ___cxa_uncaught_exceptions,
  "__resumeException": ___resumeException,
- "__sys_chmod": ___sys_chmod,
+ "__sys__newselect": ___sys__newselect,
  "__sys_dup": ___sys_dup,
  "__sys_exit_group": ___sys_exit_group,
  "__sys_fadvise64_64": ___sys_fadvise64_64,
- "__sys_fchmod": ___sys_fchmod,
  "__sys_fcntl64": ___sys_fcntl64,
  "__sys_fstat64": ___sys_fstat64,
  "__sys_ftruncate64": ___sys_ftruncate64,
  "__sys_getcwd": ___sys_getcwd,
  "__sys_getdents64": ___sys_getdents64,
- "__sys_getegid32": ___sys_getegid32,
- "__sys_geteuid32": ___sys_geteuid32,
- "__sys_getgid32": ___sys_getgid32,
  "__sys_getpid": ___sys_getpid,
  "__sys_getrusage": ___sys_getrusage,
- "__sys_getuid32": ___sys_getuid32,
  "__sys_ioctl": ___sys_ioctl,
- "__sys_link": ___sys_link,
  "__sys_lstat64": ___sys_lstat64,
  "__sys_madvise1": ___sys_madvise1,
- "__sys_mkdir": ___sys_mkdir,
  "__sys_mlock": ___sys_mlock,
  "__sys_mmap2": ___sys_mmap2,
  "__sys_mprotect": ___sys_mprotect,
  "__sys_munlock": ___sys_munlock,
  "__sys_munmap": ___sys_munmap,
  "__sys_open": ___sys_open,
- "__sys_pipe": ___sys_pipe,
- "__sys_pipe2": ___sys_pipe2,
- "__sys_poll": ___sys_poll,
  "__sys_prlimit64": ___sys_prlimit64,
  "__sys_read": ___sys_read,
  "__sys_readlink": ___sys_readlink,
- "__sys_rename": ___sys_rename,
- "__sys_rmdir": ___sys_rmdir,
  "__sys_setrlimit": ___sys_setrlimit,
  "__sys_socketcall": ___sys_socketcall,
  "__sys_stat64": ___sys_stat64,
  "__sys_ugetrlimit": ___sys_ugetrlimit,
  "__sys_uname": ___sys_uname,
  "__sys_unlink": ___sys_unlink,
- "__sys_utimensat": ___sys_utimensat,
  "__sys_write": ___sys_write,
  "abort": _abort,
  "atexit": _atexit,
  "clock_gettime": _clock_gettime,
+ "closesocket": _closesocket,
  "corert_wasm_invoke_js": _corert_wasm_invoke_js,
  "corert_wasm_invoke_js_unmarshalled": _corert_wasm_invoke_js_unmarshalled,
  "deflate": _deflate,
  "deflateEnd": _deflateEnd,
  "deflateInit2_": _deflateInit2_,
- "dladdr": _dladdr,
- "dlclose": _dlclose,
- "dlerror": _dlerror,
  "dlopen": _dlopen,
  "dlsym": _dlsym,
  "emscripten_asm_const_int": _emscripten_asm_const_int,
@@ -13588,9 +15113,6 @@ var asmLibraryArg = {
  "flock": _flock,
  "gai_strerror": _gai_strerror,
  "getTempRet0": _getTempRet0,
- "getaddrinfo": _getaddrinfo,
- "getnameinfo": _getnameinfo,
- "getpwuid_r": _getpwuid_r,
  "gettimeofday": _gettimeofday,
  "gmtime_r": _gmtime_r,
  "inflate": _inflate,
@@ -13605,13 +15127,10 @@ var asmLibraryArg = {
  "invoke_diiii": invoke_diiii,
  "invoke_diiiii": invoke_diiiii,
  "invoke_fi": invoke_fi,
- "invoke_fid": invoke_fid,
  "invoke_ii": invoke_ii,
  "invoke_iid": invoke_iid,
  "invoke_iidd": invoke_iidd,
- "invoke_iidddd": invoke_iidddd,
  "invoke_iidddddddd": invoke_iidddddddd,
- "invoke_iiddi": invoke_iiddi,
  "invoke_iiddiiiiiiiiii": invoke_iiddiiiiiiiiii,
  "invoke_iii": invoke_iii,
  "invoke_iiii": invoke_iiii,
@@ -13623,13 +15142,11 @@ var asmLibraryArg = {
  "invoke_iiiiiiiiii": invoke_iiiiiiiiii,
  "invoke_iiiiiiiiiii": invoke_iiiiiiiiiii,
  "invoke_iiiiiiiiiiii": invoke_iiiiiiiiiiii,
- "invoke_iiiiiiiiiiiii": invoke_iiiiiiiiiiiii,
  "invoke_iiiiiiiiiiiiiiiiiiiiiiii": invoke_iiiiiiiiiiiiiiiiiiiiiiii,
  "invoke_iiiiij": invoke_iiiiij,
  "invoke_iiiij": invoke_iiiij,
  "invoke_iiij": invoke_iiij,
  "invoke_iij": invoke_iij,
- "invoke_iiji": invoke_iiji,
  "invoke_iijj": invoke_iijj,
  "invoke_iijjj": invoke_iijjj,
  "invoke_iijjji": invoke_iijjji,
@@ -13641,8 +15158,6 @@ var asmLibraryArg = {
  "invoke_jij": invoke_jij,
  "invoke_jiji": invoke_jiji,
  "invoke_jijj": invoke_jijj,
-    "invoke_i": invoke_i,
-    "invoke_v": invoke_v,
  "invoke_vi": invoke_vi,
  "invoke_vid": invoke_vid,
  "invoke_vidd": invoke_vidd,
@@ -13690,9 +15205,10 @@ var asmLibraryArg = {
  "invoke_viijj": invoke_viijj,
  "invoke_vij": invoke_vij,
  "invoke_viji": invoke_viji,
+ "invoke_vijii": invoke_vijii,
  "invoke_vijj": invoke_vijj,
+ "ioctlsocket": _ioctlsocket,
  "memory": wasmMemory,
- "mktime": _mktime,
  "nanosleep": _nanosleep,
  "pthread_attr_destroy": _pthread_attr_destroy,
  "pthread_attr_getdetachstate": _pthread_attr_getdetachstate,
@@ -13704,11 +15220,6 @@ var asmLibraryArg = {
  "pthread_condattr_init": _pthread_condattr_init,
  "pthread_condattr_setclock": _pthread_condattr_setclock,
  "pthread_getattr_np": _pthread_getattr_np,
- "pthread_rwlock_destroy": _pthread_rwlock_destroy,
- "pthread_rwlock_init": _pthread_rwlock_init,
- "pthread_rwlock_rdlock": _pthread_rwlock_rdlock,
- "pthread_rwlock_unlock": _pthread_rwlock_unlock,
- "pthread_rwlock_wrlock": _pthread_rwlock_wrlock,
  "pthread_setcancelstate": _pthread_setcancelstate,
  "setTempRet0": _setTempRet0,
  "sigaction": _sigaction,
@@ -13934,6 +15445,7 @@ var _memset = Module["_memset"] = createExportWrapper("memset");
 var _corert_wasm_invoke_method = Module["_corert_wasm_invoke_method"] = createExportWrapper("corert_wasm_invoke_method");
 
 var _uno_windows_ui_core_coredispatcher_dispatchercallback = Module["_uno_windows_ui_core_coredispatcher_dispatchercallback"] = createExportWrapper("uno_windows_ui_core_coredispatcher_dispatchercallback");
+var _uno__ui_windows_ui_xaml_window_resize = Module["_uno__ui_windows_ui_xaml_window_resize"] = createExportWrapper("uno__ui_windows_ui_xaml_window_resize");
 
 /** @type {function(...*):?} */
 var _memcpy = Module["_memcpy"] = createExportWrapper("memcpy");
@@ -14348,15 +15860,15 @@ function invoke_iiiiiii(index,a1,a2,a3,a4,a5,a6) {
   }
 }
 
-function invoke_viidd(index,a1,a2,a3,a4) {
-  var sp = stackSave();
-  try {
-    dynCall_viidd(index,a1,a2,a3,a4);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_viidd(index, a1, a2, a3, a4) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
 function invoke_viiffffffffffff(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14) {
@@ -14370,48 +15882,49 @@ function invoke_viiffffffffffff(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13
   }
 }
 
-function invoke_vidd(index,a1,a2,a3) {
-  var sp = stackSave();
-  try {
-    dynCall_vidd(index,a1,a2,a3);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_vidd(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
-function invoke_viiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11) {
-  var sp = stackSave();
-  try {
-    dynCall_viiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_viiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
-function invoke_didd(index,a1,a2,a3) {
-  var sp = stackSave();
-  try {
-    return dynCall_didd(index,a1,a2,a3);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_didd(index, a1, a2, a3) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
-function invoke_vid(index,a1,a2) {
-  var sp = stackSave();
-  try {
-    dynCall_vid(index,a1,a2);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+
+function invoke_vid(index, a1, a2) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
 function invoke_viiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8) {
@@ -14613,16 +16126,17 @@ function invoke_iidd(index,a1,a2,a3) {
   }
 }
 
-function invoke_vidddd(index,a1,a2,a3,a4,a5) {
-  var sp = stackSave();
-  try {
-    dynCall_vidddd(index,a1,a2,a3,a4,a5);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_vidddd(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
+
 
 function invoke_fi(index,a1) {
   var sp = stackSave();
@@ -14767,37 +16281,38 @@ function invoke_viidddd(index,a1,a2,a3,a4,a5,a6) {
   }
 }
 
-function invoke_viiiddii(index,a1,a2,a3,a4,a5,a6,a7) {
-  var sp = stackSave();
-  try {
-    dynCall_viiiddii(index,a1,a2,a3,a4,a5,a6,a7);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_viiiddii(index, a1, a2, a3, a4, a5, a6, a7) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
-function invoke_viddii(index,a1,a2,a3,a4,a5) {
-  var sp = stackSave();
-  try {
-    dynCall_viddii(index,a1,a2,a3,a4,a5);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+
+function invoke_viddii(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  wasmTable.get(index)(a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
-function invoke_iiddiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13) {
-  var sp = stackSave();
-  try {
-    return dynCall_iiddiiiiiiiiii(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13);
-  } catch(e) {
-    stackRestore(sp);
-    if (e !== e+0 && e !== 'longjmp') throw e;
-    _setThrew(1, 0);
-  }
+function invoke_iiddiiiiiiiiii(index, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13) {
+ var sp = stackSave();
+ try {
+  return wasmTable.get(index)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
 }
 
 function invoke_viffffff(index,a1,a2,a3,a4,a5,a6,a7) {
@@ -15482,6 +16997,17 @@ function invoke_viiiiiijj(index,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10) {
   }
 }
 
+function invoke_vijii(index, a1, a2, a3, a4, a5) {
+ var sp = stackSave();
+ try {
+  dynCall_vijii(index, a1, a2, a3, a4, a5);
+ } catch (e) {
+  stackRestore(sp);
+  if (e !== e + 0 && e !== "longjmp") throw e;
+  _setThrew(1, 0);
+ }
+}
+
 function invoke_vijiiii(index,a1,a2,a3,a4,a5,a6,a7) {
   var sp = stackSave();
   try {
@@ -15905,6 +17431,16 @@ alert('entryFunction');
   }
 }
 
+function cleanupInit()
+{
+    this.loader = this.App.body.querySelector(".uno-loader");
+
+    // Remove loader node, not needed anymore
+    if (this.loader && this.loader.parentNode) {
+        this.loader.parentNode.removeChild(this.loader);
+    }
+}
+
 function run(args) {
     args = args || Module["arguments"];
     if (runDependencies > 0) {
@@ -15928,7 +17464,7 @@ function run(args) {
         preMain();
         if (Module["onRuntimeInitialized"])
             Module["onRuntimeInitialized"]();
-        alert("callMain commented out");
+	    cleanupInit();
 //            if (shouldRunNow) callMain(args);
         postRun()
     }
@@ -16255,6 +17791,7 @@ var MonoSupport;
         }
         static findJSFunction(identifier) {
             if (!identifier) {
+                console.log("jsCallDispatcher.dispatch");
                 return jsCallDispatcher.dispatch;
             }
             else {
@@ -16268,6 +17805,7 @@ var MonoSupport;
                 if (instance) {
                     var boundMethod = instance[methodName].bind(instance);
                     var methodId = jsCallDispatcher.cacheMethod(boundMethod);
+                    console.log("findjsfunc for name " + methodName + " id " + methodId);
                     return () => methodId;
                 }
                 else {
@@ -16282,6 +17820,7 @@ var MonoSupport;
          * @param pRet The pointer to the return value structure
          */
         static dispatch(id, pParams, pRet) {
+            console.log("dispatch to " + jsCallDispatcher.methodMap[id].name);
             return jsCallDispatcher.methodMap[id](pParams, pRet);
         }
         /**
@@ -16701,6 +18240,7 @@ var Uno;
                 const element = this.getView(elementId);
                 for (const style in styles) {
                     if (styles.hasOwnProperty(style)) {
+			    console.log("setStyle " + element + " style " + style + " to " + styles[style]);
                         element.style.setProperty(style, styles[style]);
                     }
                 }
@@ -16726,6 +18266,7 @@ var Uno;
                 for (let i = 0; i < params.Pairs_Length; i += 2) {
                     const key = pairs[i];
                     const value = pairs[i + 1];
+			    console.log("setStyle " + element + " key " + key + " to " + value);
                     elementStyle.setProperty(key, value);
                 }
                 if (params.SetAsArranged) {
@@ -16786,6 +18327,37 @@ var Uno;
                 }
                 return "ok";
             }
+
+		   setUnsetClasses(elementId, cssClassesToSet, cssClassesToUnset) {
+    const element = this.getView(elementId);
+    if (cssClassesToSet) {
+     cssClassesToSet.forEach(c => {
+      element.classList.add(c);
+     });
+    }
+    if (cssClassesToUnset) {
+     cssClassesToUnset.forEach(c => {
+      element.classList.remove(c);
+     });
+    }
+   }
+
+		   setUnsetClassesNative(pParams) {
+    const params = WindowManagerSetUnsetClassesParams.unmarshal(pParams);
+    this.setUnsetClasses(params.HtmlId, params.CssClassesToSet, params.CssClassesToUnset);
+    return true;
+   }
+   setClasses(elementId, cssClassesList, classIndex) {
+    const element = this.getView(elementId);
+    for (let i = 0; i < cssClassesList.length; i++) {
+     if (i === classIndex) {
+      element.classList.add(cssClassesList[i]);
+     } else {
+      element.classList.remove(cssClassesList[i]);
+     }
+    }
+    return "ok";
+   }
             setClassesNative(pParams) {
                 const params = WindowManagerSetClassesParams.unmarshal(pParams);
                 this.setClasses(params.HtmlId, params.CssClasses, params.Index);
@@ -16903,6 +18475,7 @@ var Uno;
             registerEventOnViewNative(pParams) {
                 const params = WindowManagerRegisterEventOnViewParams.unmarshal(pParams);
                 this.registerEventOnViewInternal(params.HtmlId, params.EventName, params.OnCapturePhase, params.EventFilterName, params.EventExtractorName);
+                console.log("registerEventOnViewNative done " + params);
                 return true;
             }
             /**
@@ -16921,7 +18494,7 @@ var Uno;
                 this._isPendingLeaveProcessingEnabled = true;
             }
                         registerPointerEventsOnView(pParams) {
-                const params = WindowManagerRegisterEventOnViewParams.unmarshal(pParams);
+                const params = WindowManagerRegisterPointerEventsOnViewParams.unmarshal(pParams);
                 const element = this.getView(params.HtmlId);
                 element.addEventListener("pointerenter", WindowManager.onPointerEnterReceived);
                 element.addEventListener("pointerleave", WindowManager.onPointerLeaveReceived);
@@ -17249,6 +18822,7 @@ var Uno;
                 * Set or replace the root content element.
                 */
             setRootContent(elementId) {
+                console.log("setRootContent");
                 if (this.rootContent && Number(this.rootContent.id) === elementId) {
                     return null; // nothing to do
                 }
@@ -17261,6 +18835,7 @@ var Uno;
                     this.rootContent.classList.remove(WindowManager.unoRootClassName);
                 }
                 if (!elementId) {
+                console.log("setRootContent null");
                     return null;
                 }
                 // set new root
@@ -17276,6 +18851,7 @@ var Uno;
                 }
                 this.setAsArranged(newRootElement); // patch because root is not measured/arranged
                 this.resize();
+                console.log("setRootContent end " + newRootElement);
                 return "ok";
             }
             /**
@@ -17304,6 +18880,8 @@ var Uno;
             addViewInternal(parentId, childId, index) {
                 const parentElement = this.getView(parentId);
                 const childElement = this.getView(childId);
+		    	   console.log("addViewInternal " + childId + " to " + parentId);
+		    	   console.log("addViewInternal " + parentElement + " to " + childElement);
                 let shouldRaiseLoadEvents = false;
                 if (WindowManager.isLoadEventsEnabled) {
                     const alreadyLoaded = this.getIsConnectedToRootElement(childElement);
@@ -17436,10 +19014,12 @@ var Uno;
                 const resultWidth = offsetWidth ? offsetWidth : element.clientWidth;
                 const resultHeight = offsetHeight ? offsetHeight : element.clientHeight;
                 // +1 is added to take rounding/flooring into account
+		    console.log("measureElement width " + resultWidth + " height " + resultHeight);
                 return [resultWidth + 1, resultHeight];
             }
             measureViewInternal(viewId, maxWidth, maxHeight) {
                 const element = this.getView(viewId);
+		    console.log("measureViewInternal for " + element + " " + viewId + " maxWidth " + maxWidth + " maxHeight " + maxHeight);
                 const elementStyle = element.style;
                 const originalStyleCssText = elementStyle.cssText;
                 let parentElement = null;
@@ -17520,6 +19100,7 @@ var Uno;
                         return [textSize[0], inputSize[1]];
                     }
                     else {
+		    console.log("measureElementInternal not image or input width ");
                         return this.measureElement(element);
                     }
                 }
@@ -17709,7 +19290,10 @@ var Uno;
                 }
                 else {
                     if (!WindowManager.resizeMethod) {
-                        WindowManager.resizeMethod = function() {}; // why doesn't this use standard emscripten methods, because its interpreted?  // Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.Window:Resize");
+                        WindowManager.resizeMethod = function(width, height) {
+			    console.log("resizeMethod " + width + "," + height);
+                            Module._uno__ui_windows_ui_xaml_window_resize(width, height);
+			}; // why doesn't this use standard emscripten methods, because its interpreted?  // Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.Window:Resize");
                     }
                     if (!WindowManager.dispatchEventMethod) {
                         WindowManager.dispatchEventMethod = function() {}; // ditto Module.mono_bind_static_method("[Uno.UI] Windows.UI.Xaml.UIElement:DispatchEvent");
@@ -17739,10 +19323,13 @@ var Uno;
             }
             resize() {
                 if (WindowManager.isHosted) {
+			console.log("isHosted resize");
                     UnoDispatch.resize(`${document.documentElement.clientWidth};${document.documentElement.clientHeight}`);
                 }
                 else {
+			console.log("!isHosted resize");
                     WindowManager.resizeMethod(document.documentElement.clientWidth, document.documentElement.clientHeight);
+			console.log("resize done");
                 }
             }
             dispatchEvent(element, eventName, eventPayload = null) {
@@ -18007,6 +19594,7 @@ class WindowManagerMeasureViewParams {
         {
             ret.AvailableHeight = Number(Module.getValue(pData + 16, "double"));
         }
+	    console.log("WindowManagerMeasureViewParams " + ret.AvailableWidth +  " " + ret.AvailableHeight );
         return ret;
     }
 }
@@ -18442,6 +20030,57 @@ class WindowManagerSetStylesParams {
         return ret;
     }
 }
+
+
+class WindowManagerSetUnsetClassesParams {
+ static unmarshal(pData) {
+  const ret = new WindowManagerSetUnsetClassesParams();
+  {
+   ret.HtmlId = Number(Module.getValue(pData + 0, "*"));
+  }
+  {
+   ret.CssClassesToSet_Length = Number(Module.getValue(pData + 4, "i32"));
+  }
+  {
+   const pArray = Module.getValue(pData + 8, "*");
+   if (pArray !== 0) {
+    ret.CssClassesToSet = new Array();
+    for (var i = 0; i < ret.CssClassesToSet_Length; i++) {
+     const value = Module.getValue(pArray + i * 4, "*");
+     if (value !== 0) {
+      ret.CssClassesToSet.push(String(MonoRuntime.conv_string(value)));
+     } else {
+      ret.CssClassesToSet.push(null);
+     }
+    }
+   } else {
+    ret.CssClassesToSet = null;
+   }
+  }
+  {
+   ret.CssClassesToUnset_Length = Number(Module.getValue(pData + 12, "i32"));
+  }
+  {
+   const pArray = Module.getValue(pData + 16, "*");
+   if (pArray !== 0) {
+    ret.CssClassesToUnset = new Array();
+    for (var i = 0; i < ret.CssClassesToUnset_Length; i++) {
+     const value = Module.getValue(pArray + i * 4, "*");
+     if (value !== 0) {
+      ret.CssClassesToUnset.push(String(MonoRuntime.conv_string(value)));
+     } else {
+      ret.CssClassesToUnset.push(null);
+     }
+    }
+   } else {
+    ret.CssClassesToUnset = null;
+   }
+  }
+  return ret;
+ }
+}
+
+
 /* TSBindingsGenerator Generated code -- this code is regenerated on each build */
 class WindowManagerSetXUidParams {
     static unmarshal(pData) {

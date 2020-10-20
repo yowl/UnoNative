@@ -24,7 +24,10 @@ namespace UnoCoreRt
     {
         public MainPage()
         {
+            App.PrintLine("MainPage ctor");
             this.InitializeComponent();
+            App.PrintLine("MainPage ctor x");
+
         }
     }
 }

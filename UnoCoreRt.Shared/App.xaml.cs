@@ -3,11 +3,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -35,6 +37,34 @@ namespace UnoCoreRt
             this.Suspending += OnSuspending;
         }
 
+        [DllImport("*")]
+        private static unsafe extern int printf(byte* str, byte* unused);
+        public struct TwoByteStr
+        {
+            public byte first;
+            public byte second;
+        }
+        private static unsafe void PrintString(string s)
+        {
+            int length = s.Length;
+            fixed (char* curChar = s)
+            {
+                for (int i = 0; i < length; i++)
+                {
+                    TwoByteStr curCharStr = new TwoByteStr();
+                    curCharStr.first = (byte)(*(curChar + i));
+                    printf((byte*)&curCharStr, null);
+                }
+            }
+        }
+        public static void PrintLine(string s)
+        {
+            PrintString(s);
+            PrintString("\n");
+        }
+
+        private static object CreateInstance() => new global::UnoCoreRt.MainPage();
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -42,44 +72,68 @@ namespace UnoCoreRt
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            PrintLine("OnLaunched");
 #if DEBUG
-			if (System.Diagnostics.Debugger.IsAttached)
+            if (System.Diagnostics.Debugger.IsAttached)
 			{
 				// this.DebugSettings.EnableFrameRateCounter = true;
 			}
 #endif
+
+            // var bindableType = new Uno.UI.DataBinding.BindableType(138, typeof(global::UnoCoreRt.MainPage));
+            // bindableType.AddActivator(CreateInstance);
+            PrintLine("OnLaunched AddActivator");
+
+            PrintLine("OnLaunched rootFrame");
+
             Frame rootFrame = Windows.UI.Xaml.Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
             {
+                PrintLine("OnLaunched rootFrame == null");
+
                 // Create a Frame to act as the navigation context and navigate to the first page
                 rootFrame = new Frame();
 
+                PrintLine("OnLaunched new Frame()");
+
                 rootFrame.NavigationFailed += OnNavigationFailed;
+                PrintLine("OnLaunched NavigationFailed += OnNavigationFailed()");
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
                 }
+                PrintLine("OnLaunched Window.Current.Content()");
 
                 // Place the frame in the current Window
                 Windows.UI.Xaml.Window.Current.Content = rootFrame;
+                PrintLine("OnLaunched = rootFrame");
             }
 
             if (e.PrelaunchActivated == false)
             {
+                PrintLine("OnLaunched PrelaunchActivated == false");
                 if (rootFrame.Content == null)
                 {
+                    PrintLine("OnLaunched Content == null");
+
                     // When the navigation stack isn't restored navigate to the first page,
                     // configuring the new page by passing required information as a navigation
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                    PrintLine("OnLaunched v");
+
                 }
                 // Ensure the current window is active
+                PrintLine("OnLaunched Activatev");
+
                 Windows.UI.Xaml.Window.Current.Activate();
             }
+            PrintLine("OnLaunched end");
+
         }
 
         /// <summary>
